@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="normal_green">#59ac53</color>
+    <color name="highlight_green">#86ca7f</color>
+    <color name="disabled_gray">#b0b0b0</color>
+
+    <color name="divider_line">#eeeeee</color>
+    <color name="top_divider_line">#eeeeee</color>
+
+    <color name="subtle_white">#f0f0f0</color>
+
+    <color name="keypad_background">@android:color/transparent</color>
+    <color name="keypad_focused">#72c06d</color>
+    <color name="keypad_pressed">@color/highlight_green</color>
+
+    <color name="info_display_background_color">#f7f7f7</color>
+    <color name="text_black">#202020</color>
+
+</resources>

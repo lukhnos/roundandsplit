@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_category_about">
+        <Preference android:title="@string/pref_title_version" android:key="@string/pref_key_version" />
+        <Preference android:title="@string/pref_title_disclaimer" android:key="@string/pref_key_view_disclaimer" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_contact_and_service">
+        <Preference android:title="@string/pref_title_visit_website">
+            <intent android:action="android.intent.action.VIEW" android:data="@string/website_url" />
+        </Preference>
+
+        <Preference android:title="@string/pref_title_email_us" android:key="@string/pref_key_email_us" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_settings">
+        <CheckBoxPreference
+            android:key="@string/pref_key_use_us_decimal_point"
+            android:title="@string/pref_title_use_us_decimal_point"
+            android:summary="@string/pref_summary_use_us_decimal_point"
+            android:defaultValue="true" />
+    </PreferenceCategory>
+</PreferenceScreen>

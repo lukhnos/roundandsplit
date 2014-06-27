@@ -1,0 +1,322 @@
+/*
+ * Derived from
+ *
+ * Icon BG color is #71cb53, the slash is #47b02d and the arrows are #ebf8e7.
+ *
+ * mast head dark background color: #008000;
+ * text color: #008000;
+ */
+
+.tagline {
+  font-size: 20px;
+}
+
+.applogo {
+	width: 128px;
+	height: 128px;
+}
+
+.appsample {
+	width: 290px;
+	height: 557px;
+}
+
+.storebadge {
+  margin: 4px;
+	width: 139px;
+	height: 48px;
+}
+
+@media (min-width: 768px) {
+	.applogo {
+		margin-top: 96px;
+	}
+}
+
+a {
+  -webkit-tap-highlight-color: rgba(192,192,192,0.2);
+  color: #47b02d;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: #71cb53;
+  text-decoration: underline;
+}
+
+.image-links {
+  padding-left: 0;
+  padding-bottom: 16px;
+  color: #fff;
+}
+.image-links li {
+  display: inline;
+  padding: 0 2px;
+}
+
+.image-links a {
+  -webkit-tap-highlight-color: rgba(192,192,192,0.2);
+  color: #fff;
+  text-decoration: underline;
+}
+
+.image-links a:visited {
+  color: #fff;
+}
+
+.image-links a:hover, a:focus {
+  color: #ebf8e7;
+}
+
+.image-links li:first-child {
+  padding-left: 0;
+}
+
+
+/*
+ * Main navigation
+ *
+ * Turn the `.navbar` at the top of the docs purple.
+ */
+
+.bs-docs-nav {
+  margin-bottom: 0;
+  background-color: #fff;
+  border-bottom: 0;
+}
+.bs-home-nav .bs-nav-b {
+  display: none;
+}
+.bs-docs-nav .navbar-brand,
+.bs-docs-nav .navbar-nav > li > a {
+  font-weight: 500;
+  color: #008000;
+}
+.bs-docs-nav .navbar-nav > li > a:hover,
+.bs-docs-nav .navbar-nav > .active > a,
+.bs-docs-nav .navbar-nav > .active > a:hover {
+  color: #47b02d;
+  background-color: #f9f9f9;
+}
+.bs-docs-nav .navbar-toggle .icon-bar {
+  background-color: #008000;
+}
+.bs-docs-nav .navbar-header .navbar-toggle {
+  border-color: #fff;
+}
+.bs-docs-nav .navbar-header .navbar-toggle:hover,
+.bs-docs-nav .navbar-header .navbar-toggle:focus {
+  background-color: #f9f9f9;
+  border-color: #f9f9f9;
+}
+
+
+/*
+ * Footer
+ *
+ * Separated section of content at the bottom of all pages, save the homepage.
+ */
+
+.bs-docs-footer {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  margin-top: 100px;
+  color: #777;
+  text-align: center;
+  border-top: 1px solid #e5e5e5;
+}
+
+.bs-docs-footer-links {
+  padding-left: 0;
+  margin-top: 20px;
+  color: #999;
+}
+.bs-docs-footer-links li {
+  display: inline;
+  padding: 0 2px;
+}
+.bs-docs-footer-links li:first-child {
+  padding-left: 0;
+}
+
+@media (min-width: 768px) {
+  .bs-docs-footer p {
+    margin-bottom: 0;
+  }
+}
+
+
+
+/*
+ * Homepage
+ *
+ * Tweaks to the custom homepage and the masthead (main jumbotron).
+ */
+
+/* Share masthead with page headers */
+.bs-docs-masthead,
+.bs-docs-header {
+  position: relative;
+  padding: 30px 15px;
+  color: #f9f9f9;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(0,0,0,.1);
+
+  background-color: #4aa144;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#4aa144), to(#59ac53));
+  background-image: -webkit-linear-gradient(top, #4aa144 0%, #59ac53 100%);
+  background-image:      -o-linear-gradient(top, #4aa144 0%, #59ac53 100%);
+  background-image:         linear-gradient(to bottom, #4aa144 0%, #59ac53 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4aa144', endColorstr='#59ac53', GradientType=0);
+  background-repeat: repeat-x;
+}
+
+/* Masthead (headings and download button) */
+.bs-docs-masthead .bs-docs-booticon {
+  margin: 0 auto 30px;
+}
+.bs-docs-masthead h1 {
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
+}
+.bs-docs-masthead .lead {
+  margin: 0 auto 30px;
+  font-size: 20px;
+  color: #fff;
+}
+.bs-docs-masthead .version {
+  margin-top: -15px;
+  margin-bottom: 30px;
+  color: #9783b9;
+}
+.bs-docs-masthead .btn {
+  width: 100%;
+  padding: 15px 30px;
+  font-size: 20px;
+}
+
+@media (min-width: 480px) {
+  .bs-docs-masthead .btn {
+    width: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .bs-docs-masthead {
+    padding: 0px 0;
+  }
+  .bs-docs-masthead h1 {
+    font-size: 60px;
+  }
+  .bs-docs-masthead .lead {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 992px) {
+  .bs-docs-masthead .lead {
+    width: 80%;
+    font-size: 30px;
+  }
+}
+
+
+/*
+ * Page headers
+ *
+ * Jumbotron-esque headers at the top of every page that's not the homepage.
+ */
+
+/* Page headers */
+.bs-docs-header {
+  margin-bottom: 40px;
+  font-size: 20px;
+}
+.bs-docs-header h1 {
+  margin-top: 0;
+  color: #fff;
+}
+.bs-docs-header p {
+  margin-bottom: 0;
+  font-weight: 300;
+  line-height: 1.4;
+}
+.bs-docs-header .container {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .bs-docs-header {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    font-size: 24px;
+    text-align: left;
+  }
+  .bs-docs-header h1 {
+    font-size: 60px;
+    line-height: 1;
+  }
+}
+
+@media (min-width: 992px) {
+  .bs-docs-header h1,
+  .bs-docs-header p {
+    margin-right: 380px;
+  }
+}
+
+/*
+ * Homepage featurettes
+ *
+ * Reasons to use Bootstrap, entries from the Expo, and more.
+ */
+
+.bs-docs-featurette {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+  text-align: center;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.bs-docs-featurette + .bs-docs-footer {
+  margin-top: 0;
+  border-top: 0;
+}
+
+.bs-docs-featurette-title {
+  margin-bottom: 5px;
+  font-size: 30px;
+  font-weight: normal;
+  color: #333;
+}
+
+.half-rule {
+  width: 100px;
+  margin: 40px auto;
+}
+
+.bs-docs-featurette h3 {
+  margin-bottom: 5px;
+  font-weight: normal;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .bs-docs-featurette {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .bs-docs-featurette-title {
+    font-size: 40px;
+  }
+  .bs-docs-featurette .lead {
+    max-width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

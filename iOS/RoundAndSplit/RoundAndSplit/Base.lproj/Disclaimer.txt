@@ -1,0 +1,7 @@
+The "Split and Request/Pay" feature uses Square® Cash to request money from or pay to another person.
+
+For more information about Square® Cash, visit https://square.com/cash
+
+Square® Cash is a service provided by Square, Inc. and may not be available in your region or country.
+
+Neither the developer nor the app is affiliated with Square.

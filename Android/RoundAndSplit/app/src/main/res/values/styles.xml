@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="InfoTextDescription">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/info_text_description_font_size</item>
+        <item name="android:textColor">@color/text_black</item>
+    </style>
+
+    <style name="InfoTextLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:textSize">@dimen/info_text_label_font_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_black</item>
+
+    </style>
+
+    <style name="InfoTextDescriptionSmall" parent="InfoTextDescription">
+        <item name="android:textSize">@dimen/effective_rate_font_size</item>
+    </style>
+
+
+    <style name="InfoTextLabelSmall" parent="InfoTextLabel">
+        <item name="android:textSize">@dimen/effective_rate_font_size</item>
+    </style>
+
+</resources>

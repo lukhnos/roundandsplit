@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/amount_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/charged_amount_label_margin_top"
+        android:layout_marginBottom="@dimen/charged_amount_label_margin_bottom"
+        android:layout_marginRight="@dimen/info_display_horizontal_margin"
+        android:layout_marginEnd="@dimen/info_display_horizontal_margin"
+        android:layout_gravity="end"
+        android:gravity="center_vertical"
+        android:text="@string/default_amount"
+        android:textSize="@dimen/charged_amount_label_font_size" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/divider_line_width"
+        android:background="@color/top_divider_line" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/info_display_background_color">
+
+        <org.lukhnos.roundandsplit.ButtonStrip
+            android:id="@+id/rate_button_strip"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/button_strip_height"
+            android:layout_marginLeft="@dimen/button_strip_margin_start"
+            android:layout_marginStart="@dimen/button_strip_margin_start"
+            android:layout_marginRight="@dimen/button_strip_margin_end"
+            android:layout_marginEnd="@dimen/button_strip_margin_end"
+            android:layout_marginTop="@dimen/button_strip_vertical_margin"
+            android:layout_marginBottom="@dimen/button_strip_vertical_margin" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/info_display_horizontal_margin"
+            android:paddingRight="@dimen/info_display_horizontal_margin">
+
+            <RelativeLayout
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/info_section_vertical_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/InfoTextDescription"
+                    android:text="@string/info_text_tips"/>
+
+                <TextView
+                    style="@style/InfoTextLabel"
+                    android:id="@+id/tip_label"
+                    android:text="@string/default_amount" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/info_section_vertical_margin"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/InfoTextDescription"
+                    android:text="@string/info_text_total"/>
+
+                <TextView
+                    style="@style/InfoTextLabel"
+                    android:id="@+id/total_label"
+                    android:text="@string/default_amount"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/info_section_vertical_margin"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/InfoTextDescriptionSmall"
+                    android:text="@string/info_text_effective_rate"/>
+
+                <TextView
+                    style="@style/InfoTextLabelSmall"
+                    android:id="@+id/effective_rate_label"
+                    android:text="@string/info_text_non_percentage"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/split_button"
+            android:background="@drawable/bordered_button_backgrounds"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/split_button_height"
+            android:paddingRight="@dimen/split_button_horizontal_padding"
+            android:paddingLeft="@dimen/split_button_horizontal_padding"
+            android:textSize="@dimen/split_button_font_size"
+            android:text="@string/split_and_pay_request_button_title"
+            android:textColor="@color/bordered_button_text_color"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/split_button_margin_top"
+            android:layout_marginBottom="@dimen/split_button_margin_button" />
+
+    </LinearLayout>
+</LinearLayout>
