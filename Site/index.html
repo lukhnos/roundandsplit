@@ -66,8 +66,8 @@
 
 
             <ul class="image-links">
-              <li><a href="#" id="show-ios" class="hidden">Show iOS Version</a></li>
-              <li><a href="#" id="show-android">Show Android Version</a></li>
+              <li><a href="#!" id="show-ios" class="hidden">Show iOS Version</a></li>
+              <li><a href="#!" id="show-android">Show Android Version</a></li>
             </ul>
           </div> <!-- /.col-md-6 -->
 
@@ -91,7 +91,7 @@
           </div>
           <div class="col-sm-4">
             <h3>Easy to Use, No Fluff</h3>
-            <p>Enter the billed amount, choose from the most common tipping rates, pay the total (or copy the numbers to the receipt), and you are done.</p>
+            <p>Enter the billed amount, choose from the most common tipping rates, pay the total (or copy the numbers to the receipt), and that's it!</p>
           </div>
         </div>
         <hr class="half-rule">
@@ -149,6 +149,9 @@
           $('#screenshot-android').removeClass('hidden');
         });
 
+        if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+          $('#show-android').click();
+        }
       });
     </script>
   </body>
