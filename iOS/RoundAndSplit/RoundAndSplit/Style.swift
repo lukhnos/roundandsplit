@@ -70,13 +70,13 @@ struct Style {
     static let moreInfoButtonHighlightedColor = Style.hexColor(0xb0b0b0)
 
     static let buttonTitleColorNormal = Style.hexColor(0x59ac53)
-    static let buttonTitleColorHighlighted = Style.hexColor(0x86ca7f)
+    static let buttonTitleColorHighlighted = Style.hexColor(0x9dd498)
     static let buttonTitleColorDisabled = Style.hexColor(0xb0b0b0)
 
     static let dividingLineColor = Style.hexColor(0xeeeeee)
     static let effectiveRateLabelColor = textColor
 
-    static let keypadHighlightColor = buttonTitleColorHighlighted
+    static let keypadHighlightColor = Style.hexColor(0x86ca7f)
 
     static let infoButtonFonts = Style.fontSizes(Style.tabularFigureFont(UIFont(name: "FiraSans-Medium", size: 16)), 18, 22)
     static let billedAmountFonts = Style.fontSizes(Style.regularFont(40), 46, 52)
