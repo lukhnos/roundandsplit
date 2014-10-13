@@ -26,7 +26,7 @@ import UIKit
     func didTapButtonInStripView(strip: ButtonStripView, index: Int)
 }
 
-class ButtonStripView : UIView {
+class ButtonStripView : ExtendedHitAreaView {
     weak var delegate : ButtonStripViewDelegate? = nil
 
     var underlineColor : UIColor = UIColor.blackColor()
@@ -38,16 +38,17 @@ class ButtonStripView : UIView {
     let underlineThickness : CGFloat = 2.0
     let buttonHorizontalPadding : CGFloat = 10.0
 
-    private var buttons = [UIButton]()
+    private var buttons = [AccessibileButton]()
     private var activeButton : UIButton?
     private var underlineView : UIView
 
-    required init(coder aDecoder: NSCoder)  {
+    required override init(coder aDecoder: NSCoder)  {
         underlineView = UIView(frame: CGRectZero)
         super.init(coder: aDecoder)
 
         underlineView.backgroundColor = underlineColor
         underlineView.hidden = true
+        underlineView.userInteractionEnabled = false
         addSubview(underlineView)
     }
 
@@ -76,6 +77,10 @@ class ButtonStripView : UIView {
             space = (bounds.size.width - totalButtonWidth) / (CGFloat)(buttons.count - 1)
         }
 
+        var hitAreaPadding = extendedHitAreaEdgeInset
+        var hitAreaInnerPadding = -max(0, space / 2)
+
+
         var nextX : CGFloat = 0.0
         for var i = 0, c = buttons.count; i < c; i++ {
             var button = buttons[i]
@@ -83,6 +88,10 @@ class ButtonStripView : UIView {
             var origin = CGPoint(x: nextX, y: (boundsSize.height - (buttonSize.height + underlineThickness)) / 2.0)
             button.frame = CGRect(origin: origin, size: buttonSize)
             nextX += buttonSize.width + space
+
+            hitAreaPadding.left = (i == 0 ? extendedHitAreaEdgeInset.left : hitAreaInnerPadding)
+            hitAreaPadding.right = (i + 1 == c ? extendedHitAreaEdgeInset.right : hitAreaInnerPadding)
+            button.extendedHitAreaEdgeInset = hitAreaPadding
         }
         updateButtons()
         updateUnderline()
@@ -96,7 +105,7 @@ class ButtonStripView : UIView {
         buttons.removeAll(keepCapacity: true)
 
         for label in labels {
-            var button = AccessibileButton.buttonWithType(UIButtonType.Custom) as UIButton
+            var button = AccessibileButton.buttonWithType(UIButtonType.Custom) as AccessibileButton
             button.setTitle(label, forState: UIControlState.Normal)
             
             if let font = buttonTitleFont {
@@ -138,7 +147,7 @@ class ButtonStripView : UIView {
         updateUnderline()
     }
 
-    func buttonAction(button : UIButton) {
+    func buttonAction(button : AccessibileButton) {
         activeButton = button
         let index = find(buttons, button)
 
@@ -181,7 +190,7 @@ class ButtonStripView : UIView {
         }
     }
 
-    class AccessibileButton : UIButton {
+    class AccessibileButton : ExtendedHitAreaButton {
         func accessibilityTraits() -> UIAccessibilityTraits {
             var trait = UIAccessibilityTraitButton
             if !self.enabled {

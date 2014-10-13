@@ -30,6 +30,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     @IBOutlet var infoButton : RoundedButton!
     @IBOutlet var billedAmountLabel : UILabel!
     @IBOutlet var topSeparatorView : UIView!
+    @IBOutlet var infoAreaInnerView : ExtendedHitAreaView!
     @IBOutlet var infoDisplayView : UIView!
     @IBOutlet var bottomSeparatorView : UIView!
     @IBOutlet var numericKeypadView : NumericKeypadView!
@@ -41,9 +42,13 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     @IBOutlet var totalAmountLabel : UILabel!
     @IBOutlet var effectiveRateDescriptionLabel : UILabel!
     @IBOutlet var effectiveRateLabel : UILabel!
-    @IBOutlet var splitAndPayButton : UIButton!
+    @IBOutlet var splitAndPayButton : SquareBorderButton!
 
     @IBOutlet var headerViewHeight : NSLayoutConstraint!
+    @IBOutlet var infoAreaInnerViewTopSpacing : NSLayoutConstraint!
+    @IBOutlet var infoAreaInnerViewBottomSpacing : NSLayoutConstraint!
+    @IBOutlet var infoAreaInnerViewLeadingSpace : NSLayoutConstraint!
+    @IBOutlet var infoAreaInnerViewTrailingSpace : NSLayoutConstraint!
     @IBOutlet var buttonStripHeight : NSLayoutConstraint!
     @IBOutlet var splitButtonHeight : NSLayoutConstraint!
     @IBOutlet var splitButtonBottomSpacing : NSLayoutConstraint!
@@ -53,7 +58,6 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     @IBOutlet var infoTextTopSpacing : NSLayoutConstraint!
     @IBOutlet var infoTextBottomSpacing : NSLayoutConstraint!
     @IBOutlet var effectiveRateLabelTrailingSpace : NSLayoutConstraint!
-
 
     var actionSheet : UIActionSheet!
 
@@ -110,6 +114,18 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
             splitButtonBottomSpacing.constant += 6
             screenSize = .ExtraLarge
         }
+
+        // Expand the hit area of the inner info view so as to expand the button strip's hit area.
+        var expandedHitAreaEdgeInset = UIEdgeInsetsMake(-infoAreaInnerViewTopSpacing.constant, -infoAreaInnerViewLeadingSpace.constant, -infoAreaInnerViewBottomSpacing.constant/2, -infoAreaInnerViewTrailingSpace.constant)
+        infoAreaInnerView.extendedHitAreaEdgeInset = expandedHitAreaEdgeInset
+
+        // Now expand the button strip view's hit area.
+        expandedHitAreaEdgeInset.bottom = -infoTextTopSpacing.constant
+        buttonStripView.extendedHitAreaEdgeInset = expandedHitAreaEdgeInset
+
+        // And the Split button's.
+        var splitButtonHitAreaPadding = -infoAreaInnerViewBottomSpacing.constant/2
+        splitAndPayButton.extendedHitAreaEdgeInset = UIEdgeInsetsMake(splitButtonHitAreaPadding, 0, splitButtonHitAreaPadding, 0)
 
         infoButton.titleLabel?.font = Style.infoButtonFonts[screenSize]!
 
@@ -177,6 +193,14 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         numericKeypadView.delegate = self
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("currentLocaleDidChange:"), name: NSCurrentLocaleDidChangeNotification, object: nil)
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        // Expand the hit area of the More Info button.
+        var hitAreaPadding = -((headerViewHeight.constant - infoButton.frame.height) / 2)
+        infoButton.extendedHitAreaEdgeInset = UIEdgeInsetsMake(hitAreaPadding, hitAreaPadding, hitAreaPadding * 0.5, hitAreaPadding)
     }
 
     override func viewWillAppear(animated: Bool) {

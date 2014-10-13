@@ -23,7 +23,7 @@
 import UIKit
 
 // A button base class with custom highlighting/selecting behavior.
-class CustomButton : UIButton {
+class CustomButton : ExtendedHitAreaButton {
     override func drawRect(rect: CGRect)  {
         customDraw(rect)
         super.drawRect(rect)

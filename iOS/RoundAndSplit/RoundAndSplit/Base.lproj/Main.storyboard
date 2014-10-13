@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ol-q0-YRT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ol-q0-YRT">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
@@ -60,7 +60,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gNu-cT-csw">
                                 <rect key="frame" x="0.0" y="84" width="600" height="225"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BkF-6d-ZFK">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BkF-6d-ZFK" customClass="ExtendedHitAreaView" customModule="RoundAndSplit" customModuleProvider="target">
                                         <rect key="frame" x="40" y="14" width="520" height="191"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ejB-Bn-FEd" customClass="ButtonStripView" customModule="RoundAndSplit" customModuleProvider="target">
@@ -191,6 +191,11 @@
                         <outlet property="effectiveRateLabelTrailingSpace" destination="8ae-6w-3CM" id="lGJ-dX-1XJ"/>
                         <outlet property="headerViewHeight" destination="0iF-Uk-rDc" id="kgc-Gd-gSq"/>
                         <outlet property="infoAreaHeight" destination="r4S-2q-GhZ" id="3Et-Mk-ANO"/>
+                        <outlet property="infoAreaInnerView" destination="BkF-6d-ZFK" id="OXN-C3-F3P"/>
+                        <outlet property="infoAreaInnerViewBottomSpacing" destination="jOh-BU-Zcq" id="CiI-ei-58F"/>
+                        <outlet property="infoAreaInnerViewLeadingSpace" destination="LIs-ta-oy2" id="D7D-ks-LCy"/>
+                        <outlet property="infoAreaInnerViewTopSpacing" destination="THy-b1-9p9" id="evu-8U-SWB"/>
+                        <outlet property="infoAreaInnerViewTrailingSpace" destination="kkS-ZH-gbN" id="jpz-Og-w1e"/>
                         <outlet property="infoButton" destination="H5T-xe-He4" id="bKk-aV-naO"/>
                         <outlet property="infoButtonHeight" destination="C63-dK-lEk" id="xew-UO-vCW"/>
                         <outlet property="infoButtonWidth" destination="pwJ-7E-ALr" id="chl-OW-FOS"/>
