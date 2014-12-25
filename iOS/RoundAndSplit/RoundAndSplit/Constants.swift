@@ -24,7 +24,7 @@ import Foundation
 
 struct Constants {
     static let CFBundleShortVersionString = "CFBundleShortVersionString"
-    static let WebSiteURL = NSURL(string: "https://roundandsplit.lukhnos.org")
+    static let WebSiteURL = NSURL(string: "https://roundandsplit.lukhnos.org")!
     static let ContactEmail = "contact@roundandsplit.lukhnos.org"
     static let SquareCash = "cash@square.com"
     static let SquareRequest = "request@square.com"

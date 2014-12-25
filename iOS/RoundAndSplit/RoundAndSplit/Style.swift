@@ -47,11 +47,11 @@ struct Style {
     }
 
     static func regularFont(size: CGFloat) -> UIFont {
-        return Style.tabularFigureFont(UIFont(name: "FiraSans-Light", size: size))
+        return Style.tabularFigureFont(UIFont(name: "FiraSans-Light", size: size)!)
     }
 
     static func boldFont(size: CGFloat) -> UIFont {
-        return Style.tabularFigureFont(UIFont(name: "FiraSans-Regular", size: size))
+        return Style.tabularFigureFont(UIFont(name: "FiraSans-Regular", size: size)!)
     }
 
     static func fontSizes(base: UIFont, _ largeSize: CGFloat, _ extraLargeSize: CGFloat) -> FontSizes {
@@ -78,7 +78,7 @@ struct Style {
 
     static let keypadHighlightColor = Style.hexColor(0x86ca7f)
 
-    static let infoButtonFonts = Style.fontSizes(Style.tabularFigureFont(UIFont(name: "FiraSans-Medium", size: 16)), 18, 22)
+    static let infoButtonFonts = Style.fontSizes(Style.tabularFigureFont(UIFont(name: "FiraSans-Medium", size: 16)!), 18, 22)
     static let billedAmountFonts = Style.fontSizes(Style.regularFont(40), 46, 52)
     static let buttonStripFonts = Style.fontSizes(Style.regularFont(20), 24, 26)
     static let descriptionFonts = Style.fontSizes(Style.regularFont(22), 26, 28)

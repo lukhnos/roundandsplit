@@ -58,7 +58,7 @@ struct Decimal : Equatable, Comparable {
     }
 
     func string(formatter: NSNumberFormatter) -> String {
-        return formatter.stringFromNumber(number)
+        return formatter.stringFromNumber(number)!
     }
 
     class Rounder : NSDecimalNumberBehaviors {

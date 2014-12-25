@@ -35,7 +35,7 @@ struct Settings {
         case Tip20Percent = "0.20"
 
         func toDecimal() -> Decimal {
-            return Decimal(self.toRaw())
+            return Decimal(self.rawValue)
         }
     }
 
@@ -44,14 +44,14 @@ struct Settings {
     static var tippingRate : TippingRate {
     get {
         if let rateStr = defaults.stringForKey(TippingRateKey) {
-            if let rate = TippingRate.fromRaw(rateStr) {
+            if let rate = TippingRate(rawValue: rateStr) {
                 return rate
             }
         }
         return defaultTippingRate
     }
     set {
-        defaults.setValue(newValue.toRaw(), forKey: TippingRateKey)
+        defaults.setValue(newValue.rawValue, forKey: TippingRateKey)
     }
     }
 
