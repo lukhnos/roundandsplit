@@ -1,0 +1,4 @@
+language: objective-c
+xcode_project: iOS/RoundAndSplit/RoundAndSplit.xcodeproj
+xcode_scheme: RoundAndSplit
+xcode_sdk: iphonesimulator8.1
