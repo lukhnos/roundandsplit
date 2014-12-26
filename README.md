@@ -1,5 +1,7 @@
 # Round & Split
 
+[![Build Status](https://travis-ci.org/lukhnos/roundandsplit.svg?branch=master)](https://travis-ci.org/lukhnos/roundandsplit)
+
 I needed a tip calculator, so I wrote one.
 
 I always round my tips, and when I dine out with a friend, I use
