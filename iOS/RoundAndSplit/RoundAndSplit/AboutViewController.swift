@@ -154,15 +154,18 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
                 }
             }
 
-            cell!.textLabel!.text = aboutSectionTitles[indexPath.row]
+            var textLabel : UILabel? = cell!.textLabel
+            textLabel!.text = aboutSectionTitles[indexPath.row]
         } else if indexPath.section == 1 {
             cell = tableView.dequeueReusableCellWithIdentifier(linkCellId) as? UITableViewCell
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: linkCellId)
-                cell!.textLabel!.textColor = tableView.tintColor
+                var textLabel : UILabel? = cell!.textLabel
+                textLabel!.textColor = tableView.tintColor
             }
 
-            cell!.textLabel!.text = actionableSectionTitles[indexPath.row]
+            var textLabel : UILabel? = cell!.textLabel
+            textLabel!.text = actionableSectionTitles[indexPath.row]
         } else {
             cell = tableView.dequeueReusableCellWithIdentifier(settingCellId) as? UITableViewCell
             if cell == nil {
@@ -177,7 +180,8 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
             switchButton.on = Settings.boolForKey(key)
             switchButton.tag = indexPath.section - 2
 
-            cell!.textLabel!.text = text
+            var textLabel : UILabel? = cell!.textLabel
+            textLabel!.text = text
         }
 
         return cell!
