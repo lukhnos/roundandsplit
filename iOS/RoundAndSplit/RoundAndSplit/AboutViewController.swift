@@ -98,7 +98,7 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
                 file = "Disclaimer"
             }
             var url = NSBundle.mainBundle().URLForResource(file, withExtension: "txt")
-            var body = NSString(contentsOfURL: url!, encoding: NSUTF8StringEncoding, error: nil)
+            var body = String(contentsOfURL: url!, encoding: NSUTF8StringEncoding, error: nil)
             var title = aboutSectionTitles[indexPath.row]
 
             var textView = UITextView()
@@ -126,7 +126,7 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
 
                 let ver = Utilities.bundleShortVersion()
                 let addr = Constants.ContactEmail
-                let subject = NSString(format: Utilities.L("Inquiry - Round and Split %@"), ver)
+                let subject = String(format: Utilities.L("Inquiry - Round and Split %@"), ver)
                 let controller = MFMailComposeViewController()
                 controller.mailComposeDelegate = self
                 controller.setSubject(subject)
@@ -175,7 +175,7 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
                 cell!.accessoryView = switchButton
             }
 
-            var switchButton = cell!.accessoryView as UISwitch
+            var switchButton = cell!.accessoryView as! UISwitch
             var (key, text, _) = configSections[indexPath.section - 2]
             switchButton.on = Settings.boolForKey(key)
             switchButton.tag = indexPath.section - 2

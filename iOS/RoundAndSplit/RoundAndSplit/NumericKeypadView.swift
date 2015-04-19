@@ -64,7 +64,7 @@ class NumericKeypadView : UIView {
             // Add zero-width space (U+200B) to work around the problem on
             // iOS 7 that, if there's only one number character, tabular
             // figure won't be used.
-            var keyStr : NSString
+            var keyStr : String
             switch i {
             case 9:
                 keyStr = "\u{200b}CLEAR\u{200b}"
@@ -73,7 +73,7 @@ class NumericKeypadView : UIView {
             case 11:
                 keyStr = "\u{200b}⌫\u{200b}"
             default:
-                keyStr = NSString(format: "\u{200b}%d\u{200b}", i + 1)
+                keyStr = String(format: "\u{200b}%d\u{200b}", i + 1)
             }
 
             label.text = keyStr
@@ -153,8 +153,8 @@ class NumericKeypadView : UIView {
         return nil
     }
 
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        var touch = touches.anyObject() as UITouch
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var touch = touches.first as! UITouch
         var loc = touch.locationInView(self)
         var endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
@@ -171,8 +171,8 @@ class NumericKeypadView : UIView {
         }
     }
 
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        var touch = touches.anyObject() as UITouch
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var touch = touches.first as! UITouch
         var loc = touch.locationInView(self)
         var endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
@@ -189,7 +189,7 @@ class NumericKeypadView : UIView {
         }
     }
 
-    override func touchesCancelled(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent) {
         if let oldLabel = getSelectedLabel(selectedKey) {
             oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
             oldLabel.textColor = keyPadTextColor
@@ -198,8 +198,8 @@ class NumericKeypadView : UIView {
         selectedKey = -1
     }
 
-    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        var touch = touches.anyObject() as UITouch
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var touch = touches.first as! UITouch
         var loc = touch.locationInView(self)
         var endSelectedKey = pointToKeyIndex(loc)
 

@@ -28,7 +28,7 @@ struct Utilities {
     }
 
     static func bundleShortVersion() -> String {
-        return NSBundle.mainBundle().objectForInfoDictionaryKey(Constants.CFBundleShortVersionString) as String!
+        return NSBundle.mainBundle().objectForInfoDictionaryKey(Constants.CFBundleShortVersionString) as! String
     }
 
     static func showEmailDisabledAlert() {

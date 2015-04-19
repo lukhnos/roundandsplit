@@ -42,7 +42,7 @@ class ButtonStripView : ExtendedHitAreaView {
     private var activeButton : UIButton?
     private var underlineView : UIView
 
-    required override init(coder aDecoder: NSCoder)  {
+    required init(coder aDecoder: NSCoder)  {
         underlineView = UIView(frame: CGRectZero)
         super.init(coder: aDecoder)
 
@@ -105,7 +105,7 @@ class ButtonStripView : ExtendedHitAreaView {
         buttons.removeAll(keepCapacity: true)
 
         for label in labels {
-            var button = AccessibileButton.buttonWithType(UIButtonType.Custom) as AccessibileButton
+            var button = AccessibileButton.buttonWithType(UIButtonType.Custom) as! AccessibileButton
             button.setTitle(label, forState: UIControlState.Normal)
             
             if let font = buttonTitleFont {
@@ -191,12 +191,17 @@ class ButtonStripView : ExtendedHitAreaView {
     }
 
     class AccessibileButton : ExtendedHitAreaButton {
-        func accessibilityTraits() -> UIAccessibilityTraits {
-            var trait = UIAccessibilityTraitButton
-            if !self.enabled {
-                trait |= UIAccessibilityTraitSelected
+        override var accessibilityTraits: UIAccessibilityTraits {
+            get {
+                var trait = UIAccessibilityTraitButton
+                if !self.enabled {
+                    trait |= UIAccessibilityTraitSelected
+                }
+                return trait
             }
-            return trait
+            set {
+                super.accessibilityTraits = newValue
+            }
         }
     }
 }

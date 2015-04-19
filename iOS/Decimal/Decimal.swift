@@ -70,15 +70,15 @@ struct Decimal : Equatable, Comparable {
             roundingScale = Int16(s)
         }
 
-        func roundingMode() -> NSRoundingMode {
+        @objc func roundingMode() -> NSRoundingMode {
             return mode
         }
 
-        func scale() -> Int16 {
+        @objc func scale() -> Int16 {
             return roundingScale
         }
 
-        func exceptionDuringOperation(operation: Selector, error: NSCalculationError, leftOperand: NSDecimalNumber, rightOperand: NSDecimalNumber) -> NSDecimalNumber?
+        @objc func exceptionDuringOperation(operation: Selector, error: NSCalculationError, leftOperand: NSDecimalNumber, rightOperand: NSDecimalNumber) -> NSDecimalNumber?
         {
             return NSDecimalNumber.notANumber()
         }

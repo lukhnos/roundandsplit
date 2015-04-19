@@ -61,7 +61,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
     var actionSheet : UIActionSheet!
 
-    var keypadString : NSString = ""
+    var keypadString = ""
     var billedAmount : Decimal = Decimal(0)
     var currentRate : Decimal = Settings.tippingRate.toDecimal()
     var currentTip : Tip = Tip()
@@ -227,7 +227,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
 
     func update() {
-        if (keypadString.length == 0) {
+        if keypadString.isEmpty {
             billedAmount = Decimal(0)
         } else {
             billedAmount = Decimal(keypadString) / Decimal("100")
@@ -242,9 +242,9 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         billedAmountLabel.text = billedAmount.string(currencyFormatter)
         currentTip = bestTip(billedAmount, currentRate)
         tipLabel.text = currentTip.tip.string(currencyFormatter)
-        tipLabel.accessibilityLabel = NSString(format: Utilities.L("Tips: %@"), tipLabel.text!)
+        tipLabel.accessibilityLabel = String(format: Utilities.L("Tips: %@"), tipLabel.text!)
         totalAmountLabel.text = currentTip.total.string(currencyFormatter)
-        totalAmountLabel.accessibilityLabel = NSString(format: Utilities.L("Total: %@"), totalAmountLabel.text!)
+        totalAmountLabel.accessibilityLabel = String(format: Utilities.L("Total: %@"), totalAmountLabel.text!)
 
         var rate = currentTip.effectiveRate
         if rate == Decimal(0) {
@@ -253,14 +253,14 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
             effectiveRateLabelTrailingSpace.constant = effectiveRateLabelTrailingSpaceConstant + 2.5
         } else {
             effectiveRateLabel.text = currentTip.effectiveRate.string(percentageFormatter)
-            effectiveRateLabel.accessibilityLabel = NSString(format: Utilities.L("Effective rate: %@"), effectiveRateLabel.text!)
+            effectiveRateLabel.accessibilityLabel = String(format: Utilities.L("Effective rate: %@"), effectiveRateLabel.text!)
             effectiveRateLabelTrailingSpace.constant = effectiveRateLabelTrailingSpaceConstant
         }
     }
 
     func backspaceTapped() {
-        if (keypadString.length > 0) {
-            keypadString = keypadString.substringToIndex(keypadString.length - 1)
+        if !keypadString.isEmpty {
+            keypadString = keypadString.substringToIndex(keypadString.endIndex.predecessor())
             update()
         }
     }
@@ -271,12 +271,12 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
 
     func numberTapped(number: Int) {
-        if number == 0 && keypadString.length == 0 {
+        if number == 0 && keypadString.isEmpty {
             return
         }
 
-        if keypadString.length < 6 {
-            keypadString = keypadString.stringByAppendingString(NSString(format: "%d", number))
+        if count(keypadString) < 6 {
+            keypadString = keypadString + String(format: "%d", number)
             update()
         }
     }
@@ -293,7 +293,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         actionSheet.showInView(self.view)
     }
 
-    func actionSheet(actionSheet: UIActionSheet!, clickedButtonAtIndex buttonIndex: Int) {
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
         if (buttonIndex < 2) {
             if !MFMailComposeViewController.canSendMail() {
                 Utilities.showEmailDisabledAlert()
