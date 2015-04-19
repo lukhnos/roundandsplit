@@ -80,8 +80,8 @@ class RoundedButton : CustomButton {
     var normalFillColor = UIColor.darkTextColor()
     var highlightedFillColor = UIColor.blueColor()
     var disabledFillColor = UIColor.lightGrayColor()
-    var offsetX : CGFloat = -1
-    var offsetY : CGFloat = -1
+    var offsetX : CGFloat = 0
+    var offsetY : CGFloat = 0
 
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
