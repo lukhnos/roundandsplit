@@ -2,5 +2,5 @@ language: objective-c
 before_script: ./setup.sh
 xcode_project: iOS/RoundAndSplit/RoundAndSplit.xcodeproj
 xcode_scheme: RoundAndSplit
-xcode_sdk: iphonesimulator8.1
+xcode_sdk: iphonesimulator8.3
 osx_image: beta-xcode6.3
