@@ -3,3 +3,4 @@ before_script: ./setup.sh
 xcode_project: iOS/RoundAndSplit/RoundAndSplit.xcodeproj
 xcode_scheme: RoundAndSplit
 xcode_sdk: iphonesimulator8.1
+osx_image: beta-xcode6.3
