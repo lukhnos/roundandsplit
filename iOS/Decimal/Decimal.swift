@@ -78,7 +78,7 @@ struct Decimal : Equatable, Comparable {
             return roundingScale
         }
 
-        @objc func exceptionDuringOperation(operation: Selector, error: NSCalculationError, leftOperand: NSDecimalNumber, rightOperand: NSDecimalNumber) -> NSDecimalNumber?
+        @objc func exceptionDuringOperation(operation: Selector, error: NSCalculationError, leftOperand: NSDecimalNumber, rightOperand: NSDecimalNumber?) -> NSDecimalNumber?
         {
             return NSDecimalNumber.notANumber()
         }

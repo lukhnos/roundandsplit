@@ -23,7 +23,7 @@
 import UIKit
 import MessageUI
 
-class AboutViewController : UITableViewController, UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate {
+class AboutViewController : UITableViewController, MFMailComposeViewControllerDelegate {
     let detailCellId = "DetailCell"
     let linkCellId = "LinkCell"
     let settingCellId = "SettingCell"
@@ -68,7 +68,7 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
 
     override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section >= 2 {
-            var (_, _, text) = configSections[section - 2]
+            let (_, _, text) = configSections[section - 2]
             return text
         }
 
@@ -97,11 +97,16 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
             } else {
                 file = "Disclaimer"
             }
-            var url = NSBundle.mainBundle().URLForResource(file, withExtension: "txt")
-            var body = String(contentsOfURL: url!, encoding: NSUTF8StringEncoding, error: nil)
-            var title = aboutSectionTitles[indexPath.row]
+            let url = NSBundle.mainBundle().URLForResource(file, withExtension: "txt")
+            var body: String?
+            do {
+                body = try String(contentsOfURL: url!, encoding: NSUTF8StringEncoding)
+            } catch _ {
+                body = nil
+            }
+            let title = aboutSectionTitles[indexPath.row]
 
-            var textView = UITextView()
+            let textView = UITextView()
             textView.textContainerInset = UIEdgeInsetsMake(16.0, 10.0, 16.0, 10.0)
             textView.text = body
             textView.selectable = false
@@ -109,7 +114,7 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
             textView.font = UIFont.systemFontOfSize(14)
             textView.textColor = UIColor(red: 109.0/255.0, green: 109.0/255.0, blue: 114.0/255.0, alpha: 1.0)
             textView.backgroundColor = tableView.backgroundColor
-            var controller = UIViewController()
+            let controller = UIViewController()
             controller.view = textView
             controller.title = title
             navigationController!.pushViewController(controller, animated: true)
@@ -141,59 +146,59 @@ class AboutViewController : UITableViewController, UITableViewDataSource, UITabl
 
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCellWithIdentifier(versionCellId) as? UITableViewCell
+                cell = tableView.dequeueReusableCellWithIdentifier(versionCellId)
                 if cell == nil {
                     cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: versionCellId)
                 }
                 cell!.detailTextLabel!.text = Utilities.bundleShortVersion()
             } else {
-                cell = tableView.dequeueReusableCellWithIdentifier(detailCellId) as? UITableViewCell
+                cell = tableView.dequeueReusableCellWithIdentifier(detailCellId)
                 if cell == nil {
                     cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: detailCellId)
                     cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
                 }
             }
 
-            var textLabel : UILabel? = cell!.textLabel
+            let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = aboutSectionTitles[indexPath.row]
         } else if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier(linkCellId) as? UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(linkCellId)
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: linkCellId)
-                var textLabel : UILabel? = cell!.textLabel
+                let textLabel : UILabel? = cell!.textLabel
                 textLabel!.textColor = tableView.tintColor
             }
 
-            var textLabel : UILabel? = cell!.textLabel
+            let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = actionableSectionTitles[indexPath.row]
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier(settingCellId) as? UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier(settingCellId)
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: settingCellId)
-                var switchButton = UISwitch()
+                let switchButton = UISwitch()
                 switchButton.addTarget(self, action: Selector("switchButtonValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
                 cell!.accessoryView = switchButton
             }
 
-            var switchButton = cell!.accessoryView as! UISwitch
-            var (key, text, _) = configSections[indexPath.section - 2]
+            let switchButton = cell!.accessoryView as! UISwitch
+            let (key, text, _) = configSections[indexPath.section - 2]
             switchButton.on = Settings.boolForKey(key)
             switchButton.tag = indexPath.section - 2
 
-            var textLabel : UILabel? = cell!.textLabel
+            let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = text
         }
 
         return cell!
     }
 
-    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: {})
     }
 
     func switchButtonValueChanged(switchButton: UISwitch!) {
-        var index = switchButton.tag
-        var (key, text, _) = configSections[index]
+        let index = switchButton.tag
+        let (key, _, _) = configSections[index]
         Settings.setBool(!Settings.boolForKey(key), forKey: key)
     }
 

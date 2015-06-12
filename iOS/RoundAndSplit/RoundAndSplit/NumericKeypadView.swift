@@ -95,7 +95,7 @@ class NumericKeypadView : UIView {
 
     func setLabelFonts(numberFont: UIFont, clearFont: UIFont) {
         for i in 0..<12 {
-            var label = labels[i]
+            let label = labels[i]
 
             switch i {
             case 9:
@@ -121,7 +121,7 @@ class NumericKeypadView : UIView {
 
     override func layoutSubviews()  {
         for i in 0..<12 {
-            var frame = keyRect(i)
+            let frame = keyRect(i)
             labels[i].frame = frame
         }
         gridView.frame = bounds
@@ -131,18 +131,18 @@ class NumericKeypadView : UIView {
         if (!CGRectContainsPoint(self.bounds, point)) {
             return -1
         }
-        var keyW = self.bounds.width / 3.0
-        var keyH = self.bounds.height / 4.0
-        var xIndex = Int(point.x / keyW)
-        var yIndex = Int(point.y / keyH)
+        let keyW = self.bounds.width / 3.0
+        let keyH = self.bounds.height / 4.0
+        let xIndex = Int(point.x / keyW)
+        let yIndex = Int(point.y / keyH)
         return yIndex * 3 + xIndex
     }
 
     private func keyRect(index: Int) -> CGRect {
-        var keyW = round(self.bounds.width / 3.0)
-        var keyH = round(self.bounds.height / 4.0)
-        var origin = CGPoint(x: (CGFloat(index % 3) * keyW), y: (CGFloat(index / 3) * keyH))
-        var size = CGSize(width: keyW, height: keyH)
+        let keyW = round(self.bounds.width / 3.0)
+        let keyH = round(self.bounds.height / 4.0)
+        let origin = CGPoint(x: (CGFloat(index % 3) * keyW), y: (CGFloat(index / 3) * keyH))
+        let size = CGSize(width: keyW, height: keyH)
         return CGRect(origin: origin, size: size)
     }
 
@@ -153,10 +153,10 @@ class NumericKeypadView : UIView {
         return nil
     }
 
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        var touch = touches.first as! UITouch
-        var loc = touch.locationInView(self)
-        var endSelectedKey = pointToKeyIndex(loc)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first
+        let loc = touch!.locationInView(self)
+        let endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
             if let oldLabel = getSelectedLabel(selectedKey) {
                 oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
@@ -171,10 +171,10 @@ class NumericKeypadView : UIView {
         }
     }
 
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
-        var touch = touches.first as! UITouch
-        var loc = touch.locationInView(self)
-        var endSelectedKey = pointToKeyIndex(loc)
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first
+        let loc = touch!.locationInView(self)
+        let endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
             if let oldLabel = getSelectedLabel(selectedKey) {
                 oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
@@ -189,7 +189,7 @@ class NumericKeypadView : UIView {
         }
     }
 
-    override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         if let oldLabel = getSelectedLabel(selectedKey) {
             oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
             oldLabel.textColor = keyPadTextColor
@@ -198,10 +198,10 @@ class NumericKeypadView : UIView {
         selectedKey = -1
     }
 
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        var touch = touches.first as! UITouch
-        var loc = touch.locationInView(self)
-        var endSelectedKey = pointToKeyIndex(loc)
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first
+        let loc = touch!.locationInView(self)
+        let endSelectedKey = pointToKeyIndex(loc)
 
         if endSelectedKey != selectedKey {
             if let oldLabel = getSelectedLabel(selectedKey) {
@@ -236,10 +236,10 @@ class NumericKeypadView : UIView {
         var gridColor = UIColor.darkGrayColor()
 
         override func drawRect(rect: CGRect) {
-            var path = UIBezierPath()
+            let path = UIBezierPath()
 
-            var keyW = round(self.bounds.width / 3.0)
-            var keyH = round(self.bounds.height / 4.0)
+            let keyW = round(self.bounds.width / 3.0)
+            let keyH = round(self.bounds.height / 4.0)
 
             for var x = 1; x < 3; x++ {
                 path.moveToPoint(CGPoint(x: CGFloat(x) * keyW, y: 0))

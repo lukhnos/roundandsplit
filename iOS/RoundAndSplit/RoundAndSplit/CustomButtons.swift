@@ -60,7 +60,7 @@ class SquareBorderButton : CustomButton {
     var lineWidth : CGFloat = 1.0
 
     override func customDraw(rect: CGRect)  {
-        var path = UIBezierPath(rect: CGRectInset(self.bounds, borderInsetDeltaX, borderInsetDeltaY))
+        let path = UIBezierPath(rect: CGRectInset(self.bounds, borderInsetDeltaX, borderInsetDeltaY))
 
         if highlighted {
             titleColorForState(.Highlighted)!.setStroke()
@@ -100,13 +100,13 @@ class RoundedButton : CustomButton {
     }
 
     override func customDraw(rect: CGRect)  {
-        var insetDeltaX : CGFloat = 6.0
-        var insetDeltaY : CGFloat = 6.0
+        let insetDeltaX : CGFloat = 6.0
+        let insetDeltaY : CGFloat = 6.0
 
         var roundRect = CGRectInset(self.bounds, insetDeltaX, insetDeltaY)
         roundRect.origin.x += offsetX
         roundRect.origin.y += offsetY
-        var path = UIBezierPath(ovalInRect: roundRect)
+        let path = UIBezierPath(ovalInRect: roundRect)
 
         if highlighted {
             highlightedFillColor.setFill()

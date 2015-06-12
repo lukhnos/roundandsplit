@@ -78,14 +78,14 @@ class ButtonStripView : ExtendedHitAreaView {
         }
 
         var hitAreaPadding = extendedHitAreaEdgeInset
-        var hitAreaInnerPadding = -max(0, space / 2)
+        let hitAreaInnerPadding = -max(0, space / 2)
 
 
         var nextX : CGFloat = 0.0
         for var i = 0, c = buttons.count; i < c; i++ {
-            var button = buttons[i]
-            var buttonSize = CGSize(width: buttonSizes[i].width, height: maxButtonHeight)
-            var origin = CGPoint(x: nextX, y: (boundsSize.height - (buttonSize.height + underlineThickness)) / 2.0)
+            let button = buttons[i]
+            let buttonSize = CGSize(width: buttonSizes[i].width, height: maxButtonHeight)
+            let origin = CGPoint(x: nextX, y: (boundsSize.height - (buttonSize.height + underlineThickness)) / 2.0)
             button.frame = CGRect(origin: origin, size: buttonSize)
             nextX += buttonSize.width + space
 
@@ -105,7 +105,7 @@ class ButtonStripView : ExtendedHitAreaView {
         buttons.removeAll(keepCapacity: true)
 
         for label in labels {
-            var button = AccessibileButton.buttonWithType(UIButtonType.Custom) as! AccessibileButton
+            let button = AccessibileButton(type: UIButtonType.Custom)
             button.setTitle(label, forState: UIControlState.Normal)
             
             if let font = buttonTitleFont {
@@ -149,7 +149,7 @@ class ButtonStripView : ExtendedHitAreaView {
 
     func buttonAction(button : AccessibileButton) {
         activeButton = button
-        let index = find(buttons, button)
+        let index = buttons.indexOf(button)
 
         updateButtons()
         UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
@@ -181,8 +181,8 @@ class ButtonStripView : ExtendedHitAreaView {
 
     private func updateUnderline() {
         if let refView = activeButton {
-            var origin = CGPoint(x: refView.frame.origin.x, y: CGRectGetMaxY(refView.frame) - (underlineThickness + 1.0))
-            var size = CGSize(width: refView.frame.size.width, height: underlineThickness)
+            let origin = CGPoint(x: refView.frame.origin.x, y: CGRectGetMaxY(refView.frame) - (underlineThickness + 1.0))
+            let size = CGSize(width: refView.frame.size.width, height: underlineThickness)
             underlineView.frame = CGRect(origin: origin, size: size)
             underlineView.hidden = false
         } else {

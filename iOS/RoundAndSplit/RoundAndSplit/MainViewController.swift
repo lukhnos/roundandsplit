@@ -124,7 +124,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         buttonStripView.extendedHitAreaEdgeInset = expandedHitAreaEdgeInset
 
         // And the Split button's.
-        var splitButtonHitAreaPadding = -infoAreaInnerViewBottomSpacing.constant/2
+        let splitButtonHitAreaPadding = -infoAreaInnerViewBottomSpacing.constant/2
         splitAndPayButton.extendedHitAreaEdgeInset = UIEdgeInsetsMake(splitButtonHitAreaPadding, 0, splitButtonHitAreaPadding, 0)
 
         infoButton.titleLabel?.font = Style.infoButtonFonts[screenSize]!
@@ -199,7 +199,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         super.viewDidLayoutSubviews()
 
         // Expand the hit area of the More Info button.
-        var hitAreaPadding = -((headerViewHeight.constant - infoButton.frame.height) / 2)
+        let hitAreaPadding = -((headerViewHeight.constant - infoButton.frame.height) / 2)
         infoButton.extendedHitAreaEdgeInset = UIEdgeInsetsMake(hitAreaPadding, hitAreaPadding, hitAreaPadding * 0.5, hitAreaPadding)
     }
 
@@ -240,13 +240,13 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         }
 
         billedAmountLabel.text = billedAmount.string(currencyFormatter)
-        currentTip = bestTip(billedAmount, currentRate)
+        currentTip = bestTip(billedAmount, rate: currentRate)
         tipLabel.text = currentTip.tip.string(currencyFormatter)
         tipLabel.accessibilityLabel = String(format: Utilities.L("Tips: %@"), tipLabel.text!)
         totalAmountLabel.text = currentTip.total.string(currencyFormatter)
         totalAmountLabel.accessibilityLabel = String(format: Utilities.L("Total: %@"), totalAmountLabel.text!)
 
-        var rate = currentTip.effectiveRate
+        let rate = currentTip.effectiveRate
         if rate == Decimal(0) {
             effectiveRateLabel.text = "–"
             effectiveRateLabel.accessibilityLabel = Utilities.L("No effective rate")
@@ -275,15 +275,15 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
             return
         }
 
-        if count(keypadString) < 6 {
+        if keypadString.characters.count < 6 {
             keypadString = keypadString + String(format: "%d", number)
             update()
         }
     }
 
     @IBAction func requestOrPay() {
-        var actionSheet = UIActionSheet()
-        var amount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
+        let actionSheet = UIActionSheet()
+        let amount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
         actionSheet.title = "Split with Square® Cash?\nYou can adjust the amount later."
         actionSheet.delegate = self
         actionSheet.addButtonWithTitle("Request \(amount)")
@@ -312,11 +312,11 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         }
     }
 
-    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: {})
 
-        if result.value == MFMailComposeResultSent.value {
-            var alertView = UIAlertView()
+        if result.rawValue == MFMailComposeResultSent.rawValue {
+            let alertView = UIAlertView()
             alertView.title = "Check Your Email"
             if requestingMoney {
                 alertView.message = "You will receive an email from Square® to confirm your request."
@@ -349,7 +349,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         percentageFormatter.minimumFractionDigits = 1
         percentageFormatter.locale = locale
 
-        var requestLocale = NSLocale(localeIdentifier: "en-us")
+        let requestLocale = NSLocale(localeIdentifier: "en-us")
         requestCurrencyFormatter.numberStyle = .CurrencyStyle
         requestCurrencyFormatter.minimumFractionDigits = 2
         requestCurrencyFormatter.locale = requestLocale
@@ -359,7 +359,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     // the app, but can be dropped it to replace e.g. the Info button
     // to save time creating the default images.
     func saveDefaultImage() {
-        var hiddenViews : [UIView] = [
+        let hiddenViews : [UIView] = [
             infoButton,
             billedAmountLabel,
             tipDescription,
@@ -380,10 +380,10 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, true, UIScreen.mainScreen().scale)
         view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates:true)
-        var image = UIGraphicsGetImageFromCurrentImageContext()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        var library = ALAssetsLibrary()
+        let library = ALAssetsLibrary()
         library.writeImageDataToSavedPhotosAlbum(UIImagePNGRepresentation(image), metadata: nil) { (_, _) -> Void in
             for view in hiddenViews {
                 view.hidden = false

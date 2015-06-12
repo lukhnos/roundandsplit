@@ -104,12 +104,12 @@ func bestTip(amount: Decimal, rate: Decimal) -> Tip {
         return Tip(amount: amount, makeToTotal: roundUp(amount, 0))
     }
 
-    let tippings = roundedTippings(amount, rate)
+    let tippings = roundedTippings(amount, rate: rate)
 
     var tip = tippings[0]
     var delta = abs(tip.rate - tip.effectiveRate)
     for t in tippings[1...(tippings.count - 1)] {
-        var delta2 = abs(t.rate - t.effectiveRate)
+        let delta2 = abs(t.rate - t.effectiveRate)
         if delta2 < delta {
             delta = delta2
             tip = t

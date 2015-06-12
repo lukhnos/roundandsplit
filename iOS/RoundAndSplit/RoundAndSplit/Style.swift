@@ -29,9 +29,9 @@ struct Style {
     typealias FontSizes = Dictionary<ScreenSize, UIFont>
 
     static func hexColor(color: UInt) -> UIColor {
-        var r = (CGFloat)((color >> 16) & 0xff) / 255.0
-        var g = (CGFloat)((color >> 8) & 0xff) / 255.0
-        var b = (CGFloat)(color & 0xff) / 255.0
+        let r = (CGFloat)((color >> 16) & 0xff) / 255.0
+        let g = (CGFloat)((color >> 8) & 0xff) / 255.0
+        let b = (CGFloat)(color & 0xff) / 255.0
         return UIColor(red: r, green: g, blue: b, alpha: 1.0)
     }
 
@@ -40,9 +40,9 @@ struct Style {
             UIFontDescriptorFeatureSettingsAttribute: [[
                 UIFontFeatureTypeIdentifierKey: kNumberSpacingType,
                 UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector],]]
-        var fontDescriptor : UIFontDescriptor = font.fontDescriptor()
-        var tabularFigureDescriptor = fontDescriptor.fontDescriptorByAddingAttributes(attrs)
-        var tabularFigureFont = UIFont(descriptor: tabularFigureDescriptor, size: 0.0)
+        let fontDescriptor : UIFontDescriptor = font.fontDescriptor()
+        let tabularFigureDescriptor = fontDescriptor.fontDescriptorByAddingAttributes(attrs)
+        let tabularFigureFont = UIFont(descriptor: tabularFigureDescriptor, size: 0.0)
         return tabularFigureFont
     }
 
