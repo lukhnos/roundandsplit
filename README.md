@@ -1,6 +1,6 @@
 # Round & Split
 
-***Note: Travis CI build status is temporarily disabled until Xcode 6.3 (and Swift 1.2) is supported. [More info](https://github.com/travis-ci/travis-ci/issues/3216).***
+[![Build Status](https://travis-ci.org/lukhnos/roundandsplit.svg?branch=master)](https://travis-ci.org/lukhnos/roundandsplit)
 
 I needed a tip calculator, so I wrote one.
 
