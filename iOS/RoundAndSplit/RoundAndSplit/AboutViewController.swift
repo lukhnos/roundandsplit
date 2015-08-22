@@ -98,12 +98,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
                 file = "Disclaimer"
             }
             let url = NSBundle.mainBundle().URLForResource(file, withExtension: "txt")
-            var body: String?
-            do {
-                body = try String(contentsOfURL: url!, encoding: NSUTF8StringEncoding)
-            } catch _ {
-                body = nil
-            }
+            var body: String? = String(contentsOfURL: url!, encoding: NSUTF8StringEncoding)
             let title = aboutSectionTitles[indexPath.row]
 
             let textView = UITextView()
@@ -146,13 +141,13 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
 
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCellWithIdentifier(versionCellId)
+                cell = tableView.dequeueReusableCellWithIdentifier(versionCellId) as? UITableViewCell
                 if cell == nil {
                     cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: versionCellId)
                 }
                 cell!.detailTextLabel!.text = Utilities.bundleShortVersion()
             } else {
-                cell = tableView.dequeueReusableCellWithIdentifier(detailCellId)
+                cell = tableView.dequeueReusableCellWithIdentifier(detailCellId) as? UITableViewCell
                 if cell == nil {
                     cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: detailCellId)
                     cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
@@ -162,7 +157,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = aboutSectionTitles[indexPath.row]
         } else if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier(linkCellId)
+            cell = tableView.dequeueReusableCellWithIdentifier(linkCellId) as? UITableViewCell
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: linkCellId)
                 let textLabel : UILabel? = cell!.textLabel
@@ -172,7 +167,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = actionableSectionTitles[indexPath.row]
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier(settingCellId)
+            cell = tableView.dequeueReusableCellWithIdentifier(settingCellId) as? UITableViewCell
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: settingCellId)
                 let switchButton = UISwitch()

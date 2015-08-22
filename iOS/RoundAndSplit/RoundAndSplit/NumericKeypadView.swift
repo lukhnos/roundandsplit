@@ -153,9 +153,9 @@ class NumericKeypadView : UIView {
         return nil
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first
-        let loc = touch!.locationInView(self)
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let touch = touches.first as! UITouch
+        let loc = touch.locationInView(self)
         let endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
             if let oldLabel = getSelectedLabel(selectedKey) {
@@ -171,9 +171,9 @@ class NumericKeypadView : UIView {
         }
     }
 
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first
-        let loc = touch!.locationInView(self)
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let touch = touches.first as! UITouch
+        let loc = touch.locationInView(self)
         let endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
             if let oldLabel = getSelectedLabel(selectedKey) {
@@ -189,7 +189,7 @@ class NumericKeypadView : UIView {
         }
     }
 
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent) {
         if let oldLabel = getSelectedLabel(selectedKey) {
             oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
             oldLabel.textColor = keyPadTextColor
@@ -198,9 +198,9 @@ class NumericKeypadView : UIView {
         selectedKey = -1
     }
 
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first
-        let loc = touch!.locationInView(self)
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let touch = touches.first as! UITouch
+        let loc = touch.locationInView(self)
         let endSelectedKey = pointToKeyIndex(loc)
 
         if endSelectedKey != selectedKey {
