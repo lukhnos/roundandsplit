@@ -83,7 +83,7 @@ class RoundedButton : CustomButton {
     var offsetX : CGFloat = 0
     var offsetY : CGFloat = 0
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setTitleColors()
     }

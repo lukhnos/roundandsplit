@@ -54,7 +54,7 @@ class NumericKeypadView : UIView {
     private var selectedKey = -1
     private var labels = [OffsetLabel]()
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
         for i in 0..<12 {
@@ -153,8 +153,8 @@ class NumericKeypadView : UIView {
         return nil
     }
 
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first!
         let loc = touch.locationInView(self)
         let endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
@@ -171,8 +171,8 @@ class NumericKeypadView : UIView {
         }
     }
 
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first!
         let loc = touch.locationInView(self)
         let endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
@@ -189,7 +189,7 @@ class NumericKeypadView : UIView {
         }
     }
 
-    override func touchesCancelled(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
         if let oldLabel = getSelectedLabel(selectedKey) {
             oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
             oldLabel.textColor = keyPadTextColor
@@ -198,8 +198,8 @@ class NumericKeypadView : UIView {
         selectedKey = -1
     }
 
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch = touches.first as! UITouch
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch = touches.first!
         let loc = touch.locationInView(self)
         let endSelectedKey = pointToKeyIndex(loc)
 

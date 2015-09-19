@@ -240,7 +240,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         }
 
         billedAmountLabel.text = billedAmount.string(currencyFormatter)
-        currentTip = bestTip(billedAmount, currentRate)
+        currentTip = bestTip(billedAmount, rate: currentRate)
         tipLabel.text = currentTip.tip.string(currencyFormatter)
         tipLabel.accessibilityLabel = String(format: Utilities.L("Tips: %@"), tipLabel.text!)
         totalAmountLabel.text = currentTip.total.string(currencyFormatter)
@@ -275,7 +275,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
             return
         }
 
-        if count(keypadString) < 6 {
+        if keypadString.characters.count < 6 {
             keypadString = keypadString + String(format: "%d", number)
             update()
         }
@@ -315,7 +315,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: {})
 
-        if result.value == MFMailComposeResultSent.value {
+        if result.rawValue == MFMailComposeResultSent.rawValue {
             let alertView = UIAlertView()
             alertView.title = "Check Your Email"
             if requestingMoney {

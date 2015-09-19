@@ -42,7 +42,7 @@ class ButtonStripView : ExtendedHitAreaView {
     private var activeButton : UIButton?
     private var underlineView : UIView
 
-    required init(coder aDecoder: NSCoder)  {
+    required init?(coder aDecoder: NSCoder)  {
         underlineView = UIView(frame: CGRectZero)
         super.init(coder: aDecoder)
 
@@ -105,7 +105,7 @@ class ButtonStripView : ExtendedHitAreaView {
         buttons.removeAll(keepCapacity: true)
 
         for label in labels {
-            let button = AccessibileButton.buttonWithType(UIButtonType.Custom) as! AccessibileButton
+            let button = AccessibileButton(type: UIButtonType.Custom)
             button.setTitle(label, forState: UIControlState.Normal)
             
             if let font = buttonTitleFont {
@@ -149,7 +149,7 @@ class ButtonStripView : ExtendedHitAreaView {
 
     func buttonAction(button : AccessibileButton) {
         activeButton = button
-        let index = find(buttons, button)
+        let index = buttons.indexOf(button)
 
         updateButtons()
         UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
