@@ -84,14 +84,16 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         var screenSize : Style.ScreenSize = .Normal
         if height > 480 && height < 667 {
             infoAreaHeight.constant += 24
+            infoButton.offsetX = -0.5
+            infoButton.offsetY = 0
             infoTextTopSpacing.constant += 12
             infoTextBottomSpacing.constant += 10
             splitButtonBottomSpacing.constant += 2
         } else if height >= 667 && height < 736 {
             infoButtonWidth.constant = 40
             infoButtonHeight.constant = 40
-            infoButton.offsetX = -0.5
-            infoButton.offsetY = -0.5
+            infoButton.offsetX = 0
+            infoButton.offsetY = 0
             headerViewHeight.constant += 10
             buttonStripHeight.constant += 6
             splitButtonHeight.constant += 4
@@ -103,8 +105,8 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         } else if height >= 736 {
             infoButtonWidth.constant = 44
             infoButtonHeight.constant = 44
-            infoButton.offsetX = -1
-            infoButton.offsetY = -1
+            infoButton.offsetX = 0.5
+            infoButton.offsetY = 0
             headerViewHeight.constant += 18
             buttonStripHeight.constant += 10
             splitButtonHeight.constant += 8
