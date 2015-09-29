@@ -289,10 +289,12 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         let payTitle = String(format: Utilities.L("Pay %@"), amount)
 
         let requestAction = UIAlertAction(title: requestTitle, style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            self.payReqeuestAction(true)
+            self.requestingMoney = true
+            self.payReqeuestAction()
         })
         let payAction = UIAlertAction(title: payTitle, style: UIAlertActionStyle.Default, handler: { (action) -> Void in
-            self.payReqeuestAction(false)
+            self.requestingMoney = false
+            self.payReqeuestAction()
         })
         let cancelAction = UIAlertAction(title: Utilities.L("Cancel"), style: .Cancel, handler: nil)
 
@@ -302,7 +304,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         presentViewController(sheet, animated: true, completion: nil)
     }
 
-    func payReqeuestAction(requestingMoney: Bool) {
+    func payReqeuestAction() {
         let splitAmount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
 
         let addr =  requestingMoney ? "request@square.com" : "cash@square.com"
