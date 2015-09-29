@@ -59,8 +59,6 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     @IBOutlet var infoTextBottomSpacing : NSLayoutConstraint!
     @IBOutlet var effectiveRateLabelTrailingSpace : NSLayoutConstraint!
 
-    var actionSheet : UIActionSheet!
-
     var keypadString = ""
     var billedAmount : Decimal = Decimal(0)
     var currentRate : Decimal = Settings.tippingRate.toDecimal()
@@ -284,50 +282,53 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
 
     @IBAction func requestOrPay() {
-        let actionSheet = UIActionSheet()
+        let sheet = UIAlertController(title: Utilities.L("Split with Square® Cash?\nYou can adjust the amount later."), message: nil, preferredStyle: .ActionSheet)
+
         let amount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
-        actionSheet.title = "Split with Square® Cash?\nYou can adjust the amount later."
-        actionSheet.delegate = self
-        actionSheet.addButtonWithTitle("Request \(amount)")
-        actionSheet.addButtonWithTitle("Pay \(amount)")
-        actionSheet.addButtonWithTitle("Cancel")
-        actionSheet.cancelButtonIndex = 2
-        actionSheet.showInView(self.view)
+        let requestTitle = String(format: Utilities.L("Request %@"), amount)
+        let payTitle = String(format: Utilities.L("Pay %@"), amount)
+
+        let requestAction = UIAlertAction(title: requestTitle, style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            self.payReqeuestAction(true)
+        })
+        let payAction = UIAlertAction(title: payTitle, style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+            self.payReqeuestAction(false)
+        })
+        let cancelAction = UIAlertAction(title: Utilities.L("Cancel"), style: .Cancel, handler: nil)
+
+        sheet.addAction(payAction)
+        sheet.addAction(requestAction)
+        sheet.addAction(cancelAction)
+        presentViewController(sheet, animated: true, completion: nil)
     }
 
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        if (buttonIndex < 2) {
-            if !MFMailComposeViewController.canSendMail() {
-                Utilities.showEmailDisabledAlert()
-                return
-            }
+    func payReqeuestAction(requestingMoney: Bool) {
+        let splitAmount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
 
-            let splitAmount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
-
-            requestingMoney = (buttonIndex == 0)
-            let addr =  requestingMoney ? "request@square.com" : "cash@square.com"
-            let controller = MFMailComposeViewController()
-            controller.mailComposeDelegate = self
-            controller.setSubject(splitAmount)
-            controller.setCcRecipients([addr])
-            presentViewController(controller, animated: true, completion: {})
-        }
+        let addr =  requestingMoney ? "request@square.com" : "cash@square.com"
+        let controller = MFMailComposeViewController()
+        controller.mailComposeDelegate = self
+        controller.setSubject(splitAmount)
+        controller.setCcRecipients([addr])
+        presentViewController(controller, animated: true, completion: {})
     }
 
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: {})
 
         if result.rawValue == MFMailComposeResultSent.rawValue {
-            let alertView = UIAlertView()
-            alertView.title = "Check Your Email"
+            let title = Utilities.L("Check Your Email")
+            let message : String
             if requestingMoney {
-                alertView.message = "You will receive an email from Square® to confirm your request."
+                message = Utilities.L("You will receive an email from Square® to confirm your request.")
             } else {
-                alertView.message = "You will receive an email from Square® to confirm your payment."
+                message = Utilities.L("You will receive an email from Square® to confirm your payment.")
             }
-            alertView.addButtonWithTitle("Dismiss")
-            alertView.cancelButtonIndex = 0
-            alertView.show()
+
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+            let action = UIAlertAction(title: Utilities.L("Dismiss"), style: .Default, handler: nil)
+            alert.addAction(action)
+            presentViewController(alert, animated: true, completion: nil)
         }
     }
 

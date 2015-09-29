@@ -125,7 +125,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
                 UIApplication.sharedApplication().openURL(Constants.WebSiteURL)
             } else {
                 if !MFMailComposeViewController.canSendMail() {
-                    Utilities.showEmailDisabledAlert()
+                    Utilities.showEmailDisabledAlert(self)
                     return
                 }
 

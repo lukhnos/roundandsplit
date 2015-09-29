@@ -31,7 +31,10 @@ struct Utilities {
         return NSBundle.mainBundle().objectForInfoDictionaryKey(Constants.CFBundleShortVersionString) as! String
     }
 
-    static func showEmailDisabledAlert() {
-        UIAlertView(title: L("Cannot Compose Email"), message: L("You can open the Mail app to set it up."), delegate: nil, cancelButtonTitle: L("Dismiss")).show()
+    static func showEmailDisabledAlert(viewController: UIViewController) {
+        let alert = UIAlertController(title: L("Cannot Compose Email"), message: L("You can open the Mail app to set it up."), preferredStyle: .Alert)
+        let action = UIAlertAction(title: L("Dismiss"), style: .Default, handler: nil)
+        alert.addAction(action)
+        viewController.presentViewController(alert, animated: true, completion: nil)
     }
 }
