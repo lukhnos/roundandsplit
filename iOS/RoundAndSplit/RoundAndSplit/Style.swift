@@ -47,11 +47,11 @@ struct Style {
     }
 
     static func regularFont(size: CGFloat) -> UIFont {
-        return Style.tabularFigureFont(UIFont(name: "FiraSans-Light", size: size)!)
+        return UIFont(name: "FiraSans-Light", size: size)!
     }
 
     static func boldFont(size: CGFloat) -> UIFont {
-        return Style.tabularFigureFont(UIFont(name: "FiraSans-Regular", size: size)!)
+        return UIFont(name: "FiraSans-Regular", size: size)!
     }
 
     static func fontSizes(base: UIFont, _ largeSize: CGFloat, _ extraLargeSize: CGFloat) -> FontSizes {
@@ -78,11 +78,11 @@ struct Style {
 
     static let keypadHighlightColor = Style.hexColor(0x86ca7f)
 
-    static let infoButtonFonts = Style.fontSizes(Style.tabularFigureFont(UIFont(name: "FiraSans-Medium", size: 16)!), 18, 22)
+    static let infoButtonFonts = Style.fontSizes(UIFont(name: "FiraSans-Medium", size: 16)!, 18, 22)
     static let billedAmountFonts = Style.fontSizes(Style.regularFont(40), 46, 52)
     static let buttonStripFonts = Style.fontSizes(Style.regularFont(20), 24, 26)
     static let descriptionFonts = Style.fontSizes(Style.regularFont(22), 26, 28)
-    static let valueFonts = Style.fontSizes(Style.boldFont(24), 28, 31)
+    static let valueFonts = Style.fontSizes(Style.tabularFigureFont(Style.boldFont(24)), 28, 31)
     static let effectiveRateDescriptionFonts = Style.fontSizes(Style.regularFont(14), 16, 18)
     static let effectiveRateValueFonts = Style.fontSizes(Style.regularFont(14), 16, 18)
     static let splitButtonFonts = Style.fontSizes(Style.regularFont(14), 16, 18)
