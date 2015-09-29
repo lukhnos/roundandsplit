@@ -357,40 +357,4 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         requestCurrencyFormatter.minimumFractionDigits = 2
         requestCurrencyFormatter.locale = requestLocale
     }
-
-    // This saves the default image with the needed UI elements. Not used in
-    // the app, but can be dropped it to replace e.g. the Info button
-    // to save time creating the default images.
-    func saveDefaultImage() {
-        let hiddenViews : [UIView] = [
-            infoButton,
-            billedAmountLabel,
-            tipDescription,
-            tipLabel,
-            totalAmountDescription,
-            totalAmountLabel,
-            effectiveRateDescriptionLabel,
-            effectiveRateLabel,
-            numericKeypadView,
-            splitAndPayButton
-        ]
-
-        for view in hiddenViews {
-            view.hidden = true
-        }
-
-        buttonStripView.deselect()
-
-        UIGraphicsBeginImageContextWithOptions(view.bounds.size, true, UIScreen.mainScreen().scale)
-        view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates:true)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        let library = ALAssetsLibrary()
-        library.writeImageDataToSavedPhotosAlbum(UIImagePNGRepresentation(image), metadata: nil) { (_, _) -> Void in
-            for view in hiddenViews {
-                view.hidden = false
-            }
-        }
-    }
 }
