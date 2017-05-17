@@ -4,11 +4,10 @@
 
 I needed a tip calculator, so I wrote one.
 
-I always round my tips, and when I dine out with a friend, I use
-[Square® Cash](https://square.com/cash) to
-split the bill with him or her. I was looking for a tip calculator that could
-do both, but there wasn't any. Plus, most tip calculators out there have a lot
-of features that I don't need.
+I always round my tips, and when I dine out with a friend, I email them
+reminders that I owe them money or vice versa. I was looking for a tip
+calculator that could do both, but there wasn't any. Plus, most tip calculators
+out there have a lot of features that I don't need.
 
 So I decided to make one. Or two in fact – I've made an iOS version and an
 Android version, because I happen to know programming on both platforms.
@@ -28,8 +27,7 @@ here does not include the app icons made by a professional icon designer.
 * Calculate tip at three most common rates in the United States: 15%, 18%, and
   20%.
 * Always give you a rounded total.
-* Split the bill. The app helps you send an email to Square® Cash. You can use
-  that to request money from or pay the split amount to your dining partner.
+* Send email reminder with pre-populated subject lines.
 
 
 ## On Rounding
@@ -105,25 +103,11 @@ The iOS version of this app uses the Fira Sans typeface from Mozilla:
 https://github.com/mozilla/Fira.
 
 
-## Disclaimer
-
-The "Split and Request/Pay" feature uses Square® Cash to request money from or
-pay to another person.
-
-For more information about Square® Cash, visit https://square.com/cash.
-
-Square® Cash is a service provided by Square, Inc. and may not be available in
-your region or country.
-
-Neither the developer nor the app is affiliated with Square, Inc. or its
-services.
-
-
 ## Copyright and License
 
 The source code is released under the MIT License (MIT).
 
-Copyright (c) 2014-2015 Lukhnos Liu.
+Copyright (c) 2014-2017 Lukhnos Liu.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
