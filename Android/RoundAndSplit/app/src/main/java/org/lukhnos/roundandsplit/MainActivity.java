@@ -311,12 +311,14 @@ public class MainActivity extends Activity implements ButtonStrip.Observer, Nume
                             }
 
                             Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "", null));
-                            intent.putExtra(Intent.EXTRA_SUBJECT, mSplitAmount);
+                            final String subjectFormat;
                             if (which == 0) {
-                                intent.putExtra(Intent.EXTRA_CC, new String[]{"request@square.com"});
+                                subjectFormat = getString(R.string.request_subject_prefix);
                             } else {
-                                intent.putExtra(Intent.EXTRA_CC, new String[]{"cash@square.com"});
+                                subjectFormat = getString(R.string.send_subject_prefix);
                             }
+                            String subject = String.format(Locale.ROOT, subjectFormat, mSplitAmount);
+                            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
                             startActivity(intent);
                         }
                     });

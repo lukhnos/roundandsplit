@@ -3,7 +3,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/pref_category_about">
         <Preference android:title="@string/pref_title_version" android:key="@string/pref_key_version" />
-        <Preference android:title="@string/pref_title_disclaimer" android:key="@string/pref_key_view_disclaimer" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_contact_and_service">

@@ -50,12 +50,6 @@ public class SettingsActivity extends PreferenceActivity {
             }
             versionPref.setSummary(versionName);
 
-            Preference viewDisclaimerPref = findPreference(getString(R.string.pref_key_view_disclaimer));
-            Intent disclaimerIntent = new Intent(getActivity(), TextViewerActivity.class);
-            disclaimerIntent.putExtra(TextViewerActivity.TITLE, "Disclaimer");
-            disclaimerIntent.putExtra(TextViewerActivity.TEXT_FILE_ID, R.raw.disclaimer);
-            viewDisclaimerPref.setIntent(disclaimerIntent);
-
             Preference emailPref = findPreference(getString(R.string.pref_key_email_us));
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "contact@roundandsplit.lukhnos.org", null));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Inquiry - Round & Split Android " + versionName);
