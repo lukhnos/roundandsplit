@@ -78,7 +78,7 @@ struct Tip {
     }
 }
 
-func roundedTippings(amount: Decimal, rate: Decimal) -> [Tip] {
+func roundedTippings(_ amount: Decimal, rate: Decimal) -> [Tip] {
     let tip = Tip(amount: amount, rate: rate)
     var tippings : [Tip] = []
 
@@ -91,7 +91,7 @@ func roundedTippings(amount: Decimal, rate: Decimal) -> [Tip] {
     return tippings
 }
 
-func bestTip(amount: Decimal, rate: Decimal) -> Tip {
+func bestTip(_ amount: Decimal, rate: Decimal) -> Tip {
     if (rate <= Decimal(0)) {
         return Tip(amount: amount, rate: Decimal(0))
     }

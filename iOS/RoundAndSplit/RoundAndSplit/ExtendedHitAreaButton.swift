@@ -23,10 +23,10 @@
 import UIKit
 
 class ExtendedHitAreaButton : UIButton {
-    var extendedHitAreaEdgeInset = UIEdgeInsetsZero
+    var extendedHitAreaEdgeInset = UIEdgeInsets.zero
 
-    override func pointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let hitBounds = UIEdgeInsetsInsetRect(bounds, extendedHitAreaEdgeInset)
-        return CGRectContainsPoint(hitBounds, point)
+        return hitBounds.contains(point)
     }
 }

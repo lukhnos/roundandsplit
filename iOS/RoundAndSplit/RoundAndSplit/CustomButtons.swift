@@ -24,30 +24,30 @@ import UIKit
 
 // A button base class with custom highlighting/selecting behavior.
 class CustomButton : ExtendedHitAreaButton {
-    override func drawRect(rect: CGRect)  {
+    override func draw(_ rect: CGRect)  {
         customDraw(rect)
-        super.drawRect(rect)
+        super.draw(rect)
     }
 
-    func customDraw(rect: CGRect) {
+    func customDraw(_ rect: CGRect) {
     }
 
-    override var selected : Bool {
+    override var isSelected : Bool {
     get {
-        return super.selected
+        return super.isSelected
     }
     set {
-        super.selected = newValue
+        super.isSelected = newValue
         setNeedsDisplay()
     }
     }
 
-    override var highlighted : Bool {
+    override var isHighlighted : Bool {
     get {
-        return super.highlighted
+        return super.isHighlighted
     }
     set {
-        super.highlighted = newValue
+        super.isHighlighted = newValue
         setNeedsDisplay()
     }
     }
@@ -59,15 +59,15 @@ class SquareBorderButton : CustomButton {
     var borderInsetDeltaY : CGFloat = 1.0
     var lineWidth : CGFloat = 1.0
 
-    override func customDraw(rect: CGRect)  {
-        let path = UIBezierPath(rect: CGRectInset(self.bounds, borderInsetDeltaX, borderInsetDeltaY))
+    override func customDraw(_ rect: CGRect)  {
+        let path = UIBezierPath(rect: self.bounds.insetBy(dx: borderInsetDeltaX, dy: borderInsetDeltaY))
 
-        if highlighted {
-            titleColorForState(.Highlighted)!.setStroke()
-        } else if enabled {
-            titleColorForState(.Normal)!.setStroke()
+        if isHighlighted {
+            titleColor(for: .highlighted)!.setStroke()
+        } else if isEnabled {
+            titleColor(for: UIControlState())!.setStroke()
         } else {
-            titleColorForState(.Disabled)!.setStroke()
+            titleColor(for: .disabled)!.setStroke()
         }
 
         path.lineWidth = lineWidth
@@ -77,9 +77,9 @@ class SquareBorderButton : CustomButton {
 
 // A round button used to draw the Info button
 class RoundedButton : CustomButton {
-    var normalFillColor = UIColor.darkTextColor()
-    var highlightedFillColor = UIColor.blueColor()
-    var disabledFillColor = UIColor.lightGrayColor()
+    var normalFillColor = UIColor.darkText
+    var highlightedFillColor = UIColor.blue
+    var disabledFillColor = UIColor.lightGray
     var offsetX : CGFloat = 0
     var offsetY : CGFloat = 0
 
@@ -93,24 +93,24 @@ class RoundedButton : CustomButton {
         setTitleColors()
     }
 
-    private func setTitleColors() {
-        setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
-        setTitleColor(UIColor.whiteColor(), forState: .Disabled)
+    fileprivate func setTitleColors() {
+        setTitleColor(UIColor.white, for: UIControlState())
+        setTitleColor(UIColor.white, for: .highlighted)
+        setTitleColor(UIColor.white, for: .disabled)
     }
 
-    override func customDraw(rect: CGRect)  {
+    override func customDraw(_ rect: CGRect)  {
         let insetDeltaX : CGFloat = 6.0
         let insetDeltaY : CGFloat = 6.0
 
-        var roundRect = CGRectInset(self.bounds, insetDeltaX, insetDeltaY)
+        var roundRect = self.bounds.insetBy(dx: insetDeltaX, dy: insetDeltaY)
         roundRect.origin.x += offsetX
         roundRect.origin.y += offsetY
-        let path = UIBezierPath(ovalInRect: roundRect)
+        let path = UIBezierPath(ovalIn: roundRect)
 
-        if highlighted {
+        if isHighlighted {
             highlightedFillColor.setFill()
-        } else if enabled {
+        } else if isEnabled {
             normalFillColor.setFill()
         } else {
             disabledFillColor.setFill()

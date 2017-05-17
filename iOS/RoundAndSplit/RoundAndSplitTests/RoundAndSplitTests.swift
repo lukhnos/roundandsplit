@@ -37,7 +37,7 @@ class RoundAndSplitTests: XCTestCase {
     }
     
     func testPerformanceExample() {
-        self.measureBlock() {
+        self.measure() {
         }
     }
     

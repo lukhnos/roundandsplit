@@ -63,23 +63,23 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     var billedAmount : Decimal = Decimal(0)
     var currentRate : Decimal = Settings.tippingRate.toDecimal()
     var currentTip : Tip = Tip()
-    var currencyFormatter = NSNumberFormatter()
-    var percentageFormatter = NSNumberFormatter()
+    var currencyFormatter = NumberFormatter()
+    var percentageFormatter = NumberFormatter()
     var effectiveRateLabelTrailingSpaceConstant : CGFloat = 0.0
 
     // For requesting/paying money
-    var requestCurrencyFormatter = NSNumberFormatter()
+    var requestCurrencyFormatter = NumberFormatter()
     var requestingMoney = false
 
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let height = UIScreen.mainScreen().bounds.size.height
-        var screenSize : Style.ScreenSize = .Normal
+        let height = UIScreen.main.bounds.size.height
+        var screenSize : Style.ScreenSize = .normal
         if height > 480 && height < 667 {
             infoAreaHeight.constant += 24
             infoButton.offsetX = -0.5
@@ -99,7 +99,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
             infoTextTopSpacing.constant += 12
             infoTextBottomSpacing.constant += 6
             splitButtonBottomSpacing.constant += 6
-            screenSize = .Large
+            screenSize = .large
         } else if height >= 736 {
             infoButtonWidth.constant = 44
             infoButtonHeight.constant = 44
@@ -112,7 +112,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
             infoTextTopSpacing.constant += 12
             infoTextBottomSpacing.constant += 6
             splitButtonBottomSpacing.constant += 6
-            screenSize = .ExtraLarge
+            screenSize = .extraLarge
         }
 
         // Expand the hit area of the inner info view so as to expand the button strip's hit area.
@@ -130,14 +130,14 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         infoButton.titleLabel?.font = Style.infoButtonFonts[screenSize]!
 
         for label in [billedAmountLabel, tipDescription, tipLabel, totalAmountDescription, totalAmountLabel] {
-            label.textColor = Style.textColor
+            label?.textColor = Style.textColor
         }
         billedAmountLabel.font = Style.billedAmountFonts[screenSize]!
         for label in [tipDescription, totalAmountDescription] {
-            label.font = Style.descriptionFonts[screenSize]!
+            label?.font = Style.descriptionFonts[screenSize]!
         }
         for label in [tipLabel, totalAmountLabel] {
-            label.font = Style.valueFonts[screenSize]!
+            label?.font = Style.valueFonts[screenSize]!
         }
         effectiveRateDescriptionLabel.font = Style.effectiveRateDescriptionFonts[screenSize]!
         effectiveRateLabel.font = Style.effectiveRateValueFonts[screenSize]!
@@ -156,14 +156,14 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         infoButton.highlightedFillColor = Style.moreInfoButtonHighlightedColor
         infoButton.disabledFillColor = Style.moreInfoButtonHighlightedColor
 
-        infoButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        infoButton.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
-        infoButton.setTitleColor(UIColor.whiteColor(), forState: .Disabled)
+        infoButton.setTitleColor(UIColor.white, for: UIControlState())
+        infoButton.setTitleColor(UIColor.white, for: .highlighted)
+        infoButton.setTitleColor(UIColor.white, for: .disabled)
 
         splitAndPayButton.titleLabel?.font = Style.splitButtonFonts[screenSize]!
-        splitAndPayButton.setTitleColor(Style.buttonTitleColorNormal, forState: .Normal)
-        splitAndPayButton.setTitleColor(Style.buttonTitleColorHighlighted, forState: .Highlighted)
-        splitAndPayButton.setTitleColor(Style.buttonTitleColorDisabled, forState: .Disabled)
+        splitAndPayButton.setTitleColor(Style.buttonTitleColorNormal, for: UIControlState())
+        splitAndPayButton.setTitleColor(Style.buttonTitleColorHighlighted, for: .highlighted)
+        splitAndPayButton.setTitleColor(Style.buttonTitleColorDisabled, for: .disabled)
 
         buttonStripView.buttonTitleFont = Style.buttonStripFonts[screenSize]!
         buttonStripView.buttonTitleColorNormal = Style.buttonTitleColorNormal
@@ -192,7 +192,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         numericKeypadView.setBackspaceLabelInset(UIEdgeInsetsMake(-1.0, 0, 0.0, 0))
         numericKeypadView.delegate = self
 
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("currentLocaleDidChange:"), name: NSCurrentLocaleDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.currentLocaleDidChange(_:)), name: NSLocale.currentLocaleDidChangeNotification, object: nil)
     }
 
     override func viewDidLayoutSubviews() {
@@ -203,12 +203,12 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         infoButton.extendedHitAreaEdgeInset = UIEdgeInsetsMake(hitAreaPadding, hitAreaPadding, hitAreaPadding * 0.5, hitAreaPadding)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         updateFormatters()
         update()
     }
 
-    func didTapButtonInStripView(strip: ButtonStripView, index: Int) {
+    func didTapButtonInStripView(_ strip: ButtonStripView, index: Int) {
         var rate : Settings.TippingRate
 
         switch index {
@@ -234,9 +234,9 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         }
 
         if billedAmount < Decimal("1.00") {
-            splitAndPayButton.enabled = false
+            splitAndPayButton.isEnabled = false
         } else {
-            splitAndPayButton.enabled = true
+            splitAndPayButton.isEnabled = true
         }
 
         billedAmountLabel.text = billedAmount.string(currencyFormatter)
@@ -260,7 +260,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
     func backspaceTapped() {
         if !keypadString.isEmpty {
-            keypadString = keypadString.substringToIndex(keypadString.endIndex.predecessor())
+            keypadString = keypadString.substring(to: keypadString.characters.index(before: keypadString.endIndex))
             update()
         }
     }
@@ -270,7 +270,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         update()
     }
 
-    func numberTapped(number: Int) {
+    func numberTapped(_ number: Int) {
         if number == 0 && keypadString.isEmpty {
             return
         }
@@ -282,26 +282,26 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
 
     @IBAction func requestOrPay() {
-        let sheet = UIAlertController(title: Utilities.L("Split with Square® Cash?\nYou can adjust the amount later."), message: nil, preferredStyle: .ActionSheet)
+        let sheet = UIAlertController(title: Utilities.L("Split with Square® Cash?\nYou can adjust the amount later."), message: nil, preferredStyle: .actionSheet)
 
         let amount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
         let requestTitle = String(format: Utilities.L("Request %@"), amount)
         let payTitle = String(format: Utilities.L("Pay %@"), amount)
 
-        let requestAction = UIAlertAction(title: requestTitle, style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+        let requestAction = UIAlertAction(title: requestTitle, style: UIAlertActionStyle.default, handler: { (action) -> Void in
             self.requestingMoney = true
             self.payReqeuestAction()
         })
-        let payAction = UIAlertAction(title: payTitle, style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+        let payAction = UIAlertAction(title: payTitle, style: UIAlertActionStyle.default, handler: { (action) -> Void in
             self.requestingMoney = false
             self.payReqeuestAction()
         })
-        let cancelAction = UIAlertAction(title: Utilities.L("Cancel"), style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: Utilities.L("Cancel"), style: .cancel, handler: nil)
 
         sheet.addAction(payAction)
         sheet.addAction(requestAction)
         sheet.addAction(cancelAction)
-        presentViewController(sheet, animated: true, completion: nil)
+        present(sheet, animated: true, completion: nil)
     }
 
     func payReqeuestAction() {
@@ -312,13 +312,13 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         controller.mailComposeDelegate = self
         controller.setSubject(splitAmount)
         controller.setCcRecipients([addr])
-        presentViewController(controller, animated: true, completion: {})
+        present(controller, animated: true, completion: {})
     }
 
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: {})
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: {})
 
-        if result.rawValue == MFMailComposeResultSent.rawValue {
+        if result.rawValue == MFMailComposeResult.sent.rawValue {
             let title = Utilities.L("Check Your Email")
             let message : String
             if requestingMoney {
@@ -327,35 +327,35 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
                 message = Utilities.L("You will receive an email from Square® to confirm your payment.")
             }
 
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            let action = UIAlertAction(title: Utilities.L("Dismiss"), style: .Default, handler: nil)
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let action = UIAlertAction(title: Utilities.L("Dismiss"), style: .default, handler: nil)
             alert.addAction(action)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
         }
     }
 
-    func currentLocaleDidChange(notification: NSNotification!) {
+    func currentLocaleDidChange(_ notification: Notification!) {
         updateFormatters()
         update()
     }
 
     func updateFormatters() {
-        var locale : NSLocale? = nil
+        var locale : Locale? = nil
         if Settings.boolForKey(Settings.UseDecimalPointKey) {
-            locale = NSLocale(localeIdentifier: "en-us")
+            locale = Locale(identifier: "en-us")
         }
 
-        currencyFormatter.numberStyle = .DecimalStyle
+        currencyFormatter.numberStyle = .decimal
         currencyFormatter.minimumFractionDigits = 2
         currencyFormatter.locale = locale
 
-        percentageFormatter.numberStyle = .PercentStyle
-        percentageFormatter.roundingMode = .RoundHalfUp
+        percentageFormatter.numberStyle = .percent
+        percentageFormatter.roundingMode = .halfUp
         percentageFormatter.minimumFractionDigits = 1
         percentageFormatter.locale = locale
 
-        let requestLocale = NSLocale(localeIdentifier: "en-us")
-        requestCurrencyFormatter.numberStyle = .CurrencyStyle
+        let requestLocale = Locale(identifier: "en-us")
+        requestCurrencyFormatter.numberStyle = .currency
         requestCurrencyFormatter.minimumFractionDigits = 2
         requestCurrencyFormatter.locale = requestLocale
     }

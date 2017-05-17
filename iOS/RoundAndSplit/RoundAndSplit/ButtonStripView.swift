@@ -23,13 +23,13 @@
 import UIKit
 
 @objc protocol ButtonStripViewDelegate {
-    func didTapButtonInStripView(strip: ButtonStripView, index: Int)
+    func didTapButtonInStripView(_ strip: ButtonStripView, index: Int)
 }
 
 class ButtonStripView : ExtendedHitAreaView {
     weak var delegate : ButtonStripViewDelegate? = nil
 
-    var underlineColor : UIColor = UIColor.blackColor()
+    var underlineColor : UIColor = UIColor.black
     var buttonTitleFont : UIFont? = nil
     var buttonTitleColorNormal : UIColor? = nil
     var buttonTitleColorHighlighted : UIColor? = nil
@@ -38,17 +38,17 @@ class ButtonStripView : ExtendedHitAreaView {
     let underlineThickness : CGFloat = 2.0
     let buttonHorizontalPadding : CGFloat = 10.0
 
-    private var buttons = [AccessibileButton]()
-    private var activeButton : UIButton?
-    private var underlineView : UIView
+    fileprivate var buttons = [AccessibileButton]()
+    fileprivate var activeButton : UIButton?
+    fileprivate var underlineView : UIView
 
     required init?(coder aDecoder: NSCoder)  {
-        underlineView = UIView(frame: CGRectZero)
+        underlineView = UIView(frame: CGRect.zero)
         super.init(coder: aDecoder)
 
         underlineView.backgroundColor = underlineColor
-        underlineView.hidden = true
-        underlineView.userInteractionEnabled = false
+        underlineView.isHidden = true
+        underlineView.isUserInteractionEnabled = false
         addSubview(underlineView)
     }
 
@@ -82,7 +82,8 @@ class ButtonStripView : ExtendedHitAreaView {
 
 
         var nextX : CGFloat = 0.0
-        for var i = 0, c = buttons.count; i < c; i++ {
+        let buttonCount = buttons.count
+        for i in 0..<buttonCount {
             let button = buttons[i]
             let buttonSize = CGSize(width: buttonSizes[i].width, height: maxButtonHeight)
             let origin = CGPoint(x: nextX, y: (boundsSize.height - (buttonSize.height + underlineThickness)) / 2.0)
@@ -90,41 +91,41 @@ class ButtonStripView : ExtendedHitAreaView {
             nextX += buttonSize.width + space
 
             hitAreaPadding.left = (i == 0 ? extendedHitAreaEdgeInset.left : hitAreaInnerPadding)
-            hitAreaPadding.right = (i + 1 == c ? extendedHitAreaEdgeInset.right : hitAreaInnerPadding)
+            hitAreaPadding.right = (i + 1 == buttonCount ? extendedHitAreaEdgeInset.right : hitAreaInnerPadding)
             button.extendedHitAreaEdgeInset = hitAreaPadding
         }
         updateButtons()
         updateUnderline()
     }
 
-    func addButtonsWithLabels(labels: [String], activeIndex: Int = 0) {
+    func addButtonsWithLabels(_ labels: [String], activeIndex: Int = 0) {
         for button in buttons {
             button.removeFromSuperview()
         }
 
-        buttons.removeAll(keepCapacity: true)
+        buttons.removeAll(keepingCapacity: true)
 
         for label in labels {
-            let button = AccessibileButton(type: UIButtonType.Custom)
-            button.setTitle(label, forState: UIControlState.Normal)
+            let button = AccessibileButton(type: UIButtonType.custom)
+            button.setTitle(label, for: UIControlState())
             
             if let font = buttonTitleFont {
                 button.titleLabel!.font = font
             }
 
             if let color = buttonTitleColorNormal {
-                button.setTitleColor(color, forState: UIControlState.Normal)
+                button.setTitleColor(color, for: UIControlState())
             }
 
             if let color = buttonTitleColorHighlighted {
-                button.setTitleColor(color, forState: UIControlState.Highlighted)
+                button.setTitleColor(color, for: UIControlState.highlighted)
             }
 
             if let color = buttonTitleColorSelected {
-                button.setTitleColor(color, forState: UIControlState.Disabled)
+                button.setTitleColor(color, for: UIControlState.disabled)
             }
 
-            button.addTarget(self, action: Selector("buttonAction:"), forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: #selector(ButtonStripView.buttonAction(_:)), for: UIControlEvents.touchUpInside)
             buttons.append(button)
             addSubview(button)
         }
@@ -133,10 +134,10 @@ class ButtonStripView : ExtendedHitAreaView {
 
         if buttons.count > 0 && activeIndex < buttons.count {
             activeButton = buttons[activeIndex]
-            underlineView.hidden = false
+            underlineView.isHidden = false
         } else {
             activeButton = nil
-            underlineView.hidden = true
+            underlineView.isHidden = true
         }
 
         setNeedsLayout()
@@ -147,12 +148,12 @@ class ButtonStripView : ExtendedHitAreaView {
         updateUnderline()
     }
 
-    func buttonAction(button : AccessibileButton) {
+    func buttonAction(_ button : AccessibileButton) {
         activeButton = button
-        let index = buttons.indexOf(button)
+        let index = buttons.index(of: button)
 
         updateButtons()
-        UIView.animateWithDuration(0.25, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIViewAnimationOptions(), animations: {
             self.updateUnderline()
         }, completion: { (complete: Bool) in
             if complete {
@@ -167,26 +168,26 @@ class ButtonStripView : ExtendedHitAreaView {
         })
     }
 
-    private func updateButtons() {
+    fileprivate func updateButtons() {
         if let currentButton = activeButton {
             for button in buttons {
                 if button == currentButton {
-                    button.enabled = false
+                    button.isEnabled = false
                 } else {
-                    button.enabled = true
+                    button.isEnabled = true
                 }
             }
         }
     }
 
-    private func updateUnderline() {
+    fileprivate func updateUnderline() {
         if let refView = activeButton {
-            let origin = CGPoint(x: refView.frame.origin.x, y: CGRectGetMaxY(refView.frame) - (underlineThickness + 1.0))
+            let origin = CGPoint(x: refView.frame.origin.x, y: refView.frame.maxY - (underlineThickness + 1.0))
             let size = CGSize(width: refView.frame.size.width, height: underlineThickness)
             underlineView.frame = CGRect(origin: origin, size: size)
-            underlineView.hidden = false
+            underlineView.isHidden = false
         } else {
-            underlineView.hidden = true
+            underlineView.isHidden = true
         }
     }
 
@@ -194,7 +195,7 @@ class ButtonStripView : ExtendedHitAreaView {
         override var accessibilityTraits: UIAccessibilityTraits {
             get {
                 var trait = UIAccessibilityTraitButton
-                if !self.enabled {
+                if !self.isEnabled {
                     trait |= UIAccessibilityTraitSelected
                 }
                 return trait

@@ -49,14 +49,14 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
     ]
 
     override func viewDidLoad() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: Utilities.L("Info"), style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: Utilities.L("Info"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
     }
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2 + configSections.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return aboutSectionTitles.count
         } else if section == 1 {
@@ -66,7 +66,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         return 1
     }
 
-    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section >= 2 {
             let (_, _, text) = configSections[section - 2]
             return text
@@ -75,7 +75,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         return nil
     }
 
-    override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 0 && indexPath.row > 0 {
             return true
         } else if indexPath.section == 1 {
@@ -85,7 +85,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         return false
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section >= 2 {
             return
         }
@@ -97,10 +97,10 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             } else {
                 file = "Disclaimer"
             }
-            let url = NSBundle.mainBundle().URLForResource(file, withExtension: "txt")
+            let url = Bundle.main.url(forResource: file, withExtension: "txt")
             var body: String?
             do {
-                body = try String(contentsOfURL: url!, encoding: NSUTF8StringEncoding)
+                body = try String(contentsOf: url!, encoding: String.Encoding.utf8)
             } catch _ {
                 body = nil
             }
@@ -109,9 +109,9 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             let textView = UITextView()
             textView.textContainerInset = UIEdgeInsetsMake(16.0, 10.0, 16.0, 10.0)
             textView.text = body
-            textView.selectable = false
-            textView.editable = false
-            textView.font = UIFont.systemFontOfSize(14)
+            textView.isSelectable = false
+            textView.isEditable = false
+            textView.font = UIFont.systemFont(ofSize: 14)
             textView.textColor = UIColor(red: 109.0/255.0, green: 109.0/255.0, blue: 114.0/255.0, alpha: 1.0)
             textView.backgroundColor = tableView.backgroundColor
             let controller = UIViewController()
@@ -119,10 +119,10 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             controller.title = title
             navigationController!.pushViewController(controller, animated: true)
         } else if indexPath.section == 1 {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
 
             if indexPath.row == 0 {
-                UIApplication.sharedApplication().openURL(Constants.WebSiteURL)
+                UIApplication.shared.openURL(Constants.WebSiteURL as URL)
             } else {
                 if !MFMailComposeViewController.canSendMail() {
                     Utilities.showEmailDisabledAlert(self)
@@ -136,35 +136,35 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
                 controller.mailComposeDelegate = self
                 controller.setSubject(subject)
                 controller.setToRecipients([addr])
-                presentViewController(controller, animated: true, completion: {})
+                present(controller, animated: true, completion: {})
             }
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : UITableViewCell?
 
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                cell = tableView.dequeueReusableCellWithIdentifier(versionCellId)
+                cell = tableView.dequeueReusableCell(withIdentifier: versionCellId)
                 if cell == nil {
-                    cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: versionCellId)
+                    cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: versionCellId)
                 }
                 cell!.detailTextLabel!.text = Utilities.bundleShortVersion()
             } else {
-                cell = tableView.dequeueReusableCellWithIdentifier(detailCellId)
+                cell = tableView.dequeueReusableCell(withIdentifier: detailCellId)
                 if cell == nil {
-                    cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: detailCellId)
-                    cell!.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                    cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: detailCellId)
+                    cell!.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                 }
             }
 
             let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = aboutSectionTitles[indexPath.row]
         } else if indexPath.section == 1 {
-            cell = tableView.dequeueReusableCellWithIdentifier(linkCellId)
+            cell = tableView.dequeueReusableCell(withIdentifier: linkCellId)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: linkCellId)
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: linkCellId)
                 let textLabel : UILabel? = cell!.textLabel
                 textLabel!.textColor = tableView.tintColor
             }
@@ -172,17 +172,17 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = actionableSectionTitles[indexPath.row]
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier(settingCellId)
+            cell = tableView.dequeueReusableCell(withIdentifier: settingCellId)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: settingCellId)
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: settingCellId)
                 let switchButton = UISwitch()
-                switchButton.addTarget(self, action: Selector("switchButtonValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+                switchButton.addTarget(self, action: #selector(AboutViewController.switchButtonValueChanged(_:)), for: UIControlEvents.valueChanged)
                 cell!.accessoryView = switchButton
             }
 
             let switchButton = cell!.accessoryView as! UISwitch
             let (key, text, _) = configSections[indexPath.section - 2]
-            switchButton.on = Settings.boolForKey(key)
+            switchButton.isOn = Settings.boolForKey(key)
             switchButton.tag = indexPath.section - 2
 
             let textLabel : UILabel? = cell!.textLabel
@@ -192,18 +192,18 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         return cell!
     }
 
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        controller.dismissViewControllerAnimated(true, completion: {})
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: {})
     }
 
-    func switchButtonValueChanged(switchButton: UISwitch!) {
+    func switchButtonValueChanged(_ switchButton: UISwitch!) {
         let index = switchButton.tag
         let (key, _, _) = configSections[index]
         Settings.setBool(!Settings.boolForKey(key), forKey: key)
     }
 
     @IBAction func dismissAction() {
-        navigationController!.dismissViewControllerAnimated(true, completion: nil)
+        navigationController!.dismiss(animated: true, completion: nil)
     }
 
 }

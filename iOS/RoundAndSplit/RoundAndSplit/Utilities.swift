@@ -23,18 +23,18 @@
 import UIKit
 
 struct Utilities {
-    static func L(key: String) -> String {
-        return NSLocalizedString(key, tableName: nil, bundle: NSBundle.mainBundle(), value: key, comment: "")
+    static func L(_ key: String) -> String {
+        return NSLocalizedString(key, tableName: nil, bundle: Bundle.main, value: key, comment: "")
     }
 
     static func bundleShortVersion() -> String {
-        return NSBundle.mainBundle().objectForInfoDictionaryKey(Constants.CFBundleShortVersionString) as! String
+        return Bundle.main.object(forInfoDictionaryKey: Constants.CFBundleShortVersionString) as! String
     }
 
-    static func showEmailDisabledAlert(viewController: UIViewController) {
-        let alert = UIAlertController(title: L("Cannot Compose Email"), message: L("You can open the Mail app to set it up."), preferredStyle: .Alert)
-        let action = UIAlertAction(title: L("Dismiss"), style: .Default, handler: nil)
+    static func showEmailDisabledAlert(_ viewController: UIViewController) {
+        let alert = UIAlertController(title: L("Cannot Compose Email"), message: L("You can open the Mail app to set it up."), preferredStyle: .alert)
+        let action = UIAlertAction(title: L("Dismiss"), style: .default, handler: nil)
         alert.addAction(action)
-        viewController.presentViewController(alert, animated: true, completion: nil)
+        viewController.present(alert, animated: true, completion: nil)
     }
 }

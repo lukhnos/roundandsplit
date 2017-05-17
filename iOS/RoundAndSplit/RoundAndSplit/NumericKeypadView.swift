@@ -23,7 +23,7 @@
 import UIKit
 
 protocol NumericKeypadDelegate {
-    func numberTapped(number: Int)
+    func numberTapped(_ number: Int)
     func clearTapped()
     func backspaceTapped()
 }
@@ -32,16 +32,16 @@ class NumericKeypadView : UIView {
     var delegate : NumericKeypadDelegate?
     var gridView = GridView()
 
-    var keyPadBackgroudColor : UIColor = UIColor.whiteColor() {
+    var keyPadBackgroudColor : UIColor = UIColor.white {
         didSet {
             for label in labels {
-                label.layer.backgroundColor = keyPadBackgroudColor.CGColor
+                label.layer.backgroundColor = keyPadBackgroudColor.cgColor
             }
         }
     }
 
-    var keyPadHighlightColor = UIColor.lightGrayColor()
-    var keyPadTextColor : UIColor = UIColor.blackColor() {
+    var keyPadHighlightColor = UIColor.lightGray
+    var keyPadTextColor : UIColor = UIColor.black {
         didSet {
             for label in labels {
                 label.textColor = keyPadTextColor
@@ -49,17 +49,17 @@ class NumericKeypadView : UIView {
         }
     }
 
-    var keyPadTextHighlightColor = UIColor.whiteColor()
+    var keyPadTextHighlightColor = UIColor.white
 
-    private var selectedKey = -1
-    private var labels = [OffsetLabel]()
+    fileprivate var selectedKey = -1
+    fileprivate var labels = [OffsetLabel]()
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
         for i in 0..<12 {
             var label : OffsetLabel
-            label = OffsetLabel(frame: CGRectZero)
+            label = OffsetLabel(frame: CGRect.zero)
 
             // Add zero-width space (U+200B) to work around the problem on
             // iOS 7 that, if there's only one number character, tabular
@@ -82,18 +82,18 @@ class NumericKeypadView : UIView {
             label.accessibilityTraits |= UIAccessibilityTraitButton
 
             labels.append(label)
-            label.layer.backgroundColor = keyPadBackgroudColor.CGColor
-            label.textAlignment = NSTextAlignment.Center
-            label.opaque = true
+            label.layer.backgroundColor = keyPadBackgroudColor.cgColor
+            label.textAlignment = NSTextAlignment.center
+            label.isOpaque = true
             addSubview(label)
         }
 
-        gridView.backgroundColor = UIColor.clearColor()
-        gridView.opaque = true
+        gridView.backgroundColor = UIColor.clear
+        gridView.isOpaque = true
         addSubview(gridView)
     }
 
-    func setLabelFonts(numberFont: UIFont, clearFont: UIFont) {
+    func setLabelFonts(_ numberFont: UIFont, clearFont: UIFont) {
         for i in 0..<12 {
             let label = labels[i]
 
@@ -109,12 +109,12 @@ class NumericKeypadView : UIView {
         setNeedsDisplay()
     }
 
-    func setClearLabelInset(inset: UIEdgeInsets) {
+    func setClearLabelInset(_ inset: UIEdgeInsets) {
         labels[9].inset = inset
         setNeedsDisplay()
     }
 
-    func setBackspaceLabelInset(inset: UIEdgeInsets) {
+    func setBackspaceLabelInset(_ inset: UIEdgeInsets) {
         labels[11].inset = inset
         setNeedsDisplay()
     }
@@ -127,8 +127,8 @@ class NumericKeypadView : UIView {
         gridView.frame = bounds
     }
 
-    private func pointToKeyIndex(point: CGPoint) -> Int {
-        if (!CGRectContainsPoint(self.bounds, point)) {
+    fileprivate func pointToKeyIndex(_ point: CGPoint) -> Int {
+        if (!self.bounds.contains(point)) {
             return -1
         }
         let keyW = self.bounds.width / 3.0
@@ -138,7 +138,7 @@ class NumericKeypadView : UIView {
         return yIndex * 3 + xIndex
     }
 
-    private func keyRect(index: Int) -> CGRect {
+    fileprivate func keyRect(_ index: Int) -> CGRect {
         let keyW = round(self.bounds.width / 3.0)
         let keyH = round(self.bounds.height / 4.0)
         let origin = CGPoint(x: (CGFloat(index % 3) * keyW), y: (CGFloat(index / 3) * keyH))
@@ -146,66 +146,66 @@ class NumericKeypadView : UIView {
         return CGRect(origin: origin, size: size)
     }
 
-    private func getSelectedLabel(index: Int) -> UILabel? {
+    fileprivate func getSelectedLabel(_ index: Int) -> UILabel? {
         if index >= 0 && index < labels.count {
             return labels[index]
         }
         return nil
     }
 
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
-        let loc = touch.locationInView(self)
+        let loc = touch.location(in: self)
         let endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
             if let oldLabel = getSelectedLabel(selectedKey) {
-                oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
+                oldLabel.layer.backgroundColor = keyPadBackgroudColor.cgColor
                 oldLabel.textColor = keyPadTextColor
             }
 
             selectedKey = endSelectedKey
             if let newLabel = getSelectedLabel(selectedKey) {
-                newLabel.layer.backgroundColor = keyPadHighlightColor.CGColor
+                newLabel.layer.backgroundColor = keyPadHighlightColor.cgColor
                 newLabel.textColor = keyPadTextHighlightColor
             }
         }
     }
 
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
-        let loc = touch.locationInView(self)
+        let loc = touch.location(in: self)
         let endSelectedKey = pointToKeyIndex(loc)
         if endSelectedKey != selectedKey {
             if let oldLabel = getSelectedLabel(selectedKey) {
-                oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
+                oldLabel.layer.backgroundColor = keyPadBackgroudColor.cgColor
                 oldLabel.textColor = keyPadTextColor
             }
 
             selectedKey = endSelectedKey
             if let newLabel = getSelectedLabel(selectedKey) {
-                newLabel.layer.backgroundColor = keyPadHighlightColor.CGColor
+                newLabel.layer.backgroundColor = keyPadHighlightColor.cgColor
                 newLabel.textColor = keyPadTextHighlightColor
             }
         }
     }
 
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let oldLabel = getSelectedLabel(selectedKey) {
-            oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
+            oldLabel.layer.backgroundColor = keyPadBackgroudColor.cgColor
             oldLabel.textColor = keyPadTextColor
         }
 
         selectedKey = -1
     }
 
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
-        let loc = touch.locationInView(self)
+        let loc = touch.location(in: self)
         let endSelectedKey = pointToKeyIndex(loc)
 
         if endSelectedKey != selectedKey {
             if let oldLabel = getSelectedLabel(selectedKey) {
-                oldLabel.layer.backgroundColor = keyPadBackgroudColor.CGColor
+                oldLabel.layer.backgroundColor = keyPadBackgroudColor.cgColor
                 oldLabel.textColor = keyPadTextColor
             }
         } else if selectedKey != -1 {
@@ -222,8 +222,8 @@ class NumericKeypadView : UIView {
             }
 
             if let oldLabel = getSelectedLabel(selectedKey) {
-                UIView.animateWithDuration(0.2, animations: {
-                    oldLabel.layer.backgroundColor = self.keyPadBackgroudColor.CGColor
+                UIView.animate(withDuration: 0.2, animations: {
+                    oldLabel.layer.backgroundColor = self.keyPadBackgroudColor.cgColor
                     oldLabel.textColor = self.keyPadTextColor
                 })
             }
@@ -233,22 +233,22 @@ class NumericKeypadView : UIView {
     }
 
     class GridView : UIView {
-        var gridColor = UIColor.darkGrayColor()
+        var gridColor = UIColor.darkGray
 
-        override func drawRect(rect: CGRect) {
+        override func draw(_ rect: CGRect) {
             let path = UIBezierPath()
 
             let keyW = round(self.bounds.width / 3.0)
             let keyH = round(self.bounds.height / 4.0)
 
-            for var x = 1; x < 3; x++ {
-                path.moveToPoint(CGPoint(x: CGFloat(x) * keyW, y: 0))
-                path.addLineToPoint(CGPoint(x: CGFloat(x) * keyW, y: self.bounds.height))
+            for x in 1 ..< 3 {
+                path.move(to: CGPoint(x: CGFloat(x) * keyW, y: 0))
+                path.addLine(to: CGPoint(x: CGFloat(x) * keyW, y: self.bounds.height))
             }
 
-            for var y = 1; y < 4; y++ {
-                path.moveToPoint(CGPoint(x: 0, y: CGFloat(y) * keyH))
-                path.addLineToPoint(CGPoint(x: self.bounds.width, y: CGFloat(y) * keyH))
+            for y in 1 ..< 4 {
+                path.move(to: CGPoint(x: 0, y: CGFloat(y) * keyH))
+                path.addLine(to: CGPoint(x: self.bounds.width, y: CGFloat(y) * keyH))
             }
             
             gridColor.setStroke()
@@ -257,9 +257,9 @@ class NumericKeypadView : UIView {
     }
 
     class OffsetLabel : UILabel {
-        var inset : UIEdgeInsets = UIEdgeInsetsZero
-        override func drawTextInRect(rect: CGRect) {
-            super.drawTextInRect(UIEdgeInsetsInsetRect(rect, inset))
+        var inset : UIEdgeInsets = UIEdgeInsets.zero
+        override func drawText(in rect: CGRect) {
+            super.drawText(in: UIEdgeInsetsInsetRect(rect, inset))
         }
     }
 }

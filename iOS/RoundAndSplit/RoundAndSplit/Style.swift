@@ -24,41 +24,41 @@ import UIKit
 
 struct Style {
     enum ScreenSize {
-        case Normal, Large, ExtraLarge
+        case normal, large, extraLarge
     }
     typealias FontSizes = Dictionary<ScreenSize, UIFont>
 
-    static func hexColor(color: UInt) -> UIColor {
+    static func hexColor(_ color: UInt) -> UIColor {
         let r = (CGFloat)((color >> 16) & 0xff) / 255.0
         let g = (CGFloat)((color >> 8) & 0xff) / 255.0
         let b = (CGFloat)(color & 0xff) / 255.0
         return UIColor(red: r, green: g, blue: b, alpha: 1.0)
     }
 
-    static func tabularFigureFont(font: UIFont) -> UIFont {
+    static func tabularFigureFont(_ font: UIFont) -> UIFont {
         let attrs = [
             UIFontDescriptorFeatureSettingsAttribute: [[
                 UIFontFeatureTypeIdentifierKey: kNumberSpacingType,
                 UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector],]]
-        let fontDescriptor : UIFontDescriptor = font.fontDescriptor()
-        let tabularFigureDescriptor = fontDescriptor.fontDescriptorByAddingAttributes(attrs)
+        let fontDescriptor : UIFontDescriptor = font.fontDescriptor
+        let tabularFigureDescriptor = fontDescriptor.addingAttributes(attrs)
         let tabularFigureFont = UIFont(descriptor: tabularFigureDescriptor, size: 0.0)
         return tabularFigureFont
     }
 
-    static func regularFont(size: CGFloat) -> UIFont {
+    static func regularFont(_ size: CGFloat) -> UIFont {
         return UIFont(name: "FiraSans-Light", size: size)!
     }
 
-    static func boldFont(size: CGFloat) -> UIFont {
+    static func boldFont(_ size: CGFloat) -> UIFont {
         return UIFont(name: "FiraSans-Regular", size: size)!
     }
 
-    static func fontSizes(base: UIFont, _ largeSize: CGFloat, _ extraLargeSize: CGFloat) -> FontSizes {
+    static func fontSizes(_ base: UIFont, _ largeSize: CGFloat, _ extraLargeSize: CGFloat) -> FontSizes {
         return [
-            .Normal: base,
-            .Large: UIFont(descriptor: base.fontDescriptor(), size: largeSize),
-            .ExtraLarge: UIFont(descriptor: base.fontDescriptor(), size: extraLargeSize)
+            .normal: base,
+            .large: UIFont(descriptor: base.fontDescriptor, size: largeSize),
+            .extraLarge: UIFont(descriptor: base.fontDescriptor, size: extraLargeSize)
         ]
     }
 

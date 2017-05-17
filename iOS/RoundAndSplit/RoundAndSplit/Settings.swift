@@ -25,7 +25,7 @@ import UIKit
 struct Settings {
     static let UseDecimalPointKey = "UseDecimalPoint"
 
-    private static let defaultBoolValues = [
+    fileprivate static let defaultBoolValues = [
         UseDecimalPointKey: true
     ]
 
@@ -43,7 +43,7 @@ struct Settings {
 
     static var tippingRate : TippingRate {
     get {
-        if let rateStr = defaults.stringForKey(TippingRateKey) {
+        if let rateStr = defaults.string(forKey: TippingRateKey) {
             if let rate = TippingRate(rawValue: rateStr) {
                 return rate
             }
@@ -55,8 +55,8 @@ struct Settings {
     }
     }
 
-    static func boolForKey(key: String) -> Bool {
-        if let value: Bool = defaults.valueForKey(UseDecimalPointKey) as? Bool {
+    static func boolForKey(_ key: String) -> Bool {
+        if let value: Bool = defaults.value(forKey: UseDecimalPointKey) as? Bool {
             return value
         }
 
@@ -67,15 +67,15 @@ struct Settings {
         return false
     }
 
-    static func setBool(value: Bool, forKey key: String) {
-        defaults.setBool(value, forKey:key)
+    static func setBool(_ value: Bool, forKey key: String) {
+        defaults.set(value, forKey:key)
     }
 
-    private static let TippingRateKey = "TippingRate"
+    fileprivate static let TippingRateKey = "TippingRate"
 
-    private static var defaults : NSUserDefaults {
+    fileprivate static var defaults : UserDefaults {
         get {
-            return NSUserDefaults.standardUserDefaults()
+            return UserDefaults.standard
     }
     }
 }

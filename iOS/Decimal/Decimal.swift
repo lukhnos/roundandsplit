@@ -33,7 +33,7 @@ struct Decimal : Equatable, Comparable {
     }
 
     init(_ n: Int) {
-        number = NSDecimalNumber(integer: n)
+        number = NSDecimalNumber(value: n)
     }
 
     init(_ n: String) {
@@ -47,9 +47,9 @@ struct Decimal : Equatable, Comparable {
         number = NSDecimalNumber(mantissa: m, exponent: e, isNegative: n)
     }
 
-    func rounded(mode: NSRoundingMode, _ scale: Int) -> Decimal {
+    func rounded(_ mode: NSDecimalNumber.RoundingMode, _ scale: Int) -> Decimal {
         let r = Rounder(mode: mode, scale: scale)
-        let n = number.decimalNumberByRoundingAccordingToBehavior(r)
+        let n = number.rounding(accordingToBehavior: r)
         return Decimal(n)
     }
 
@@ -57,20 +57,20 @@ struct Decimal : Equatable, Comparable {
         return number.stringValue
     }
 
-    func string(formatter: NSNumberFormatter) -> String {
-        return formatter.stringFromNumber(number)!
+    func string(_ formatter: NumberFormatter) -> String {
+        return formatter.string(from: number)!
     }
 
     class Rounder : NSDecimalNumberBehaviors {
-        var mode: NSRoundingMode;
+        var mode: NSDecimalNumber.RoundingMode;
         var roundingScale : Int16
 
-        init(mode m: NSRoundingMode, scale s: Int) {
+        init(mode m: NSDecimalNumber.RoundingMode, scale s: Int) {
             mode = m
             roundingScale = Int16(s)
         }
 
-        @objc func roundingMode() -> NSRoundingMode {
+        @objc func roundingMode() -> NSDecimalNumber.RoundingMode {
             return mode
         }
 
@@ -78,9 +78,9 @@ struct Decimal : Equatable, Comparable {
             return roundingScale
         }
 
-        @objc func exceptionDuringOperation(operation: Selector, error: NSCalculationError, leftOperand: NSDecimalNumber, rightOperand: NSDecimalNumber?) -> NSDecimalNumber?
+        @objc func exceptionDuringOperation(_ operation: Selector, error: NSDecimalNumber.CalculationError, leftOperand: NSDecimalNumber, rightOperand: NSDecimalNumber?) -> NSDecimalNumber?
         {
-            return NSDecimalNumber.notANumber()
+            return NSDecimalNumber.notANumber
         }
     }
 }
@@ -90,38 +90,38 @@ func==(lhs: Decimal, rhs: Decimal) -> Bool {
 }
 
 func <(lhs: Decimal, rhs: Decimal) -> Bool {
-    return lhs.number.compare(rhs.number) == NSComparisonResult.OrderedAscending
+    return lhs.number.compare(rhs.number) == ComparisonResult.orderedAscending
 }
 
 func + (left: Decimal, right: Decimal) -> Decimal {
-    return Decimal(left.number.decimalNumberByAdding(right.number))
+    return Decimal(left.number.adding(right.number))
 }
 
 func - (left: Decimal, right: Decimal) -> Decimal {
-    return Decimal(left.number.decimalNumberBySubtracting(right.number))
+    return Decimal(left.number.subtracting(right.number))
 }
 
 func * (left: Decimal, right: Decimal) -> Decimal {
-    return Decimal(left.number.decimalNumberByMultiplyingBy(right.number))
+    return Decimal(left.number.multiplying(by: right.number))
 }
 
 func / (left: Decimal, right: Decimal) -> Decimal {
-    return Decimal(left.number.decimalNumberByDividingBy(right.number))
+    return Decimal(left.number.dividing(by: right.number))
 }
 
-func roundUp(number: Decimal, _ scale: Int = 0) -> Decimal {
-    return number.rounded(.RoundUp, scale)
+func roundUp(_ number: Decimal, _ scale: Int = 0) -> Decimal {
+    return number.rounded(.up, scale)
 }
 
-func roundDown(number: Decimal, _ scale: Int = 0) -> Decimal {
-    return number.rounded(.RoundDown, scale)
+func roundDown(_ number: Decimal, _ scale: Int = 0) -> Decimal {
+    return number.rounded(.down, scale)
 }
 
-func round(number: Decimal, _ scale: Int = 0) -> Decimal {
-    return number.rounded(.RoundPlain, scale)
+func round(_ number: Decimal, _ scale: Int = 0) -> Decimal {
+    return number.rounded(.plain, scale)
 }
 
-func abs(number: Decimal) -> Decimal {
+func abs(_ number: Decimal) -> Decimal {
     if number < Decimal(0) {
         return number * Decimal(-1)
     } else {
