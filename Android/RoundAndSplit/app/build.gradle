@@ -29,9 +29,9 @@ android {
     defaultConfig {
         applicationId "org.lukhnos.roundandsplit"
         minSdkVersion 15
-        versionCode 7
-        versionName "1.1"
         targetSdkVersion 25
+        versionCode 8
+        versionName "1.2"
     }
     buildTypes {
         release {
