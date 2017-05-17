@@ -43,7 +43,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         (
             Settings.UseDecimalPointKey,
             Utilities.L("Use \".\" for Decimal Point"),
-            Utilities.L("By default, the app assumes you are living or traveling in a region where \".\" is used – for example, 9.99. If turned off, it will observe the Region Format settings on your phone.")
+            Utilities.L("By default, the app assumes you are living or traveling in a region where \".\" is used – for example, 9.99. When turned off, it will observe the Region Format settings on your phone.")
         )
     ]
 

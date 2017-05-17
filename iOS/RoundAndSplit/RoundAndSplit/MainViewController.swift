@@ -282,11 +282,11 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
 
     @IBAction func requestOrPay() {
-        let sheet = UIAlertController(title: Utilities.L("Send a reminder email\nYou can adjust the amount later."), message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: Utilities.L("Send a reminder?\nYou can adjust the amount later."), message: nil, preferredStyle: .actionSheet)
 
         let amount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
         let requestTitle = String(format: Utilities.L("Request %@"), amount)
-        let payTitle = String(format: Utilities.L("Pay %@"), amount)
+        let payTitle = String(format: Utilities.L("Email that I Owe %@"), amount)
 
         let requestAction = UIAlertAction(title: requestTitle, style: UIAlertActionStyle.default, handler: { (action) -> Void in
             self.requestingMoney = true
@@ -298,8 +298,8 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         })
         let cancelAction = UIAlertAction(title: Utilities.L("Cancel"), style: .cancel, handler: nil)
 
-        sheet.addAction(payAction)
         sheet.addAction(requestAction)
+        sheet.addAction(payAction)
         sheet.addAction(cancelAction)
         present(sheet, animated: true, completion: nil)
     }
@@ -314,9 +314,9 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         let controller = MFMailComposeViewController()
         controller.mailComposeDelegate = self
         if requestingMoney {
-            controller.setSubject(String(format: Utilities.L("Requesting %@"), splitAmount))
+            controller.setSubject(String(format: Utilities.L("You owe me %@"), splitAmount))
         } else {
-            controller.setSubject(String(format: Utilities.L("Paid %@"), splitAmount))
+            controller.setSubject(String(format: Utilities.L("I owe you %@"), splitAmount))
         }
         present(controller, animated: true, completion: {})
     }
