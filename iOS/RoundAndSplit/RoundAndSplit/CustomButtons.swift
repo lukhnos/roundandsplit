@@ -53,7 +53,7 @@ class CustomButton : ExtendedHitAreaButton {
     }
 }
 
-// A square-bordered button used for the Split and Request/Pay feature
+// A square-bordered button used for the Split and Email Reminder feature
 class SquareBorderButton : CustomButton {
     var borderInsetDeltaX : CGFloat = 1.0
     var borderInsetDeltaY : CGFloat = 1.0
