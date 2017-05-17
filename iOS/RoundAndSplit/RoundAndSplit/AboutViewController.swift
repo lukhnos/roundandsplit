@@ -32,7 +32,6 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
     let aboutSectionTitles = [
         Utilities.L("Version"),
         Utilities.L("Acknowledgments"),
-        Utilities.L("Disclaimer"),
     ]
 
     let actionableSectionTitles = [
@@ -90,13 +89,8 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             return
         }
 
-        if indexPath.section == 0 {
-            var file : String
-            if indexPath.row == 1 {
-                file = "Acknowledgments"
-            } else {
-                file = "Disclaimer"
-            }
+        if indexPath.section == 0 && indexPath.row == 1 {
+            let file = "Acknowledgments"
             let url = Bundle.main.url(forResource: file, withExtension: "txt")
             var body: String?
             do {

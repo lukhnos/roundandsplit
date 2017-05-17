@@ -282,7 +282,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
 
     @IBAction func requestOrPay() {
-        let sheet = UIAlertController(title: Utilities.L("Split with Square® Cash?\nYou can adjust the amount later."), message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: Utilities.L("Send a reminder email\nYou can adjust the amount later."), message: nil, preferredStyle: .actionSheet)
 
         let amount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
         let requestTitle = String(format: Utilities.L("Request %@"), amount)
@@ -306,12 +306,18 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
     func payReqeuestAction() {
         let splitAmount = (currentTip.total / Decimal("2")).string(requestCurrencyFormatter)
+        if !MFMailComposeViewController.canSendMail() {
+            Utilities.showEmailDisabledAlert(self)
+            return
+        }
 
-        let addr =  requestingMoney ? "request@square.com" : "cash@square.com"
         let controller = MFMailComposeViewController()
         controller.mailComposeDelegate = self
-        controller.setSubject(splitAmount)
-        controller.setCcRecipients([addr])
+        if requestingMoney {
+            controller.setSubject(String(format: Utilities.L("Requesting %@"), splitAmount))
+        } else {
+            controller.setSubject(String(format: Utilities.L("Paid %@"), splitAmount))
+        }
         present(controller, animated: true, completion: {})
     }
 
@@ -319,12 +325,12 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         controller.dismiss(animated: true, completion: {})
 
         if result.rawValue == MFMailComposeResult.sent.rawValue {
-            let title = Utilities.L("Check Your Email")
+            let title = Utilities.L("Email Sent")
             let message : String
             if requestingMoney {
-                message = Utilities.L("You will receive an email from Square® to confirm your request.")
+                message = Utilities.L("A reminder email about your request is sent.")
             } else {
-                message = Utilities.L("You will receive an email from Square® to confirm your payment.")
+                message = Utilities.L("An email about your payment is sent.")
             }
 
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

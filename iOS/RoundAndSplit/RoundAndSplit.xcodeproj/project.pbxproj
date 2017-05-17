@@ -17,7 +17,6 @@
 		6A6D685219D023B200CB8153 /* FiraSans-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6A6D685119D023B200CB8153 /* FiraSans-Light.otf */; };
 		6A9A98B0198C889B001DA27D /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9A98AF198C889B001DA27D /* Settings.swift */; };
 		6AAA8C9319B29BE40010F931 /* Acknowledgments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6AAA8C9519B29BE40010F931 /* Acknowledgments.txt */; };
-		6AAA8C9619B29BFB0010F931 /* Disclaimer.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6AAA8C9819B29BFB0010F931 /* Disclaimer.txt */; };
 		6AAA8C9919B29DC10010F931 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6AAA8C9B19B29DC10010F931 /* InfoPlist.strings */; };
 		6AC4BEA8196A70A70013BF51 /* NumericKeypadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC4BEA7196A70A70013BF51 /* NumericKeypadView.swift */; };
 		6AD8F44A1961273800C31CFD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AD8F44C1961273800C31CFD /* Main.storyboard */; };
@@ -54,7 +53,6 @@
 		6A6D685119D023B200CB8153 /* FiraSans-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Light.otf"; sourceTree = "<group>"; };
 		6A9A98AF198C889B001DA27D /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		6AAA8C9419B29BE40010F931 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/Acknowledgments.txt; sourceTree = "<group>"; };
-		6AAA8C9719B29BFB0010F931 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/Disclaimer.txt; sourceTree = "<group>"; };
 		6AAA8C9A19B29DC10010F931 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6AC4BEA7196A70A70013BF51 /* NumericKeypadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumericKeypadView.swift; sourceTree = "<group>"; };
 		6AD8F44B1961273800C31CFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -187,7 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				6AAA8C9519B29BE40010F931 /* Acknowledgments.txt */,
-				6AAA8C9819B29BFB0010F931 /* Disclaimer.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -275,7 +272,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AAA8C9619B29BFB0010F931 /* Disclaimer.txt in Resources */,
 				6AAA8C9919B29DC10010F931 /* InfoPlist.strings in Resources */,
 				6ADC4EDE195EA4BB00463CFD /* FiraSans-Regular.otf in Resources */,
 				6A1D84C619857F9F00C45E82 /* FiraSans-Medium.otf in Resources */,
@@ -344,14 +340,6 @@
 				6AAA8C9419B29BE40010F931 /* Base */,
 			);
 			name = Acknowledgments.txt;
-			sourceTree = "<group>";
-		};
-		6AAA8C9819B29BFB0010F931 /* Disclaimer.txt */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6AAA8C9719B29BFB0010F931 /* Base */,
-			);
-			name = Disclaimer.txt;
 			sourceTree = "<group>";
 		};
 		6AAA8C9B19B29DC10010F931 /* InfoPlist.strings */ = {

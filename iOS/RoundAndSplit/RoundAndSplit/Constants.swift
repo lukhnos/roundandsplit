@@ -26,6 +26,4 @@ struct Constants {
     static let CFBundleShortVersionString = "CFBundleShortVersionString"
     static let WebSiteURL = URL(string: "https://roundandsplit.lukhnos.org")!
     static let ContactEmail = "contact@roundandsplit.lukhnos.org"
-    static let SquareCash = "cash@square.com"
-    static let SquareRequest = "request@square.com"
 }
