@@ -51,7 +51,7 @@ point is that I want neither overtipping nor undertipping too much.
 ### iOS
 
 Make sure you have the latest version of Xcode installed. At the time
-of writing, that is Xcode 6 running on OS X 10.9.4 or higher.
+of writing, that is Xcode 8.3.2 running on macOS 10.12.4 or higher.
 
 To build Round & Split from source code, follow the steps below:
 
