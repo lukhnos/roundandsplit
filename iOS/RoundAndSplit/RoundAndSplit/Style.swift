@@ -37,9 +37,9 @@ struct Style {
 
     static func tabularFigureFont(_ font: UIFont) -> UIFont {
         let attrs = [
-            UIFontDescriptorFeatureSettingsAttribute: [[
-                UIFontFeatureTypeIdentifierKey: kNumberSpacingType,
-                UIFontFeatureSelectorIdentifierKey: kMonospacedNumbersSelector],]]
+            UIFontDescriptor.AttributeName.featureSettings: [[
+                UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
+                UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector],]]
         let fontDescriptor : UIFontDescriptor = font.fontDescriptor
         let tabularFigureDescriptor = fontDescriptor.addingAttributes(attrs)
         let tabularFigureFont = UIFont(descriptor: tabularFigureDescriptor, size: 0.0)

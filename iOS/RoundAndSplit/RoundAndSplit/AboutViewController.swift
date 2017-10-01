@@ -190,7 +190,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         controller.dismiss(animated: true, completion: {})
     }
 
-    func switchButtonValueChanged(_ switchButton: UISwitch!) {
+    @objc func switchButtonValueChanged(_ switchButton: UISwitch!) {
         let index = switchButton.tag
         let (key, _, _) = configSections[index]
         Settings.setBool(!Settings.boolForKey(key), forKey: key)

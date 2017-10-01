@@ -260,7 +260,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
     func backspaceTapped() {
         if !keypadString.isEmpty {
-            keypadString = keypadString.substring(to: keypadString.characters.index(before: keypadString.endIndex))
+            keypadString = String(keypadString.dropLast())
             update()
         }
     }
@@ -340,7 +340,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         }
     }
 
-    func currentLocaleDidChange(_ notification: Notification!) {
+    @objc func currentLocaleDidChange(_ notification: Notification!) {
         updateFormatters()
         update()
     }

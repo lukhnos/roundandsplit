@@ -148,7 +148,7 @@ class ButtonStripView : ExtendedHitAreaView {
         updateUnderline()
     }
 
-    func buttonAction(_ button : AccessibileButton) {
+    @objc func buttonAction(_ button : AccessibileButton) {
         activeButton = button
         let index = buttons.index(of: button)
 
