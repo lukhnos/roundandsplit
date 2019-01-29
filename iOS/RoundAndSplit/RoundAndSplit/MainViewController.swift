@@ -275,7 +275,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
             return
         }
 
-        if keypadString.characters.count < 6 {
+        if keypadString.count < 6 {
             keypadString = keypadString + String(format: "%d", number)
             update()
         }
