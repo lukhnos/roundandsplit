@@ -116,7 +116,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             tableView.deselectRow(at: indexPath, animated: true)
 
             if indexPath.row == 0 {
-                UIApplication.shared.openURL(Constants.WebSiteURL as URL)
+                UIApplication.shared.open(Constants.WebSiteURL, options: [:], completionHandler: nil)
             } else {
                 if !MFMailComposeViewController.canSendMail() {
                     Utilities.showEmailDisabledAlert(self)
