@@ -30,8 +30,8 @@ android {
         applicationId "org.lukhnos.roundandsplit"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 9
-        versionName "1.4"
+        versionCode 65
+        versionName "1.5"
     }
     buildTypes {
         release {
