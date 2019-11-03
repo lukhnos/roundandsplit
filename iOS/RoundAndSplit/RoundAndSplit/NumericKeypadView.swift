@@ -128,6 +128,13 @@ class NumericKeypadView : UIView {
         gridView.frame = bounds
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        for label in labels {
+            label.layer.backgroundColor = keyPadBackgroudColor.cgColor
+        }
+    }
+
     fileprivate func pointToKeyIndex(_ point: CGPoint) -> Int {
         if (!self.bounds.contains(point)) {
             return -1

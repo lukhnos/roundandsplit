@@ -156,9 +156,9 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         infoButton.highlightedFillColor = Style.moreInfoButtonHighlightedColor
         infoButton.disabledFillColor = Style.moreInfoButtonHighlightedColor
 
-        infoButton.setTitleColor(UIColor.white, for: UIControl.State())
-        infoButton.setTitleColor(UIColor.white, for: .highlighted)
-        infoButton.setTitleColor(UIColor.white, for: .disabled)
+        infoButton.setTitleColor(Style.moreInfoButtonTextColor, for: UIControl.State())
+        infoButton.setTitleColor(Style.moreInfoButtonTextColor, for: .highlighted)
+        infoButton.setTitleColor(Style.moreInfoButtonTextColor, for: .disabled)
 
         splitAndPayButton.titleLabel?.font = Style.splitButtonFonts[screenSize]!
         splitAndPayButton.setTitleColor(Style.buttonTitleColorNormal, for: UIControl.State())
@@ -185,6 +185,9 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         buttonStripView.addButtonsWithLabels(["15%", "18%", "20%"], activeIndex: activeIndex)
 
         numericKeypadView.gridView.gridColor = Style.dividingLineColor
+        if #available(iOS 13, *) {
+            numericKeypadView.keyPadBackgroudColor = UIColor.systemBackground
+        }
         numericKeypadView.keyPadTextColor = Style.textColor
         numericKeypadView.keyPadHighlightColor = Style.keypadHighlightColor
         numericKeypadView.setLabelFonts(Style.keypadLabelFonts[screenSize]!, clearFont: Style.keypadSmallLabelFonts[screenSize]!)

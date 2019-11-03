@@ -10,6 +10,7 @@
 		6A08110D19B2556700817C7E /* DecimalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A08110C19B2556700817C7E /* DecimalTests.swift */; };
 		6A08110E19B2565200817C7E /* Decimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADC4ED5195EA21300463CFD /* Decimal.swift */; };
 		6A1C945F236F7A0D001D897B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A1C945E236F7A0D001D897B /* LaunchScreen.storyboard */; };
+		6A1C9461236F85A7001D897B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A1C9460236F85A7001D897B /* Colors.xcassets */; };
 		6A1D8497198575DA00C45E82 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1D8496198575DA00C45E82 /* Style.swift */; };
 		6A1D84C619857F9F00C45E82 /* FiraSans-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6A1D84C519857F9F00C45E82 /* FiraSans-Medium.otf */; };
 		6A1D84C819857FBF00C45E82 /* CustomButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1D84C719857FBF00C45E82 /* CustomButtons.swift */; };
@@ -47,6 +48,7 @@
 /* Begin PBXFileReference section */
 		6A08110C19B2556700817C7E /* DecimalTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DecimalTests.swift; path = ../Decimal/DecimalTests.swift; sourceTree = "<group>"; };
 		6A1C945E236F7A0D001D897B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6A1C9460236F85A7001D897B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		6A1D8496198575DA00C45E82 /* Style.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		6A1D84C519857F9F00C45E82 /* FiraSans-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Medium.otf"; sourceTree = "<group>"; };
 		6A1D84C719857FBF00C45E82 /* CustomButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtons.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				6A1D8496198575DA00C45E82 /* Style.swift */,
 				6ADC4ED7195EA2B700463CFD /* Tipping.swift */,
 				6AF5A1F1199F5CEB00566B5E /* Utilities.swift */,
+				6A1C9460236F85A7001D897B /* Colors.xcassets */,
 				6ADC4EBE195E9BF300463CFD /* Images.xcassets */,
 				6A1C945E236F7A0D001D897B /* LaunchScreen.storyboard */,
 				6AD8F44C1961273800C31CFD /* Main.storyboard */,
@@ -275,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A1C9461236F85A7001D897B /* Colors.xcassets in Resources */,
 				6AAA8C9919B29DC10010F931 /* InfoPlist.strings in Resources */,
 				6A1C945F236F7A0D001D897B /* LaunchScreen.storyboard in Resources */,
 				6ADC4EDE195EA4BB00463CFD /* FiraSans-Regular.otf in Resources */,

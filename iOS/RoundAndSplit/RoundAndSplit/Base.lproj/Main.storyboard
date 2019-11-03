@@ -41,7 +41,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="0iF-Uk-rDc"/>
                                     <constraint firstAttribute="trailing" secondItem="vlt-xU-WIl" secondAttribute="trailing" constant="36" id="2Ib-iJ-8gA"/>
@@ -162,10 +162,10 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LyN-YV-Xl6" customClass="NumericKeypadView" customModule="RoundAndSplit" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="290" width="414" height="446"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="gNu-cT-csw" firstAttribute="leading" secondItem="gqa-8M-MXM" secondAttribute="leading" id="0xd-62-bU1"/>
                             <constraint firstItem="LyN-YV-Xl6" firstAttribute="top" secondItem="NY1-OO-eS3" secondAttribute="bottom" id="8Cr-Jz-4O7"/>

@@ -28,13 +28,6 @@ struct Style {
     }
     typealias FontSizes = Dictionary<ScreenSize, UIFont>
 
-    static func hexColor(_ color: UInt) -> UIColor {
-        let r = (CGFloat)((color >> 16) & 0xff) / 255.0
-        let g = (CGFloat)((color >> 8) & 0xff) / 255.0
-        let b = (CGFloat)(color & 0xff) / 255.0
-        return UIColor(red: r, green: g, blue: b, alpha: 1.0)
-    }
-
     static func tabularFigureFont(_ font: UIFont) -> UIFont {
         let attrs = [
             UIFontDescriptor.AttributeName.featureSettings: [[
@@ -62,21 +55,22 @@ struct Style {
         ]
     }
 
-    static let infoDisplayBackgroundColor = Style.hexColor(0xf7f7f7)
+    static let infoDisplayBackgroundColor = UIColor(named: "InfoDisplayBackground")!
 
-    static let textColor = Style.hexColor(0x202020)
+    static let textColor = UIColor(named: "Text")!
 
-    static let moreInfoButtonNormalColor = Style.hexColor(0x909090)
-    static let moreInfoButtonHighlightedColor = Style.hexColor(0xb0b0b0)
+    static let moreInfoButtonNormalColor = UIColor(named: "MoreInfoButtonNormal")!
+    static let moreInfoButtonHighlightedColor = UIColor(named: "MoreInfoButtonHighlighted")!
+    static let moreInfoButtonTextColor = UIColor(named: "MoreInfoButtonText")!
 
-    static let buttonTitleColorNormal = Style.hexColor(0x59ac53)
-    static let buttonTitleColorHighlighted = Style.hexColor(0x9dd498)
-    static let buttonTitleColorDisabled = Style.hexColor(0xb0b0b0)
+    static let buttonTitleColorNormal = UIColor(named: "ButtonTitleNormal")!
+    static let buttonTitleColorHighlighted = UIColor(named: "ButtonTitleHighlighted")!
+    static let buttonTitleColorDisabled = UIColor(named: "ButtonTitleDisabled")!
 
-    static let dividingLineColor = Style.hexColor(0xeeeeee)
+    static let dividingLineColor = UIColor(named: "DividingLine")!
     static let effectiveRateLabelColor = textColor
 
-    static let keypadHighlightColor = Style.hexColor(0x86ca7f)
+    static let keypadHighlightColor = UIColor(named: "KeypadHighlight")!
 
     static let infoButtonFonts = Style.fontSizes(UIFont(name: "FiraSans-Medium", size: 16)!, 18, 22)
     static let billedAmountFonts = Style.fontSizes(Style.regularFont(40), 46, 52)
