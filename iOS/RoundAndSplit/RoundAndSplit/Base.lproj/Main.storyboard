@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4ol-q0-YRT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4ol-q0-YRT">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,10 +12,6 @@
         <scene sceneID="5DT-zW-jXb">
             <objects>
                 <viewController id="4ol-q0-YRT" customClass="MainViewController" customModule="RoundAndSplit" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="8SN-fS-5jR"/>
-                        <viewControllerLayoutGuide type="bottom" id="Hzt-Yx-Tdv"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Hi9-Zi-VBn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -170,23 +167,24 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="gNu-cT-csw" firstAttribute="leading" secondItem="Hi9-Zi-VBn" secondAttribute="leading" id="0xd-62-bU1"/>
+                            <constraint firstItem="gNu-cT-csw" firstAttribute="leading" secondItem="gqa-8M-MXM" secondAttribute="leading" id="0xd-62-bU1"/>
                             <constraint firstItem="LyN-YV-Xl6" firstAttribute="top" secondItem="NY1-OO-eS3" secondAttribute="bottom" id="8Cr-Jz-4O7"/>
-                            <constraint firstItem="elG-k9-iBR" firstAttribute="leading" secondItem="Hi9-Zi-VBn" secondAttribute="leading" id="GM5-u6-z2r"/>
+                            <constraint firstItem="elG-k9-iBR" firstAttribute="leading" secondItem="gqa-8M-MXM" secondAttribute="leading" id="GM5-u6-z2r"/>
                             <constraint firstItem="LyN-YV-Xl6" firstAttribute="width" secondItem="Hi9-Zi-VBn" secondAttribute="width" id="K8j-8h-6fL"/>
-                            <constraint firstItem="LyN-YV-Xl6" firstAttribute="leading" secondItem="Hi9-Zi-VBn" secondAttribute="leading" id="N5h-WZ-Cdi"/>
+                            <constraint firstItem="LyN-YV-Xl6" firstAttribute="leading" secondItem="gqa-8M-MXM" secondAttribute="leading" id="N5h-WZ-Cdi"/>
                             <constraint firstItem="gNu-cT-csw" firstAttribute="top" secondItem="t5s-gU-yD3" secondAttribute="bottom" id="VHL-oo-nrl"/>
-                            <constraint firstItem="elG-k9-iBR" firstAttribute="top" secondItem="8SN-fS-5jR" secondAttribute="bottom" id="WGw-A0-Npu"/>
                             <constraint firstItem="gNu-cT-csw" firstAttribute="width" secondItem="Hi9-Zi-VBn" secondAttribute="width" id="bya-Xh-P0w"/>
                             <constraint firstItem="elG-k9-iBR" firstAttribute="width" secondItem="Hi9-Zi-VBn" secondAttribute="width" id="cNj-Vc-hyl"/>
-                            <constraint firstItem="t5s-gU-yD3" firstAttribute="leading" secondItem="Hi9-Zi-VBn" secondAttribute="leading" id="dhU-LR-6yg"/>
+                            <constraint firstItem="t5s-gU-yD3" firstAttribute="leading" secondItem="gqa-8M-MXM" secondAttribute="leading" id="dhU-LR-6yg"/>
                             <constraint firstAttribute="bottom" secondItem="LyN-YV-Xl6" secondAttribute="bottom" id="frW-bx-ivY"/>
-                            <constraint firstAttribute="trailing" secondItem="NY1-OO-eS3" secondAttribute="trailing" id="peb-fS-cBj"/>
+                            <constraint firstItem="elG-k9-iBR" firstAttribute="top" secondItem="gqa-8M-MXM" secondAttribute="top" id="jde-aL-YIr"/>
+                            <constraint firstItem="gqa-8M-MXM" firstAttribute="trailing" secondItem="NY1-OO-eS3" secondAttribute="trailing" id="peb-fS-cBj"/>
                             <constraint firstItem="NY1-OO-eS3" firstAttribute="top" secondItem="gNu-cT-csw" secondAttribute="bottom" id="qB1-AT-vvv"/>
                             <constraint firstAttribute="width" secondItem="t5s-gU-yD3" secondAttribute="width" id="qCy-Er-kHZ"/>
                             <constraint firstItem="t5s-gU-yD3" firstAttribute="top" secondItem="elG-k9-iBR" secondAttribute="bottom" constant="-1" id="tH8-SB-c2D"/>
-                            <constraint firstItem="NY1-OO-eS3" firstAttribute="leading" secondItem="Hi9-Zi-VBn" secondAttribute="leading" id="xn9-LM-G5G"/>
+                            <constraint firstItem="NY1-OO-eS3" firstAttribute="leading" secondItem="gqa-8M-MXM" secondAttribute="leading" id="xn9-LM-G5G"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="gqa-8M-MXM"/>
                     </view>
                     <connections>
                         <outlet property="billedAmountLabel" destination="vlt-xU-WIl" id="2B9-qd-Prg"/>
