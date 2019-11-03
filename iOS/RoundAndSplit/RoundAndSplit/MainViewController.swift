@@ -103,7 +103,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         } else if height >= 736 {
             infoButtonWidth.constant = 44
             infoButtonHeight.constant = 44
-            infoButton.offsetX = 0.5
+            infoButton.offsetX = 0
             infoButton.offsetY = 0
             headerViewHeight.constant += 18
             buttonStripHeight.constant += 10
