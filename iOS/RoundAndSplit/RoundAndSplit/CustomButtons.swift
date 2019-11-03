@@ -65,7 +65,7 @@ class SquareBorderButton : CustomButton {
         if isHighlighted {
             titleColor(for: .highlighted)!.setStroke()
         } else if isEnabled {
-            titleColor(for: UIControlState())!.setStroke()
+            titleColor(for: UIControl.State())!.setStroke()
         } else {
             titleColor(for: .disabled)!.setStroke()
         }
@@ -94,7 +94,7 @@ class RoundedButton : CustomButton {
     }
 
     fileprivate func setTitleColors() {
-        setTitleColor(UIColor.white, for: UIControlState())
+        setTitleColor(UIColor.white, for: UIControl.State())
         setTitleColor(UIColor.white, for: .highlighted)
         setTitleColor(UIColor.white, for: .disabled)
     }

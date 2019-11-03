@@ -48,7 +48,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
     ]
 
     override func viewDidLoad() {
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: Utilities.L("Info"), style: UIBarButtonItemStyle.plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: Utilities.L("Info"), style: UIBarButtonItem.Style.plain, target: nil, action: nil)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -101,7 +101,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             let title = aboutSectionTitles[indexPath.row]
 
             let textView = UITextView()
-            textView.textContainerInset = UIEdgeInsetsMake(16.0, 10.0, 16.0, 10.0)
+            textView.textContainerInset = UIEdgeInsets.init(top: 16.0, left: 10.0, bottom: 16.0, right: 10.0)
             textView.text = body
             textView.isSelectable = false
             textView.isEditable = false
@@ -116,7 +116,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             tableView.deselectRow(at: indexPath, animated: true)
 
             if indexPath.row == 0 {
-                UIApplication.shared.open(Constants.WebSiteURL, options: [:], completionHandler: nil)
+                UIApplication.shared.open(Constants.WebSiteURL, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
             } else {
                 if !MFMailComposeViewController.canSendMail() {
                     Utilities.showEmailDisabledAlert(self)
@@ -142,14 +142,14 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             if indexPath.row == 0 {
                 cell = tableView.dequeueReusableCell(withIdentifier: versionCellId)
                 if cell == nil {
-                    cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: versionCellId)
+                    cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: versionCellId)
                 }
                 cell!.detailTextLabel!.text = Utilities.bundleShortVersion()
             } else {
                 cell = tableView.dequeueReusableCell(withIdentifier: detailCellId)
                 if cell == nil {
-                    cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: detailCellId)
-                    cell!.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+                    cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: detailCellId)
+                    cell!.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
                 }
             }
 
@@ -158,7 +158,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         } else if indexPath.section == 1 {
             cell = tableView.dequeueReusableCell(withIdentifier: linkCellId)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: linkCellId)
+                cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: linkCellId)
                 let textLabel : UILabel? = cell!.textLabel
                 textLabel!.textColor = tableView.tintColor
             }
@@ -168,9 +168,9 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: settingCellId)
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: settingCellId)
+                cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: settingCellId)
                 let switchButton = UISwitch()
-                switchButton.addTarget(self, action: #selector(AboutViewController.switchButtonValueChanged(_:)), for: UIControlEvents.valueChanged)
+                switchButton.addTarget(self, action: #selector(AboutViewController.switchButtonValueChanged(_:)), for: UIControl.Event.valueChanged)
                 cell!.accessoryView = switchButton
             }
 
@@ -200,4 +200,9 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
         navigationController!.dismiss(animated: true, completion: nil)
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

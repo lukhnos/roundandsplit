@@ -79,8 +79,9 @@ class NumericKeypadView : UIView {
             label.text = keyStr
             label.numberOfLines = 1
             label.textColor = keyPadTextColor
-            label.accessibilityTraits |= UIAccessibilityTraitButton
-
+            label.accessibilityTraits = UIAccessibilityTraits(
+                rawValue: label.accessibilityTraits.rawValue |
+                    UIAccessibilityTraits.selected.rawValue)
             labels.append(label)
             label.layer.backgroundColor = keyPadBackgroudColor.cgColor
             label.textAlignment = NSTextAlignment.center
@@ -259,7 +260,7 @@ class NumericKeypadView : UIView {
     class OffsetLabel : UILabel {
         var inset : UIEdgeInsets = UIEdgeInsets.zero
         override func drawText(in rect: CGRect) {
-            super.drawText(in: UIEdgeInsetsInsetRect(rect, inset))
+            super.drawText(in: rect.inset(by: inset))
         }
     }
 }

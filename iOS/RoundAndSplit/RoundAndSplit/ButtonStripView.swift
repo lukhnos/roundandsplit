@@ -106,26 +106,26 @@ class ButtonStripView : ExtendedHitAreaView {
         buttons.removeAll(keepingCapacity: true)
 
         for label in labels {
-            let button = AccessibileButton(type: UIButtonType.custom)
-            button.setTitle(label, for: UIControlState())
+            let button = AccessibileButton(type: UIButton.ButtonType.custom)
+            button.setTitle(label, for: UIControl.State())
             
             if let font = buttonTitleFont {
                 button.titleLabel!.font = font
             }
 
             if let color = buttonTitleColorNormal {
-                button.setTitleColor(color, for: UIControlState())
+                button.setTitleColor(color, for: UIControl.State())
             }
 
             if let color = buttonTitleColorHighlighted {
-                button.setTitleColor(color, for: UIControlState.highlighted)
+                button.setTitleColor(color, for: UIControl.State.highlighted)
             }
 
             if let color = buttonTitleColorSelected {
-                button.setTitleColor(color, for: UIControlState.disabled)
+                button.setTitleColor(color, for: UIControl.State.disabled)
             }
 
-            button.addTarget(self, action: #selector(ButtonStripView.buttonAction(_:)), for: UIControlEvents.touchUpInside)
+            button.addTarget(self, action: #selector(ButtonStripView.buttonAction(_:)), for: UIControl.Event.touchUpInside)
             buttons.append(button)
             addSubview(button)
         }
@@ -150,10 +150,10 @@ class ButtonStripView : ExtendedHitAreaView {
 
     @objc func buttonAction(_ button : AccessibileButton) {
         activeButton = button
-        let index = buttons.index(of: button)
+        let index = buttons.firstIndex(of: button)
 
         updateButtons()
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions(), animations: {
             self.updateUnderline()
         }, completion: { (complete: Bool) in
             if complete {
@@ -194,9 +194,9 @@ class ButtonStripView : ExtendedHitAreaView {
     class AccessibileButton : ExtendedHitAreaButton {
         override var accessibilityTraits: UIAccessibilityTraits {
             get {
-                var trait = UIAccessibilityTraitButton
+                var trait = UIAccessibilityTraits.button
                 if !self.isEnabled {
-                    trait |= UIAccessibilityTraitSelected
+                    trait = UIAccessibilityTraits(rawValue: trait.rawValue | UIAccessibilityTraits.selected.rawValue)
                 }
                 return trait
             }

@@ -26,7 +26,7 @@ class ExtendedHitAreaButton : UIButton {
     var extendedHitAreaEdgeInset = UIEdgeInsets.zero
 
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        let hitBounds = UIEdgeInsetsInsetRect(bounds, extendedHitAreaEdgeInset)
+        let hitBounds = bounds.inset(by: extendedHitAreaEdgeInset)
         return hitBounds.contains(point)
     }
 }

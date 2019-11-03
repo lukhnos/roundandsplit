@@ -116,7 +116,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         }
 
         // Expand the hit area of the inner info view so as to expand the button strip's hit area.
-        var expandedHitAreaEdgeInset = UIEdgeInsetsMake(-infoAreaInnerViewTopSpacing.constant, -infoAreaInnerViewLeadingSpace.constant, -infoAreaInnerViewBottomSpacing.constant/2, -infoAreaInnerViewTrailingSpace.constant)
+        var expandedHitAreaEdgeInset = UIEdgeInsets.init(top: -infoAreaInnerViewTopSpacing.constant, left: -infoAreaInnerViewLeadingSpace.constant, bottom: -infoAreaInnerViewBottomSpacing.constant/2, right: -infoAreaInnerViewTrailingSpace.constant)
         infoAreaInnerView.extendedHitAreaEdgeInset = expandedHitAreaEdgeInset
 
         // Now expand the button strip view's hit area.
@@ -125,7 +125,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
         // And the Split button's.
         let splitButtonHitAreaPadding = -infoAreaInnerViewBottomSpacing.constant/2
-        splitAndPayButton.extendedHitAreaEdgeInset = UIEdgeInsetsMake(splitButtonHitAreaPadding, 0, splitButtonHitAreaPadding, 0)
+        splitAndPayButton.extendedHitAreaEdgeInset = UIEdgeInsets.init(top: splitButtonHitAreaPadding, left: 0, bottom: splitButtonHitAreaPadding, right: 0)
 
         infoButton.titleLabel?.font = Style.infoButtonFonts[screenSize]!
 
@@ -156,12 +156,12 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         infoButton.highlightedFillColor = Style.moreInfoButtonHighlightedColor
         infoButton.disabledFillColor = Style.moreInfoButtonHighlightedColor
 
-        infoButton.setTitleColor(UIColor.white, for: UIControlState())
+        infoButton.setTitleColor(UIColor.white, for: UIControl.State())
         infoButton.setTitleColor(UIColor.white, for: .highlighted)
         infoButton.setTitleColor(UIColor.white, for: .disabled)
 
         splitAndPayButton.titleLabel?.font = Style.splitButtonFonts[screenSize]!
-        splitAndPayButton.setTitleColor(Style.buttonTitleColorNormal, for: UIControlState())
+        splitAndPayButton.setTitleColor(Style.buttonTitleColorNormal, for: UIControl.State())
         splitAndPayButton.setTitleColor(Style.buttonTitleColorHighlighted, for: .highlighted)
         splitAndPayButton.setTitleColor(Style.buttonTitleColorDisabled, for: .disabled)
 
@@ -188,8 +188,8 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         numericKeypadView.keyPadTextColor = Style.textColor
         numericKeypadView.keyPadHighlightColor = Style.keypadHighlightColor
         numericKeypadView.setLabelFonts(Style.keypadLabelFonts[screenSize]!, clearFont: Style.keypadSmallLabelFonts[screenSize]!)
-        numericKeypadView.setClearLabelInset(UIEdgeInsetsMake(-1.0, 0, 0.0, 0))
-        numericKeypadView.setBackspaceLabelInset(UIEdgeInsetsMake(-1.0, 0, 0.0, 0))
+        numericKeypadView.setClearLabelInset(UIEdgeInsets.init(top: -1.0, left: 0, bottom: 0.0, right: 0))
+        numericKeypadView.setBackspaceLabelInset(UIEdgeInsets.init(top: -1.0, left: 0, bottom: 0.0, right: 0))
         numericKeypadView.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.currentLocaleDidChange(_:)), name: NSLocale.currentLocaleDidChangeNotification, object: nil)
@@ -200,7 +200,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
         // Expand the hit area of the More Info button.
         let hitAreaPadding = -((headerViewHeight.constant - infoButton.frame.height) / 2)
-        infoButton.extendedHitAreaEdgeInset = UIEdgeInsetsMake(hitAreaPadding, hitAreaPadding, hitAreaPadding * 0.5, hitAreaPadding)
+        infoButton.extendedHitAreaEdgeInset = UIEdgeInsets.init(top: hitAreaPadding, left: hitAreaPadding, bottom: hitAreaPadding * 0.5, right: hitAreaPadding)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -288,11 +288,11 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         let requestTitle = String(format: Utilities.L("Request %@"), amount)
         let payTitle = String(format: Utilities.L("Email that I Owe %@"), amount)
 
-        let requestAction = UIAlertAction(title: requestTitle, style: UIAlertActionStyle.default, handler: { (action) -> Void in
+        let requestAction = UIAlertAction(title: requestTitle, style: UIAlertAction.Style.default, handler: { (action) -> Void in
             self.requestingMoney = true
             self.payReqeuestAction()
         })
-        let payAction = UIAlertAction(title: payTitle, style: UIAlertActionStyle.default, handler: { (action) -> Void in
+        let payAction = UIAlertAction(title: payTitle, style: UIAlertAction.Style.default, handler: { (action) -> Void in
             self.requestingMoney = false
             self.payReqeuestAction()
         })
