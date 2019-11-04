@@ -24,9 +24,11 @@ import UIKit
 import MessageUI
 
 class AboutViewController : UITableViewController, MFMailComposeViewControllerDelegate {
+
     let detailCellId = "DetailCell"
     let linkCellId = "LinkCell"
     let settingCellId = "SettingCell"
+    let rateCellId = "RateCell"
     let versionCellId = "VersionCell"
 
     let aboutSectionTitles = [
@@ -42,32 +44,50 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
     let configSections = [
         (
             Settings.UseDecimalPointKey,
-            Utilities.L("Use \".\" for Decimal Point"),
-            Utilities.L("By default, the app assumes you are living or traveling in a region where \".\" is used – for example, 9.99. When turned off, it will observe the Region Format settings on your phone.")
+            Utilities.L("Use “.” for Decimal Point"),
+            Utilities.L("By default, the app uses “.” as the decimal separator—for example, 9.99. When turned off, it observes the Region Format settings on your device.")
         )
     ]
 
+    let aboutSectionIndex = 0
+    let actionableSectionIndex = 1
+    let ratesSectionIndex = 2
+    let configSectionIndex = 3
+
     override func viewDidLoad() {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: Utilities.L("Info"), style: UIBarButtonItem.Style.plain, target: nil, action: nil)
+
+        NotificationCenter.default.addObserver(forName: Settings.TippingRatesUpdatedNotificationName, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+                self?.tableView.reloadData()
+            }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2 + configSections.count
+        return 4
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        if section == aboutSectionIndex {
             return aboutSectionTitles.count
-        } else if section == 1 {
+        } else if section == actionableSectionIndex {
             return actionableSectionTitles.count
+        } else if section == ratesSectionIndex {
+            return 3
         }
 
-        return 1
+        return configSections.count
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == ratesSectionIndex {
+            return Utilities.L("Tipping Rates")
+        }
+        return nil
     }
 
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        if section >= 2 {
-            let (_, _, text) = configSections[section - 2]
+        if section == configSectionIndex {
+            let (_, _, text) = configSections[section - configSectionIndex]
             return text
         }
 
@@ -75,9 +95,11 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
     }
 
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.section == 0 && indexPath.row > 0 {
+        if indexPath.section == aboutSectionIndex && indexPath.row > 0 {
             return true
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == actionableSectionIndex {
+            return true
+        } else if indexPath.section == ratesSectionIndex {
             return true
         }
 
@@ -85,11 +107,11 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section >= 2 {
+        if indexPath.section >= configSectionIndex {
             return
         }
 
-        if indexPath.section == 0 && indexPath.row == 1 {
+        if indexPath.section == aboutSectionIndex && indexPath.row == 1 {
             let file = "Acknowledgments"
             let url = Bundle.main.url(forResource: file, withExtension: "txt")
             var body: String?
@@ -112,7 +134,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             controller.view = textView
             controller.title = title
             navigationController!.pushViewController(controller, animated: true)
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == actionableSectionIndex {
             tableView.deselectRow(at: indexPath, animated: true)
 
             if indexPath.row == 0 {
@@ -132,13 +154,18 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
                 controller.setToRecipients([addr])
                 present(controller, animated: true, completion: {})
             }
+        } else if indexPath.section == ratesSectionIndex {
+            tableView.deselectRow(at: indexPath, animated: true)
+
+            let rateTableViewController = TippingRateTableViewController(rateIndex: indexPath.row)
+            navigationController?.pushViewController(rateTableViewController, animated: true)
         }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : UITableViewCell?
 
-        if indexPath.section == 0 {
+        if indexPath.section == aboutSectionIndex {
             if indexPath.row == 0 {
                 cell = tableView.dequeueReusableCell(withIdentifier: versionCellId)
                 if cell == nil {
@@ -155,7 +182,7 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
 
             let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = aboutSectionTitles[indexPath.row]
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == actionableSectionIndex {
             cell = tableView.dequeueReusableCell(withIdentifier: linkCellId)
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: linkCellId)
@@ -165,6 +192,15 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
 
             let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = actionableSectionTitles[indexPath.row]
+        } else if indexPath.section == ratesSectionIndex {
+            cell = tableView.dequeueReusableCell(withIdentifier: rateCellId)
+            if cell == nil {
+                cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: rateCellId)
+                cell!.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+            }
+
+            let textLabel : UILabel? = cell!.textLabel
+            textLabel!.text = Settings.tippingRates[indexPath.row].percentageString
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: settingCellId)
             if cell == nil {
@@ -175,9 +211,9 @@ class AboutViewController : UITableViewController, MFMailComposeViewControllerDe
             }
 
             let switchButton = cell!.accessoryView as! UISwitch
-            let (key, text, _) = configSections[indexPath.section - 2]
+            let (key, text, _) = configSections[indexPath.section - configSectionIndex]
             switchButton.isOn = Settings.boolForKey(key)
-            switchButton.tag = indexPath.section - 2
+            switchButton.tag = indexPath.section - configSectionIndex
 
             let textLabel : UILabel? = cell!.textLabel
             textLabel!.text = text

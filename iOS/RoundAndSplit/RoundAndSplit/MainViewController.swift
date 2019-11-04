@@ -61,7 +61,6 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
     var keypadString = ""
     var billedAmount : Decimal = Decimal(0)
-    var currentRate : Decimal = Settings.tippingRate.value
     var currentTip : Tip = Tip()
     var currencyFormatter = NumberFormatter()
     var percentageFormatter = NumberFormatter()
@@ -172,11 +171,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         buttonStripView.underlineColor = Style.buttonTitleColorNormal
         buttonStripView.delegate = self
 
-        let activeIndex : Int = Settings.tippingRates.firstIndex(of: Settings.tippingRate)!
-        let labels = Settings.tippingRates.map { (rate) -> String in
-            rate.percentageString
-        }
-        buttonStripView.addButtonsWithLabels(labels, activeIndex: activeIndex)
+        updateButtotStripView()
 
         numericKeypadView.gridView.gridColor = Style.dividingLineColor
         if #available(iOS 13, *) {
@@ -190,6 +185,19 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         numericKeypadView.delegate = self
 
         NotificationCenter.default.addObserver(self, selector: #selector(MainViewController.currentLocaleDidChange(_:)), name: NSLocale.currentLocaleDidChangeNotification, object: nil)
+
+        NotificationCenter.default.addObserver(forName: Settings.TippingRatesUpdatedNotificationName, object: nil, queue: OperationQueue.main) { [weak self] (notification) in
+                self?.updateButtotStripView()
+                self?.update()
+            }
+    }
+
+    private func updateButtotStripView() {
+        let activeIndex : Int = Settings.tippingRates.firstIndex(of: Settings.tippingRate)!
+        let labels = Settings.tippingRates.map { (rate) -> String in
+            rate.percentageString
+        }
+        buttonStripView.addButtonsWithLabels(labels, activeIndex: activeIndex)
     }
 
     override func viewDidLayoutSubviews() {
@@ -208,7 +216,6 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     func didTapButtonInStripView(_ strip: ButtonStripView, index: Int) {
         let rate : Settings.Rate = Settings.tippingRates[index]
         Settings.tippingRate = rate
-        currentRate = rate.value
         update()
     }
 
@@ -226,7 +233,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         }
 
         billedAmountLabel.text = billedAmount.string(currencyFormatter)
-        currentTip = bestTip(billedAmount, rate: currentRate)
+        currentTip = bestTip(billedAmount, rate: Settings.tippingRate.value)
         tipLabel.text = currentTip.tip.string(currencyFormatter)
         tipLabel.accessibilityLabel = String(format: Utilities.L("Tips: %@"), tipLabel.text!)
         totalAmountLabel.text = currentTip.total.string(currencyFormatter)

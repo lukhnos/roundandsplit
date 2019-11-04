@@ -23,6 +23,8 @@
 import UIKit
 
 struct Settings {
+    static let TippingRatesUpdatedNotificationName = Notification.Name("TippingRatesUpdated")
+
     static let UseDecimalPointKey = "UseDecimalPoint"
     private static let RatesKey = "Rates"
 
@@ -56,7 +58,7 @@ struct Settings {
         }
     }
 
-    private static let SupportedTippingRates = [
+    static let SupportedTippingRates = [
         Rate("0.05"),
         Rate("0.10"),
         Rate("0.15"),
@@ -102,11 +104,13 @@ struct Settings {
         set {
             assert(newValue.count == 3)
 
-            if !newValue.contains(tippingRate) {
-                tippingRate = newValue[1]
-            }
+            // Make sure the current rate is adjusted accordingly.
+            let currentRateIndex = tippingRates.firstIndex(of: tippingRate)!
+            tippingRate = newValue[currentRateIndex]
 
             defaults.set(Rate.toStrings(newValue), forKey: RatesKey)
+
+            NotificationCenter.default.post(name: TippingRatesUpdatedNotificationName, object: self)
         }
     }
 
