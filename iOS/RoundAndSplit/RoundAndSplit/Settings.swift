@@ -26,6 +26,7 @@ struct Settings {
     static let TippingRatesUpdatedNotificationName = Notification.Name("TippingRatesUpdated")
 
     static let UseDecimalPointKey = "UseDecimalPoint"
+    private static let LastKeypadStringKey = "LastKeypadString"
     private static let RatesKey = "Rates"
 
     fileprivate static let defaultBoolValues = [
@@ -92,6 +93,18 @@ struct Settings {
     set {
         defaults.setValue(newValue.decimalString, forKey: TippingRateKey)
     }
+    }
+
+    static var lastKeypadString : String {
+        get {
+            if let str = defaults.string(forKey: LastKeypadStringKey) {
+                return str
+            }
+            return ""
+        }
+        set {
+            defaults.setValue(newValue, forKey: LastKeypadStringKey)
+        }
     }
 
     static var tippingRates : [Rate] {

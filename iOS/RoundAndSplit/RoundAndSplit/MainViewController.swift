@@ -59,7 +59,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     @IBOutlet var infoTextBottomSpacing : NSLayoutConstraint!
     @IBOutlet var effectiveRateLabelTrailingSpace : NSLayoutConstraint!
 
-    var keypadString = ""
+    var keypadString = Settings.lastKeypadString
     var billedAmount : Decimal = Decimal(0)
     var currentTip : Tip = Tip()
     var currencyFormatter = NumberFormatter()
@@ -220,6 +220,8 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
 
     func update() {
+        Settings.lastKeypadString = keypadString
+
         if keypadString.isEmpty {
             billedAmount = Decimal(0)
         } else {
