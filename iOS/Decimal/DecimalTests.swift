@@ -37,4 +37,23 @@ class DecimalTests: XCTestCase {
         let q = Decimal("0")
         XCTAssertEqual(p, q)
     }
+
+    func testStringConversion() {
+        let p = Decimal(1) / Decimal(20)
+        let q = Decimal("0.05")
+        XCTAssertEqual(p, q)
+    }
+
+    func testDoNotParseEuropeanDecimalSeparator() {
+        let p = Decimal(1) / Decimal(20)
+        let q = Decimal(0)
+        let r = Decimal("0,05")
+        XCTAssertNotEqual(p, r)
+        XCTAssertEqual(q, r)
+    }
+
+    func testRawStringWithPeriodSeparator() {
+        let p = Decimal(1) / Decimal(20)
+        XCTAssertEqual(p.rawStringWithPeriodSeparator(), "0.05")
+    }
 }

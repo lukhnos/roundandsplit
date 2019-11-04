@@ -41,4 +41,27 @@ class RoundAndSplitTests: XCTestCase {
         }
     }
     
+    func testRate() {
+        XCTAssertEqual(Settings.Rate("0.18").percentageString, "18%")
+    }
+
+    func testRatesConversion() {
+        XCTAssertEqual(Settings.Rate.fromStrings(["0.15", "0.18"]), [Settings.Rate("0.15"), Settings.Rate("0.18")])
+    }
+
+    func testValidatedRates() {
+        let p = Settings.Rate.fromStrings([])
+        let q = Settings.Rate.fromStrings(["0.05", "0.10", "0.35"])
+        let r = Settings.Rate.fromStrings(["0.05", "0.10"])
+        let s = Settings.Rate.fromStrings(["0.05"])
+        let t = Settings.Rate.fromStrings(["0.20", "0.18", "0.10"])
+        let u = Settings.Rate.fromStrings(["0.20", "0.03", "0.10"])
+
+        XCTAssertEqual(Settings.validatedTippingRates(p), Settings.DefaultTippingRates)
+        XCTAssertEqual(Settings.validatedTippingRates(q), [Settings.Rate("0.05"), Settings.Rate("0.10"), Settings.Rate("0.35")])
+        XCTAssertEqual(Settings.validatedTippingRates(r), Settings.DefaultTippingRates)
+        XCTAssertEqual(Settings.validatedTippingRates(s), Settings.DefaultTippingRates)
+        XCTAssertEqual(Settings.validatedTippingRates(t), [Settings.Rate("0.20"), Settings.Rate("0.18"), Settings.Rate("0.10")])
+        XCTAssertEqual(Settings.validatedTippingRates(u), Settings.DefaultTippingRates)
+    }
 }

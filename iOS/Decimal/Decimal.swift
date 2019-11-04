@@ -37,7 +37,7 @@ struct Decimal : Equatable, Comparable {
     }
 
     init(_ n: String) {
-        number = NSDecimalNumber(string: n)
+        number = NSDecimalNumber(string: n, locale: Locale.init(identifier: "en_US"))
     }
 
     init(mantissa: Int, exponent: Int) {
@@ -55,6 +55,10 @@ struct Decimal : Equatable, Comparable {
 
     func rawString() -> String {
         return number.stringValue
+    }
+
+    func rawStringWithPeriodSeparator() -> String {
+        return number.description(withLocale: Locale.init(identifier: "en_US"))
     }
 
     func string(_ formatter: NumberFormatter) -> String {

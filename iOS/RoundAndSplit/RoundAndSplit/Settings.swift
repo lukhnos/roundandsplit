@@ -24,39 +24,108 @@ import UIKit
 
 struct Settings {
     static let UseDecimalPointKey = "UseDecimalPoint"
+    private static let RatesKey = "Rates"
 
     fileprivate static let defaultBoolValues = [
         UseDecimalPointKey: true
     ]
 
-    enum TippingRate : String {
-        case Tip15Percent = "0.15"
-        case Tip18Percent = "0.18"
-        case Tip20Percent = "0.20"
+    struct Rate : Equatable {
+        var value : Decimal
+        init (_ rateStr: String) {
+            value = Decimal(rateStr)
+        }
 
-        func toDecimal() -> Decimal {
-            return Decimal(self.rawValue)
+        var decimalString : String {
+            return value.rawStringWithPeriodSeparator()
+        }
+
+        var percentageString: String {
+            get {
+                let r = value * Decimal(100)
+                return "\(r.rawStringWithPeriodSeparator())%"
+            }
+        }
+
+        static func fromStrings(_ rates: [String]) -> [Rate] {
+            return rates.map { (rate) -> Rate in Rate(rate) }
+        }
+
+        static func toStrings(_ rates: [Rate]) -> [String] {
+            return rates.map { (rate) -> String in rate.decimalString }
         }
     }
 
-    static let defaultTippingRate = TippingRate.Tip18Percent
+    private static let SupportedTippingRates = [
+        Rate("0.05"),
+        Rate("0.10"),
+        Rate("0.15"),
+        Rate("0.18"),
+        Rate("0.20"),
+        Rate("0.25"),
+        Rate("0.30"),
+        Rate("0.35"),
+        Rate("0.40"),
+        Rate("0.45"),
+        Rate("0.50"),
+        Rate("0.55"),
+        Rate("0.60"),
+        Rate("0.65"),
+        Rate("0.70"),
+        Rate("0.75")
+    ]
 
-    static var tippingRate : TippingRate {
+    static let DefaultTippingRates = [Rate("0.15"), Rate("0.18"), Rate("0.20")]
+
+    static var tippingRate : Rate {
     get {
         if let rateStr = defaults.string(forKey: TippingRateKey) {
-            if let rate = TippingRate(rawValue: rateStr) {
+            let rate = Rate(rateStr)
+            if tippingRates.contains(rate) {
                 return rate
             }
         }
-        return defaultTippingRate
+        return tippingRates[1]
     }
     set {
-        defaults.setValue(newValue.rawValue, forKey: TippingRateKey)
+        defaults.setValue(newValue.decimalString, forKey: TippingRateKey)
     }
     }
 
+    static var tippingRates : [Rate] {
+        get {
+            if let rateStrings = defaults.array(forKey: RatesKey) as? [String] {
+                return validatedTippingRates(Rate.fromStrings(rateStrings))
+            }
+            return DefaultTippingRates
+        }
+        set {
+            assert(newValue.count == 3)
+
+            if !newValue.contains(tippingRate) {
+                tippingRate = newValue[1]
+            }
+
+            defaults.set(Rate.toStrings(newValue), forKey: RatesKey)
+        }
+    }
+
+    static func validatedTippingRates(_ rates: [Rate]) -> [Rate] {
+        guard rates.count == 3 else {
+            return DefaultTippingRates
+        }
+
+        for rate in rates {
+            if !SupportedTippingRates.contains(rate) {
+                return DefaultTippingRates
+            }
+        }
+
+        return rates
+    }
+
     static func boolForKey(_ key: String) -> Bool {
-        if let value: Bool = defaults.value(forKey: UseDecimalPointKey) as? Bool {
+        if let value: Bool = defaults.value(forKey: key) as? Bool {
             return value
         }
 

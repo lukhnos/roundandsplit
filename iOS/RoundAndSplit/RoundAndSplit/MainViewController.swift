@@ -61,7 +61,7 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
 
     var keypadString = ""
     var billedAmount : Decimal = Decimal(0)
-    var currentRate : Decimal = Settings.tippingRate.toDecimal()
+    var currentRate : Decimal = Settings.tippingRate.value
     var currentTip : Tip = Tip()
     var currencyFormatter = NumberFormatter()
     var percentageFormatter = NumberFormatter()
@@ -172,17 +172,11 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
         buttonStripView.underlineColor = Style.buttonTitleColorNormal
         buttonStripView.delegate = self
 
-        var activeIndex : Int
-        switch Settings.tippingRate {
-        case .Tip15Percent:
-            activeIndex = 0
-        case .Tip18Percent:
-            activeIndex = 1
-        case .Tip20Percent:
-            activeIndex = 2
+        let activeIndex : Int = Settings.tippingRates.firstIndex(of: Settings.tippingRate)!
+        let labels = Settings.tippingRates.map { (rate) -> String in
+            rate.percentageString
         }
-
-        buttonStripView.addButtonsWithLabels(["15%", "18%", "20%"], activeIndex: activeIndex)
+        buttonStripView.addButtonsWithLabels(labels, activeIndex: activeIndex)
 
         numericKeypadView.gridView.gridColor = Style.dividingLineColor
         if #available(iOS 13, *) {
@@ -212,20 +206,9 @@ class MainViewController: UIViewController, MFMailComposeViewControllerDelegate,
     }
 
     func didTapButtonInStripView(_ strip: ButtonStripView, index: Int) {
-        var rate : Settings.TippingRate
-
-        switch index {
-        case 0:
-            rate = .Tip15Percent
-        case 1:
-            rate = .Tip18Percent
-        case 2:
-            rate = .Tip20Percent
-        default:
-            rate = Settings.defaultTippingRate
-        }
+        let rate : Settings.Rate = Settings.tippingRates[index]
         Settings.tippingRate = rate
-        currentRate = rate.toDecimal()
+        currentRate = rate.value
         update()
     }
 
