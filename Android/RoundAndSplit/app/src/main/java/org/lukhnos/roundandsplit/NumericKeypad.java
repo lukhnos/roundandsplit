@@ -105,7 +105,7 @@ public class NumericKeypad extends ViewGroup {
         int ws = MeasureSpec.makeMeasureSpec(getMeasuredWidth() / 3, MeasureSpec.EXACTLY);
         int hs = MeasureSpec.makeMeasureSpec(getMeasuredHeight() / 4, MeasureSpec.EXACTLY);
 
-        float ts = (float) Math.ceil((getMeasuredHeight() / 4) * 0.50f);
+        float ts = (float) Math.ceil((getMeasuredHeight() / 4) * 0.38f);
 
         mButtonLayoutParams.width = getMeasuredWidth() / 3;
         mButtonLayoutParams.height = getMeasuredHeight() / 4;
