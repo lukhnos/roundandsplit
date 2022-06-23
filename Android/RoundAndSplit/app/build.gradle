@@ -23,13 +23,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 30
+    compileSdk 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "org.lukhnos.roundandsplit"
         minSdkVersion 28
-        targetSdkVersion 30
+        targetSdk 32
         versionCode 66
         versionName "1.5.1"
     }
