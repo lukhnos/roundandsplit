@@ -17,10 +17,14 @@ class TextViewerActivity : Activity() {
         val title = intent.getStringExtra(TITLE)
         if (title != null) {
             actionBar!!.title = title
+        } else {
+            actionBar!!.title = getString(R.string.pref_acknowledgements)
         }
         val resId = intent.getIntExtra(TEXT_FILE_ID, -1)
         if (resId != -1) {
             (findViewById<View>(R.id.viewer_text) as TextView).text = readFile(resId)
+        } else {
+            (findViewById<View>(R.id.viewer_text) as TextView).text = readFile(R.raw.acknowledgements)
         }
     }
 

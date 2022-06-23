@@ -16,6 +16,7 @@
     <string name="info_text_non_percentage">–</string>
     <string name="pref_key_use_us_decimal_point">UsePeriodDecimalPoint</string>
     <string name="pref_category_contact_and_service">Contact and Service</string>
+    <string name="pref_acknowledgements">Acknowledgements</string>
     <string name="pref_title_visit_website">Visit Website</string>
     <string name="website_url">https://roundandsplit.lukhnos.org</string>
     <string name="pref_title_email_us">Email Us</string>
