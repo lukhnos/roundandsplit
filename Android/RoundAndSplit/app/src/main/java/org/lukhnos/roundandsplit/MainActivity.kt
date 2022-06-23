@@ -248,7 +248,7 @@ class MainActivity : Activity(), ButtonStrip.Observer, NumericKeypad.Observer {
             mTitle = args.getString(LOCALIZED_TITLE)
         }
 
-        override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(activity)
             builder.setTitle(mTitle)
                 .setItems(mItems, DialogInterface.OnClickListener { dialog, which ->
