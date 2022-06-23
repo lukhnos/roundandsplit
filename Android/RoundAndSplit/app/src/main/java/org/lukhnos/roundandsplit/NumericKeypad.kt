@@ -51,6 +51,7 @@ class NumericKeypad : ViewGroup {
     }
 
     private fun init(context: Context) {
+        val typeface = resources.getFont(R.font.firasans_light)
         for (i in 0..11) {
             var title: String
             title = when (i) {
@@ -61,6 +62,7 @@ class NumericKeypad : ViewGroup {
             }
             val button = Button(context)
             button.text = title
+            button.setTypeface(typeface)
             button.setPadding(0, 0, 0, 0)
             button.gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
             button.setBackgroundResource(R.drawable.keypad_button_background)
@@ -79,7 +81,7 @@ class NumericKeypad : ViewGroup {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val ws = MeasureSpec.makeMeasureSpec(measuredWidth / 3, MeasureSpec.EXACTLY)
         val hs = MeasureSpec.makeMeasureSpec(measuredHeight / 4, MeasureSpec.EXACTLY)
-        val ts = Math.ceil((measuredHeight / 4 * 0.38f).toDouble()).toFloat()
+        val ts = Math.ceil((measuredHeight / 4 * 0.3f).toDouble()).toFloat()
         mButtonLayoutParams.width = measuredWidth / 3
         mButtonLayoutParams.height = measuredHeight / 4
         for (button in mButtons) {

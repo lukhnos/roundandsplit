@@ -99,12 +99,14 @@ class ButtonStrip : ViewGroup {
         mButtons.clear()
         val padding = ceil((mMetrics.density * BUTTON_PADDING).toDouble()).toInt()
         val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        val typeface = resources.getFont(R.font.firasans_light)
         for (title in titles) {
             val button = Button(context)
             button.setBackgroundColor(0)
             button.layoutParams = layoutParams
             button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0f)
             button.text = title
+            button.setTypeface(typeface)
             button.setPadding(padding, 0, padding, 0)
             button.setTextColor(resources.getColorStateList(R.color.button_strip_button_text_color))
             button.setOnClickListener(mButtonListener)

@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/amount_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/charged_amount_label_margin_top"
-        android:layout_marginBottom="@dimen/charged_amount_label_margin_bottom"
-        android:layout_marginRight="@dimen/info_display_horizontal_margin"
-        android:layout_marginEnd="@dimen/info_display_horizontal_margin"
         android:layout_gravity="end"
+        android:layout_marginTop="@dimen/charged_amount_label_margin_top"
+        android:layout_marginEnd="@dimen/info_display_horizontal_margin"
+        android:layout_marginRight="@dimen/info_display_horizontal_margin"
+        android:layout_marginBottom="@dimen/charged_amount_label_margin_bottom"
+        android:fontFamily="@font/firasans"
         android:gravity="center_vertical"
         android:text="@string/default_amount"
+        android:textFontWeight="300"
         android:textSize="@dimen/charged_amount_label_font_size" />
 
     <View
@@ -25,73 +28,88 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/info_display_background_color">
+        android:background="@color/info_display_background_color"
+        android:orientation="vertical">
 
         <org.lukhnos.roundandsplit.ButtonStrip
             android:id="@+id/rate_button_strip"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/button_strip_height"
-            android:layout_marginLeft="@dimen/button_strip_margin_start"
             android:layout_marginStart="@dimen/button_strip_margin_start"
-            android:layout_marginRight="@dimen/button_strip_margin_end"
-            android:layout_marginEnd="@dimen/button_strip_margin_end"
+            android:layout_marginLeft="@dimen/button_strip_margin_start"
             android:layout_marginTop="@dimen/button_strip_vertical_margin"
+            android:layout_marginEnd="@dimen/button_strip_margin_end"
+            android:layout_marginRight="@dimen/button_strip_margin_end"
             android:layout_marginBottom="@dimen/button_strip_vertical_margin" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingLeft="@dimen/info_display_horizontal_margin"
             android:paddingRight="@dimen/info_display_horizontal_margin">
 
             <RelativeLayout
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/info_section_vertical_margin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/info_section_vertical_margin"
+                android:orientation="vertical">
 
                 <TextView
                     style="@style/InfoTextDescription"
-                    android:text="@string/info_text_tips"/>
+                    android:fontFamily="@font/firasans"
+                    android:text="@string/info_text_tips"
+                    android:textFontWeight="300" />
 
                 <TextView
-                    style="@style/InfoTextLabel"
                     android:id="@+id/tip_label"
-                    android:text="@string/default_amount" />
+                    style="@style/InfoTextLabel"
+                    android:fontFamily="@font/firasans"
+                    android:fontFeatureSettings="tnum"
+                    android:text="@string/default_amount"
+                    android:textFontWeight="400" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginTop="@dimen/info_section_vertical_margin"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/info_section_vertical_margin"
+                android:orientation="vertical">
 
                 <TextView
                     style="@style/InfoTextDescription"
-                    android:text="@string/info_text_total"/>
+                    android:fontFamily="@font/firasans"
+                    android:text="@string/info_text_total"
+                    android:textFontWeight="300" />
 
                 <TextView
-                    style="@style/InfoTextLabel"
                     android:id="@+id/total_label"
-                    android:text="@string/default_amount"/>
+                    style="@style/InfoTextLabel"
+                    android:fontFamily="@font/firasans"
+                    android:fontFeatureSettings="tnum"
+                    android:text="@string/default_amount"
+                    android:textFontWeight="400" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_marginTop="@dimen/info_section_vertical_margin"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/info_section_vertical_margin"
+                android:orientation="vertical">
 
                 <TextView
                     style="@style/InfoTextDescriptionSmall"
-                    android:text="@string/info_text_effective_rate"/>
+                    android:fontFamily="@font/firasans"
+                    android:text="@string/info_text_effective_rate"
+                    android:textFontWeight="300" />
 
                 <TextView
-                    style="@style/InfoTextLabelSmall"
                     android:id="@+id/effective_rate_label"
-                    android:text="@string/info_text_non_percentage"/>
+                    style="@style/InfoTextLabelSmall"
+                    android:fontFamily="@font/firasans"
+                    android:fontFeatureSettings="tnum"
+                    android:text="@string/info_text_non_percentage"
+                    android:textFontWeight="400" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -99,17 +117,19 @@
 
         <Button
             android:id="@+id/split_button"
-            android:background="@drawable/bordered_button_backgrounds"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/split_button_height"
-            android:paddingRight="@dimen/split_button_horizontal_padding"
-            android:paddingLeft="@dimen/split_button_horizontal_padding"
-            android:textSize="@dimen/split_button_font_size"
-            android:text="@string/split_and_pay_request_button_title"
-            android:textColor="@color/bordered_button_text_color"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/split_button_margin_top"
-            android:layout_marginBottom="@dimen/split_button_margin_button" />
+            android:layout_marginBottom="@dimen/split_button_margin_button"
+            android:background="@drawable/bordered_button_backgrounds"
+            android:fontFamily="@font/firasans"
+            android:paddingLeft="@dimen/split_button_horizontal_padding"
+            android:paddingRight="@dimen/split_button_horizontal_padding"
+            android:text="@string/split_and_pay_request_button_title"
+            android:textColor="@color/bordered_button_text_color"
+            android:textFontWeight="300"
+            android:textSize="@dimen/split_button_font_size" />
 
     </LinearLayout>
 </LinearLayout>
