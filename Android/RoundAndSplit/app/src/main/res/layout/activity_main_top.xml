@@ -26,6 +26,8 @@
         android:background="@color/top_divider_line" />
 
     <LinearLayout
+        android:paddingTop="@dimen/top_panel_padding_top"
+        android:paddingBottom="@dimen/top_panel_padding_bottom"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/info_display_background_color"

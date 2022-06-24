@@ -25,8 +25,25 @@
     <string name="pref_summary_use_us_decimal_point"><![CDATA[By default, the app assumes you are living or traveling in a region where \".\" is used – for example, 9.99. When turned off, it will observe the Region Format settings on your phone.]]></string>
     <string name="request_action_prefix">Request</string>
     <string name="send_action_prefix">Email that I Owe</string>
-    <string name="cancel_action">Cancel</string><string name="split_dialog_title">Send a reminder?
+    <string name="cancel_action">Cancel</string>
+    <string name="split_dialog_title">Send a reminder?
 You can adjust the amount later.</string>
     <string name="request_subject_prefix">You owe me %s</string>
     <string name="send_subject_prefix">I owe you %s</string>
+    <string name="title_activity_settings2">SettingsActivity2</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

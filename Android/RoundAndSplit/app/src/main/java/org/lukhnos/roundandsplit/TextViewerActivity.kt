@@ -5,20 +5,21 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.nio.charset.Charset
 
-class TextViewerActivity : Activity() {
+class TextViewerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_viewer)
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
         val title = intent.getStringExtra(TITLE)
         if (title != null) {
-            actionBar!!.title = title
+            actionBar?.title = title
         } else {
-            actionBar!!.title = getString(R.string.pref_acknowledgements)
+            actionBar?.title = getString(R.string.pref_acknowledgements)
         }
         val resId = intent.getIntExtra(TEXT_FILE_ID, -1)
         if (resId != -1) {

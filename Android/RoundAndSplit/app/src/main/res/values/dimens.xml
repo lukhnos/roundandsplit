@@ -17,4 +17,6 @@
     <dimen name="split_button_horizontal_padding">36dp</dimen>
     <dimen name="split_button_margin_top">18dp</dimen>
     <dimen name="split_button_margin_button">16dp</dimen>
+    <dimen name="top_panel_padding_top">8dp</dimen>
+    <dimen name="top_panel_padding_bottom">16dp</dimen>
 </resources>

@@ -35,6 +35,8 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import org.lukhnos.tipping.Tipping
 import org.lukhnos.tipping.Tipping.Payment
 import java.math.BigDecimal
@@ -42,7 +44,7 @@ import java.math.RoundingMode
 import java.text.NumberFormat
 import java.util.*
 
-class MainActivity : Activity(), ButtonStrip.Observer, NumericKeypad.Observer {
+class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Observer {
     var mButtonStrip: ButtonStrip? = null
     var mAmountLabel: TextView? = null
     var mTipLabel: TextView? = null
@@ -55,6 +57,7 @@ class MainActivity : Activity(), ButtonStrip.Observer, NumericKeypad.Observer {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
         mAmountLabel = findViewById<View>(R.id.amount_label) as TextView
         mTipLabel = findViewById<View>(R.id.tip_label) as TextView

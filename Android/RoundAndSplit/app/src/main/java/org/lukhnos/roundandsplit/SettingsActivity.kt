@@ -25,26 +25,28 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceActivity
-import android.preference.PreferenceFragment
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 
-class SettingsActivity : PreferenceActivity() {
-    class SettingsFragment : PreferenceFragment() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+class SettingsActivity : AppCompatActivity() {
+    class SettingsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.preferences, rootKey)
 
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.preferences)
-            val versionPref = findPreference(getString(R.string.pref_key_version))
+            val versionPref: Preference? = findPreference(getString(R.string.pref_key_version))
             var versionName = "Unknown"
             try {
-                val info = activity.packageManager.getPackageInfo(activity.packageName, 0)
+                val info = requireActivity().packageManager!!.getPackageInfo(
+                    requireActivity().packageName,
+                    0
+                )
                 versionName = info.versionName
             } catch (e: PackageManager.NameNotFoundException) {
             }
-            versionPref.summary = versionName
-            val emailPref = findPreference(getString(R.string.pref_key_email_us))
+            versionPref?.summary = versionName
+            val emailPref: Preference? = findPreference(getString(R.string.pref_key_email_us))
             val emailIntent = Intent(
                 Intent.ACTION_SENDTO,
                 Uri.fromParts("mailto", "contact@roundandsplit.lukhnos.org", null)
@@ -53,18 +55,21 @@ class SettingsActivity : PreferenceActivity() {
                 Intent.EXTRA_SUBJECT,
                 "Inquiry - Round & Split Android $versionName"
             )
-            emailPref.intent = emailIntent
+            emailPref?.intent = emailIntent
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        actionBar!!.setDisplayHomeAsUpEnabled(true)
+        setContentView(R.layout.settings_activity)
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.settings, SettingsFragment())
+                .commit()
+        }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Display the fragment as the main content.
-        fragmentManager.beginTransaction()
-            .replace(android.R.id.content, SettingsFragment())
-            .commit()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
