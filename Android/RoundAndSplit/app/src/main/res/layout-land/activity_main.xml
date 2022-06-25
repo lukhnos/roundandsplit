@@ -22,7 +22,8 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/info_display_background_color">
 
         <include layout="@layout/activity_main_top" />
 
