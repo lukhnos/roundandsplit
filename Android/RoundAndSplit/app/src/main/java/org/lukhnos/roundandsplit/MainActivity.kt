@@ -23,18 +23,18 @@ package org.lukhnos.roundandsplit
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
+import androidx.preference.PreferenceManager
 import org.lukhnos.tipping.Tipping
 import org.lukhnos.tipping.Tipping.Payment
 import java.math.BigDecimal
@@ -233,24 +233,24 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
         args.putStringArray(SplitDialogFragment.LOCALIZED_ITEMS, items)
         val newFragment: DialogFragment = SplitDialogFragment()
         newFragment.arguments = args
-        newFragment.show(fragmentManager, "dialog")
+        newFragment.show(supportFragmentManager, "dialog")
     }
 
     class SplitDialogFragment : DialogFragment() {
         var mTitle: String? = null
         var mSplitAmount: String? = null
         var mItems: Array<String>? = null
-        override fun setArguments(args: Bundle) {
+        override fun setArguments(args: Bundle?) {
             super.setArguments(args)
-            mSplitAmount = args.getString(AMOUNT)
-            mItems = args.getStringArray(LOCALIZED_ITEMS)
-            mTitle = args.getString(LOCALIZED_TITLE)
+            mSplitAmount = args?.getString(AMOUNT)
+            mItems = args?.getStringArray(LOCALIZED_ITEMS)
+            mTitle = args?.getString(LOCALIZED_TITLE)
         }
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val builder = AlertDialog.Builder(activity)
             builder.setTitle(mTitle)
-                .setItems(mItems, DialogInterface.OnClickListener { dialog, which ->
+                .setItems(mItems, DialogInterface.OnClickListener { _, which ->
                     if (which != 0 && which != 1) {
                         return@OnClickListener
                     }
