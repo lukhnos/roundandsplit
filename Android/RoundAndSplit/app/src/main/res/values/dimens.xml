@@ -1,7 +1,7 @@
 <resources>
     <dimen name="charged_amount_label_margin_top">8dp</dimen>
     <dimen name="charged_amount_label_margin_bottom">8dp</dimen>
-    <dimen name="charged_amount_label_font_size">36sp</dimen>
+    <dimen name="charged_amount_label_font_size">40sp</dimen>
     <dimen name="info_display_horizontal_margin">40dp</dimen>
     <dimen name="divider_line_width">1dp</dimen>
     <dimen name="button_strip_height">40dp</dimen>
@@ -9,14 +9,14 @@
     <dimen name="button_strip_margin_end">20dp</dimen>
     <dimen name="button_strip_vertical_margin">8dp</dimen>
     <dimen name="info_section_vertical_margin">8dp</dimen>
-    <dimen name="info_text_description_font_size">21sp</dimen>
-    <dimen name="info_text_label_font_size">23sp</dimen>
-    <dimen name="effective_rate_font_size">16sp</dimen>
-    <dimen name="split_button_font_size">13sp</dimen>
-    <dimen name="split_button_height">32dp</dimen>
-    <dimen name="split_button_horizontal_padding">36dp</dimen>
-    <dimen name="split_button_margin_top">18dp</dimen>
-    <dimen name="split_button_margin_button">16dp</dimen>
+    <dimen name="info_text_description_font_size">24sp</dimen>
+    <dimen name="info_text_label_font_size">26sp</dimen>
+    <dimen name="effective_rate_font_size">18sp</dimen>
+    <dimen name="split_button_font_size">15sp</dimen>
+    <dimen name="split_button_height">34dp</dimen>
+    <dimen name="split_button_horizontal_padding">40dp</dimen>
+    <dimen name="split_button_margin_top">36dp</dimen>
+    <dimen name="split_button_margin_button">12dp</dimen>
     <dimen name="top_panel_padding_top">8dp</dimen>
-    <dimen name="top_panel_padding_bottom">16dp</dimen>
+    <dimen name="top_panel_padding_bottom">20dp</dimen>
 </resources>
