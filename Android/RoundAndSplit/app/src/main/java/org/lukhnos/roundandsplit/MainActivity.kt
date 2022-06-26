@@ -43,15 +43,15 @@ import java.text.NumberFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Observer {
-    lateinit var mButtonStrip: ButtonStrip
-    lateinit var mAmountLabel: TextView
-    lateinit var mTipLabel: TextView
-    lateinit var mTotalLabel: TextView
-    lateinit var mEffectiveRateLabel: TextView
-    lateinit var mSplitButton: Button
-    var mCurrentAmount = ""
-    var mTippingRate = BigDecimal.ZERO
-    var mPayment = Payment()
+    private lateinit var mButtonStrip: ButtonStrip
+    private lateinit var mAmountLabel: TextView
+    private lateinit var mTipLabel: TextView
+    private lateinit var mTotalLabel: TextView
+    private lateinit var mEffectiveRateLabel: TextView
+    private lateinit var mSplitButton: Button
+    private var mCurrentAmount = ""
+    private var mTippingRate = BigDecimal.ZERO
+    private var mPayment = Payment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -102,27 +102,27 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
     }
 
     override fun backspace() {
-        if (mCurrentAmount.length > 0) {
+        if (mCurrentAmount.isNotEmpty()) {
             mCurrentAmount = mCurrentAmount.substring(0, mCurrentAmount.length - 1)
             update()
         }
     }
 
     override fun clear() {
-        if (mCurrentAmount.length > 0) {
+        if (mCurrentAmount.isNotEmpty()) {
             mCurrentAmount = ""
             update()
         }
     }
 
     override fun number(n: Int) {
-        if (n == 0 && mCurrentAmount.length == 0) {
+        if (n == 0 && mCurrentAmount.isEmpty()) {
             return
         }
         if (mCurrentAmount.length >= 6) {
             return
         }
-        mCurrentAmount = mCurrentAmount + n.toString()
+        mCurrentAmount += n.toString()
         update()
     }
 
@@ -154,36 +154,35 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
         titles.add(format.format(0.20))
         val rateIndex: Int
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val rateString = prefs.getString(TIPPING_RATE_KEY, "")
-        if (rateString == "0.15") {
-            rateIndex = 0
-            mTippingRate = BigDecimal("0.15")
-        } else if (rateString == "0.18") {
-            rateIndex = 1
-            mTippingRate = BigDecimal("0.18")
-        } else if (rateString == "0.20") {
-            rateIndex = 2
-            mTippingRate = BigDecimal("0.20")
-        } else {
-            rateIndex = 1
-            mTippingRate = BigDecimal("0.18")
+        when (prefs.getString(TIPPING_RATE_KEY, "")) {
+            "0.15" -> {
+                rateIndex = 0
+                mTippingRate = BigDecimal("0.15")
+            }
+            "0.18" -> {
+                rateIndex = 1
+                mTippingRate = BigDecimal("0.18")
+            }
+            "0.20" -> {
+                rateIndex = 2
+                mTippingRate = BigDecimal("0.20")
+            }
+            else -> {
+                rateIndex = 1
+                mTippingRate = BigDecimal("0.18")
+            }
         }
         mButtonStrip.addButtons(titles, rateIndex)
     }
 
     private fun update() {
-        val amount: BigDecimal
-        amount = if (mCurrentAmount.length == 0) {
+        val amount = if (mCurrentAmount.isEmpty()) {
             BigDecimal.ZERO
         } else {
             BigDecimal(mCurrentAmount).divide(BigDecimal("100"))
         }
         mPayment = Tipping.getBestTipPayment(amount, mTippingRate)
-        if (mPayment.total.compareTo(BigDecimal("2")) < 0) {
-            mSplitButton.isEnabled = false
-        } else {
-            mSplitButton.isEnabled = true
-        }
+        mSplitButton.isEnabled = mPayment.total >= BigDecimal("2")
         mAmountLabel.text = decimalString(amount)
         mTipLabel.text = decimalString(mPayment.tip)
         mTotalLabel.text = decimalString(mPayment.total)
@@ -237,14 +236,14 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
     }
 
     class SplitDialogFragment : DialogFragment() {
-        var mTitle: String? = null
-        var mSplitAmount: String? = null
-        var mItems: Array<String>? = null
+        private var mTitle: String = ""
+        private var mSplitAmount: String = ""
+        private var mItems: Array<String> = emptyArray()
         override fun setArguments(args: Bundle?) {
             super.setArguments(args)
-            mSplitAmount = args?.getString(AMOUNT)
-            mItems = args?.getStringArray(LOCALIZED_ITEMS)
-            mTitle = args?.getString(LOCALIZED_TITLE)
+            mSplitAmount = args?.getString(AMOUNT) ?: mSplitAmount
+            mItems = args?.getStringArray(LOCALIZED_ITEMS) ?: mItems
+            mTitle = args?.getString(LOCALIZED_TITLE) ?: mTitle
         }
 
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -255,8 +254,7 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
                         return@OnClickListener
                     }
                     val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "", null))
-                    val subjectFormat: String
-                    subjectFormat = if (which == 0) {
+                    val subjectFormat = if (which == 0) {
                         getString(R.string.request_subject_prefix)
                     } else {
                         getString(R.string.send_subject_prefix)
