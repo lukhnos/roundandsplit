@@ -28,11 +28,12 @@ import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import kotlin.math.ceil
 import kotlin.math.floor
 
 class KeypadGrid : View {
-    private var mPaint: Paint? = null
+    private lateinit var paint: Paint
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -51,13 +52,13 @@ class KeypadGrid : View {
     }
 
     private fun init(context: Context) {
-        mPaint = Paint()
-        mPaint!!.color = context.resources.getColor(R.color.divider_line)
+        paint = Paint()
+        paint.color = ContextCompat.getColor(context, R.color.divider_line)
         val metrics = DisplayMetrics()
         (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
             metrics
         )
-        mPaint!!.strokeWidth = ceil(metrics.density * 1.0).toFloat()
+        paint.strokeWidth = ceil(metrics.density * 1.0).toFloat()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -76,7 +77,7 @@ class KeypadGrid : View {
                 top,
                 left + wStep * x.toFloat(),
                 top + h,
-                mPaint!!
+                paint
             )
         }
         for (y in 1..3) {
@@ -85,7 +86,7 @@ class KeypadGrid : View {
                 top + hStep * y.toFloat(),
                 left + w,
                 top + hStep * y.toFloat(),
-                mPaint!!
+                paint
             )
         }
     }

@@ -34,10 +34,9 @@ object Tipping {
             payment.total = BigDecimal.ZERO
             payment.effectiveRate = BigDecimal.ZERO
             return payment
-        } else if (amount.compareTo(two) < 0) {
+        } else if (amount < two) {
             val payment = Payment()
-            val tip: BigDecimal
-            tip = if (amount.compareTo(BigDecimal.ONE) <= 0) {
+            val tip: BigDecimal = if (amount <= BigDecimal.ONE) {
                 BigDecimal.ONE.subtract(amount)
             } else {
                 two.subtract(amount)
@@ -55,14 +54,14 @@ object Tipping {
         val roundedUpTotal = total.setScale(0, BigDecimal.ROUND_UP)
         payments.add(Payment.fromTotal(amount, roundedUpTotal))
         val roundedDownTotal = total.setScale(0, BigDecimal.ROUND_DOWN)
-        if (roundedDownTotal.compareTo(amount) > 0) {
+        if (roundedDownTotal > amount) {
             payments.add(Payment.fromTotal(amount, roundedDownTotal))
         }
         var payment = payments[0]
-        var delta = payment.effectiveRate!!.subtract(rate).abs()
+        var delta = payment.effectiveRate.subtract(rate).abs()
         for (newPayment in payments) {
-            val newDelta = newPayment.effectiveRate!!.subtract(rate).abs()
-            if (newDelta.compareTo(delta) < 0) {
+            val newDelta = newPayment.effectiveRate.subtract(rate).abs()
+            if (newDelta < delta) {
                 delta = newDelta
                 payment = newPayment
             }
@@ -71,13 +70,13 @@ object Tipping {
     }
 
     class Payment {
-        var amount = BigDecimal.ZERO
-        var total = BigDecimal.ZERO
-        var tip = BigDecimal.ZERO
-        var effectiveRate = BigDecimal.ZERO
+        var amount: BigDecimal = BigDecimal.ZERO
+        var total: BigDecimal = BigDecimal.ZERO
+        var tip: BigDecimal = BigDecimal.ZERO
+        var effectiveRate: BigDecimal = BigDecimal.ZERO
 
         companion object {
-            fun fromTotal(amount: BigDecimal?, total: BigDecimal): Payment {
+            fun fromTotal(amount: BigDecimal, total: BigDecimal): Payment {
                 val payment = Payment()
                 payment.amount = amount
                 payment.total = total

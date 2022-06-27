@@ -34,6 +34,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import kotlin.math.ceil
 
 class ButtonStrip : ViewGroup {
@@ -41,25 +42,25 @@ class ButtonStrip : ViewGroup {
         fun onButtonClicked(index: Int)
     }
 
-    private var mUnderline: View? = null
-    private val mButtons: MutableList<Button> = ArrayList()
-    private var mSelectedIndex = -1
-    private var mObserver: Observer? = null
-    private val mMetrics = DisplayMetrics()
-    private val mButtonRect = Rect()
-    private val mButtonLayoutParams =
+    private lateinit var underline: View
+    private val buttons: MutableList<Button> = ArrayList()
+    private var selectedIndex = -1
+    private var observer: Observer? = null
+    private val metrics = DisplayMetrics()
+    private val buttonRect = Rect()
+    private val buttonLayoutParams =
         LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
     @SuppressLint("ObjectAnimatorBinding")
     private val mButtonListener = OnClickListener { view ->
         val toButton = view as Button
-        mSelectedIndex = mButtons.indexOf(toButton)
-        val objectAnimator = ObjectAnimator.ofFloat(mUnderline, "x", toButton.left.toFloat())
+        selectedIndex = buttons.indexOf(toButton)
+        val objectAnimator = ObjectAnimator.ofFloat(underline, "x", toButton.left.toFloat())
         objectAnimator.interpolator = AccelerateDecelerateInterpolator()
         objectAnimator.duration = 250
         objectAnimator.start()
-        if (mObserver != null) {
-            mObserver!!.onButtonClicked(mSelectedIndex)
+        if (observer != null) {
+            observer!!.onButtonClicked(selectedIndex)
         }
     }
 
@@ -81,23 +82,25 @@ class ButtonStrip : ViewGroup {
 
     private fun init(context: Context) {
         (getContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
-            mMetrics
+            metrics
         )
-        mUnderline = View(context)
-        mUnderline!!.setBackgroundColor(resources.getColor(R.color.normal_green))
-        addView(mUnderline)
+        underline = View(context)
+        underline.setBackgroundColor(
+            ContextCompat.getColor(context, R.color.normal_green)
+        )
+        addView(underline)
     }
 
     fun setObserver(o: Observer?) {
-        mObserver = o
+        observer = o
     }
 
     fun addButtons(titles: List<String?>, activeIndex: Int) {
-        for (button in mButtons) {
+        for (button in buttons) {
             removeView(button)
         }
-        mButtons.clear()
-        val padding = ceil((mMetrics.density * BUTTON_PADDING).toDouble()).toInt()
+        buttons.clear()
+        val padding = ceil((metrics.density * BUTTON_PADDING).toDouble()).toInt()
         val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         val typeface = resources.getFont(R.font.firasans_light)
         for (title in titles) {
@@ -106,14 +109,16 @@ class ButtonStrip : ViewGroup {
             button.layoutParams = layoutParams
             button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0f)
             button.text = title
-            button.setTypeface(typeface)
+            button.typeface = typeface
             button.setPadding(padding, 0, padding, 0)
-            button.setTextColor(resources.getColorStateList(R.color.button_strip_button_text_color))
+            button.setTextColor(
+                ContextCompat.getColorStateList(context, R.color.button_strip_button_text_color)
+            )
             button.setOnClickListener(mButtonListener)
-            mButtons.add(button)
+            buttons.add(button)
             addView(button)
         }
-        mSelectedIndex = if (activeIndex >= 0 && activeIndex < titles.size) {
+        selectedIndex = if (activeIndex >= 0 && activeIndex < titles.size) {
             activeIndex
         } else {
             -1
@@ -123,49 +128,49 @@ class ButtonStrip : ViewGroup {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (mButtons.size > 0) {
-            for (button in mButtons) {
-                button.layoutParams = mButtonLayoutParams
+        if (buttons.size > 0) {
+            for (button in buttons) {
+                button.layoutParams = buttonLayoutParams
                 measureChild(button, widthMeasureSpec, heightMeasureSpec)
             }
         }
-        measureChild(mUnderline, widthMeasureSpec, heightMeasureSpec)
+        measureChild(underline, widthMeasureSpec, heightMeasureSpec)
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        val count = mButtons.size
+        val count = buttons.size
         val parentLeft = paddingLeft
         val parentRight = right - left - paddingRight
         val parentTop = paddingTop
         val parentBottom = bottom - top - paddingBottom
         (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
-            mMetrics
+            metrics
         )
-        val underlineHeight = ceil((mMetrics.density * UNDERLINE_HEIGHT).toDouble()).toInt()
+        val underlineHeight = ceil((metrics.density * UNDERLINE_HEIGHT).toDouble()).toInt()
         var totalWidth = 0
-        for (button in mButtons) {
+        for (button in buttons) {
             totalWidth += button.measuredWidth
         }
         var space = 0
         if (count > 1) {
             space = (parentRight - parentLeft - totalWidth) / (count - 1)
         }
-        mButtonRect.top = parentTop
-        mButtonRect.bottom = parentBottom - underlineHeight
-        mButtonRect.left = parentLeft
+        buttonRect.top = parentTop
+        buttonRect.bottom = parentBottom - underlineHeight
+        buttonRect.left = parentLeft
         for (i in 0 until count) {
-            val button = mButtons[i]
-            mButtonRect.right = mButtonRect.left + button.measuredWidth
-            button.layout(mButtonRect.left, mButtonRect.top, mButtonRect.right, mButtonRect.bottom)
-            if (mSelectedIndex == i) {
-                mUnderline!!.layout(
-                    mButtonRect.left,
-                    mButtonRect.bottom,
-                    mButtonRect.right,
-                    mButtonRect.bottom + underlineHeight
+            val button = buttons[i]
+            buttonRect.right = buttonRect.left + button.measuredWidth
+            button.layout(buttonRect.left, buttonRect.top, buttonRect.right, buttonRect.bottom)
+            if (selectedIndex == i) {
+                underline.layout(
+                    buttonRect.left,
+                    buttonRect.bottom,
+                    buttonRect.right,
+                    buttonRect.bottom + underlineHeight
                 )
             }
-            mButtonRect.left = mButtonRect.right + space
+            buttonRect.left = buttonRect.right + space
         }
     }
 

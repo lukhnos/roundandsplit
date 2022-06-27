@@ -1,6 +1,5 @@
 package org.lukhnos.roundandsplit
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -14,18 +13,12 @@ class TextViewerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_text_viewer)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        val title = intent.getStringExtra(TITLE)
-        if (title != null) {
-            actionBar?.title = title
-        } else {
-            actionBar?.title = getString(R.string.pref_acknowledgements)
-        }
         val resId = intent.getIntExtra(TEXT_FILE_ID, -1)
         if (resId != -1) {
             (findViewById<View>(R.id.viewer_text) as TextView).text = readFile(resId)
         } else {
-            (findViewById<View>(R.id.viewer_text) as TextView).text = readFile(R.raw.acknowledgements)
+            (findViewById<View>(R.id.viewer_text) as TextView).text =
+                readFile(DEFAULT_TEXT_RESOURCE)
         }
     }
 
@@ -55,7 +48,7 @@ class TextViewerActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val TITLE = "title"
         const val TEXT_FILE_ID = "text"
+        const val DEFAULT_TEXT_RESOURCE = R.raw.acknowledgements
     }
 }
