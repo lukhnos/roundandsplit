@@ -53,9 +53,9 @@ class NumericKeypad : ViewGroup {
         val typeface = resources.getFont(R.font.firasans_light)
         for (i in 0..11) {
             val title: String = when (i) {
-                9 -> "C"
+                9 -> "CLEAR"
                 10 -> "0"
-                11 -> "DEL"
+                11 -> "⌫"
                 else -> (i + 1).toString()
             }
             val button = Button(context)
