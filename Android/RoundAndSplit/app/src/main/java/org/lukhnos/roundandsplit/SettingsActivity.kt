@@ -22,13 +22,17 @@
 package org.lukhnos.roundandsplit
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 
 class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
@@ -56,6 +60,26 @@ class SettingsActivity : AppCompatActivity() {
                 "Inquiry - Round & Split Android $versionName"
             )
             emailPref?.intent = emailIntent
+
+            val rateManager =
+                RateManager(PreferenceManager.getDefaultSharedPreferences(requireContext()))
+            for (i in RateManager.PREF_KEY_RATES.indices) {
+                val key = RateManager.PREF_KEY_RATES[i]
+                val listPref: ListPreference = findPreference(key)!!
+
+                val listPrefValues = rateManager.getListPreferenceValues(i)
+                listPref.entryValues = listPrefValues.values
+                listPref.entries = listPrefValues.titles
+
+                val isCurrentIndexSelectedRate = rateManager.currentRateIndex == i
+                listPref.onPreferenceChangeListener =
+                    Preference.OnPreferenceChangeListener { preference, newValue ->
+                        if (isCurrentIndexSelectedRate) {
+                            rateManager.overwriteCurrentRate(newValue as String)
+                        }
+                        true
+                    }
+            }
         }
     }
 

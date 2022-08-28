@@ -43,14 +43,15 @@ import java.text.NumberFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Observer {
+    private lateinit var rateManager: RateManager
     private lateinit var buttonStrip: ButtonStrip
     private lateinit var amountLabel: TextView
     private lateinit var tipLabel: TextView
     private lateinit var totalLabel: TextView
     private lateinit var effectiveRateLabel: TextView
     private lateinit var splitButton: Button
+    private lateinit var tippingRate: BigDecimal
     private var currentAmount = ""
-    private var tippingRate = BigDecimal.ZERO
     private var payment = Payment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.my_toolbar))
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
+        rateManager = RateManager(PreferenceManager.getDefaultSharedPreferences(this))
         amountLabel = findViewById<View>(R.id.amount_label) as TextView
         tipLabel = findViewById<View>(R.id.tip_label) as TextView
         totalLabel = findViewById<View>(R.id.total_label) as TextView
@@ -68,8 +70,6 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
         buttonStrip.setObserver(this)
         (findViewById<View>(R.id.numeric_keypad) as NumericKeypad).setObserver(this)
         currentAmount = savedInstanceState?.getString(CURRENT_AMOUNT) ?: currentAmount
-        setupButtonStrip()
-        update()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -128,55 +128,18 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
     }
 
     override fun onButtonClicked(index: Int) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val editor = prefs.edit()
-        var rateString = "0.18"
-        when (index) {
-            0 -> rateString = "0.15"
-            1 -> rateString = "0.18"
-            2 -> rateString = "0.20"
-            else -> {}
-        }
-        tippingRate = BigDecimal(rateString)
-        editor.putString(TIPPING_RATE_KEY, rateString)
-        editor.apply()
+        tippingRate = rateManager.chooseRate(index)
         update()
     }
 
     private fun setupButtonStrip() {
-        val titles: MutableList<String?> = ArrayList()
-        val useUSLocale = PreferenceManager.getDefaultSharedPreferences(this)
-            .getBoolean(getString(R.string.pref_key_use_us_decimal_point), true)
-        val format =
-            if (useUSLocale) NumberFormat.getPercentInstance(Locale.US) else NumberFormat.getPercentInstance()
-        format.minimumFractionDigits = 0
-        titles.add(format.format(0.15))
-        titles.add(format.format(0.18))
-        titles.add(format.format(0.20))
-        val rateIndex: Int
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        when (prefs.getString(TIPPING_RATE_KEY, "")) {
-            "0.15" -> {
-                rateIndex = 0
-                tippingRate = BigDecimal("0.15")
-            }
-            "0.18" -> {
-                rateIndex = 1
-                tippingRate = BigDecimal("0.18")
-            }
-            "0.20" -> {
-                rateIndex = 2
-                tippingRate = BigDecimal("0.20")
-            }
-            else -> {
-                rateIndex = 1
-                tippingRate = BigDecimal("0.18")
-            }
-        }
-        buttonStrip.addButtons(titles, rateIndex)
+        val buttonTitles = rateManager.buttonTitles
+        buttonStrip.addButtons(buttonTitles.titles, buttonTitles.rateIndex)
     }
 
     private fun update() {
+        tippingRate = rateManager.currentRate
+
         val amount = if (currentAmount.isEmpty()) {
             BigDecimal.ZERO
         } else {
@@ -276,7 +239,6 @@ class MainActivity : AppCompatActivity(), ButtonStrip.Observer, NumericKeypad.Ob
     }
 
     companion object {
-        private const val TIPPING_RATE_KEY = "TippingRate"
         private const val CURRENT_AMOUNT = "CurrentAmount"
     }
 }

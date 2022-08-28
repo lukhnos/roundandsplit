@@ -31,19 +31,13 @@ You can adjust the amount later.</string>
     <string name="request_subject_prefix">You owe me %s</string>
     <string name="send_subject_prefix">I owe you %s</string>
     <string name="title_activity_settings2">SettingsActivity2</string>
-
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="default_rate_value0">0.15</string>
+    <string name="default_rate_value1">0.18</string>
+    <string name="default_rate_value2">0.20</string>
+    <string name="pref_key_tipping_rate0">TippingRate0</string>
+    <string name="pref_key_tipping_rate1">TippingRate1</string>
+    <string name="pref_key_tipping_rate2">TippingRate2</string>
+    <string name="pref_title_tipping_rate0">First Tipping Rate</string>
+    <string name="pref_title_tipping_rate1">Second Tipping Rate</string>
+    <string name="pref_title_tipping_rate2">Third Tipping Rate</string>
 </resources>

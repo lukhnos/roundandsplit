@@ -26,6 +26,28 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_settings">
+
+        <ListPreference
+            android:defaultValue="@string/default_rate_value0"
+            android:key="@string/pref_key_tipping_rate0"
+            android:summary="%s"
+            android:title="@string/pref_title_tipping_rate0"
+            />
+
+        <ListPreference
+            android:defaultValue="@string/default_rate_value1"
+            android:key="@string/pref_key_tipping_rate1"
+            android:summary="%s"
+            android:title="@string/pref_title_tipping_rate1"
+            />
+
+        <ListPreference
+            android:defaultValue="@string/default_rate_value2"
+            android:key="@string/pref_key_tipping_rate2"
+            android:summary="%s"
+            android:title="@string/pref_title_tipping_rate2"
+            />
+
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="@string/pref_key_use_us_decimal_point"

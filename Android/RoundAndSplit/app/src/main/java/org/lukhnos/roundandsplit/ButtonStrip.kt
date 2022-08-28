@@ -42,7 +42,7 @@ class ButtonStrip : ViewGroup {
         fun onButtonClicked(index: Int)
     }
 
-    private lateinit var underline: View
+    private var underline: View? = null
     private val buttons: MutableList<Button> = ArrayList()
     private var selectedIndex = -1
     private var observer: Observer? = null
@@ -81,14 +81,9 @@ class ButtonStrip : ViewGroup {
     }
 
     private fun init(context: Context) {
-        (getContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
+        (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
             metrics
         )
-        underline = View(context)
-        underline.setBackgroundColor(
-            ContextCompat.getColor(context, R.color.normal_green)
-        )
-        addView(underline)
     }
 
     fun setObserver(o: Observer?) {
@@ -98,6 +93,9 @@ class ButtonStrip : ViewGroup {
     fun addButtons(titles: List<String?>, activeIndex: Int) {
         for (button in buttons) {
             removeView(button)
+        }
+        if (underline != null) {
+            removeView(underline)
         }
         buttons.clear()
         val padding = ceil((metrics.density * BUTTON_PADDING).toDouble()).toInt()
@@ -123,7 +121,14 @@ class ButtonStrip : ViewGroup {
         } else {
             -1
         }
+        underline = View(context)
+        underline?.setBackgroundColor(
+            ContextCompat.getColor(context, R.color.normal_green)
+        )
+        addView(underline)
+
         requestLayout()
+        // underline.requestLayout()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -163,7 +168,7 @@ class ButtonStrip : ViewGroup {
             buttonRect.right = buttonRect.left + button.measuredWidth
             button.layout(buttonRect.left, buttonRect.top, buttonRect.right, buttonRect.bottom)
             if (selectedIndex == i) {
-                underline.layout(
+                underline?.layout(
                     buttonRect.left,
                     buttonRect.bottom,
                     buttonRect.right,
