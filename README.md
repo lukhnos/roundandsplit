@@ -1,8 +1,6 @@
 # Round & Split
 
-[![Build Status](https://travis-ci.org/lukhnos/roundandsplit.svg?branch=master)](https://travis-ci.org/lukhnos/roundandsplit)
-
-I needed a tip calculator, so I wrote one.
+I needed a tip calculator back in 2014, so I wrote one.
 
 I always round my tips, and when I dine out with a friend, I email them
 reminders that I owe them money or vice versa. I was looking for a tip
@@ -12,14 +10,7 @@ out there have a lot of features that I don't need.
 So I decided to make one. Or two in fact – I've made an iOS version and an
 Android version, because I happen to know programming on both platforms.
 
-You can download the iOS app on
-[the App Store](https://itunes.apple.com/us/app/round-split/id912288737?ls=1&mt=8)
-for $0.99. It's a free app on
-[Google Play](https://play.google.com/store/apps/details?id=org.lukhnos.roundandsplit).
-
-I've also made this an open source project. You are welcome to build the app
-on your own from the source code. The only difference is that the source code
-here does not include the app icons made by a professional icon designer.
+This (now archived) repo contains the open source version of the project. The repo only provides placeholder app icons.
 
 
 ## Features
@@ -86,16 +77,7 @@ I haven't tried this on Linux or Windows. On Windows you may have to use
 `gradlew.bat` to build the app.
 
 
-## Contribution Policy
-
-This is an open source project, but I also sell a paid version on the App
-Store. If you make a pull request, I'll ask you to allow me to use your code
-in the paid app without compensation. Your contribution will be acknowledged.
-
-
 ## Acknowledgments
-
-App icon designed by [OneToad](http://onetoad.com/).
 
 User interface designed by the Smoking Hare.
 
@@ -107,7 +89,7 @@ https://github.com/mozilla/Fira.
 
 The source code is released under the MIT License (MIT).
 
-Copyright (c) 2014-2019 Lukhnos Liu.
+Copyright (c) 2014-2024 Lukhnos Liu.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
